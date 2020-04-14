@@ -17,6 +17,9 @@
     "deploy": "npm run build:examples && gh-pages -d examples",
     "prepare": "npm run build"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/diegoazh/vue-google-maps.git"
