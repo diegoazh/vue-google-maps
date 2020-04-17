@@ -1,6 +1,6 @@
 {
-  "name": "vue2-google-maps",
-  "version": "0.12.1",
+  "name": "gmap-vue",
+  "version": "1.0.0",
   "description": "This is a google map component for Vue.js, updated for Vue 2 compatibility",
   "main": "dist/main.js",
   "scripts": {
@@ -18,14 +18,17 @@
     "prepare": "npm run build",
     "pre-commit": "lint-staged"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xkjyeah/vue-google-maps.git"
+    "url": "git+https://github.com/diegoazh/vue-google-maps.git"
   },
   "bugs": {
-    "url": "https://github.com/xkjyeah/vue-google-maps/issues"
+    "url": "https://github.com/diegoazh/vue-google-maps/issues"
   },
-  "homepage": "https://github.com/xkjyeah/vue-google-maps#readme",
+  "homepage": "https://github.com/diegoazh/vue-google-maps#readme",
   "dependencies": {
     "marker-clusterer-plus": "^2.1.4"
   },

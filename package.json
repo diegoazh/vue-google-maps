@@ -1,6 +1,6 @@
 {
-  "name": "vue2-google-maps",
-  "version": "0.12.1",
+  "name": "monorepo-gmap-vue",
+  "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:xkjyeah/vue-google-maps.git",
   "author": "\"Daniel Sim, Guillaume Leclerc\",",
