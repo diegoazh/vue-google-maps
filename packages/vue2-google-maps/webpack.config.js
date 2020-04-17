@@ -14,8 +14,8 @@ const webConfig = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'vue-google-maps.js',
-    library: ['VueGoogleMaps'],
+    filename: 'gmap-vue.js',
+    library: ['GmapVue'],
     libraryTarget: 'umd'
   }
 }

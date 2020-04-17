@@ -1,28 +1,3 @@
-# How it differs to https://github.com/xkjyeah/vue-google-maps
-
-The autocomplete supports cutsom text field via scoped slot
-
-```html
-          <gmap-autocomplete class="introInput" >
-                    <template v-slot:input="slotProps">
-                        <v-text-field outlined 
-                                      prepend-inner-icon="place" 
-                                      placeholder="Location Of Event" 
-                                      ref="input" 
-                                      v-on:listeners="slotProps.listeners" 
-                                      v-on:attrs="slotProps.attrs">
-                        </v-text-field>
-                    </template>
-        </gmap-autocomplete>
-```
-
-The ref on the element must be called input, if the element is a vue component then it must have a child ref called input (like in vuetify text-field) or speciy a custom name via childRefName property (only works one level deep into a component).
-
-The v-on:listeners is rquired, v-on:attrs may or may not be required depending on your implementation.
-
-This requires vue 2.6 or higher for the new slot support.
-
-
 # CONTRIBUTORS NEEDED!
 
 It's been increasingly difficult for me to make time to maintain this project.
@@ -175,7 +150,7 @@ Example of [MapOptions](https://developers.google.com/maps/documentation/javascr
     streetViewControl: false,
     rotateControl: false,
     fullscreenControl: true,
-    disableDefaultUi: false
+    disableDefaultUI: false
   }"
 >
 </GmapMap>
@@ -230,6 +205,29 @@ Vue.component('GmapCluster', GmapCluster)
 ```
 Inconvenient, but this means all other users don't have to bundle the marker clusterer package
 in their source code.
+
+### Autocomplete component
+The autocomplete supports cutsom text field via scoped slot
+
+```html
+          <gmap-autocomplete class="introInput" >
+                    <template v-slot:input="slotProps">
+                        <v-text-field outlined
+                                      prepend-inner-icon="place"
+                                      placeholder="Location Of Event"
+                                      ref="input"
+                                      v-on:listeners="slotProps.listeners"
+                                      v-on:attrs="slotProps.attrs">
+                        </v-text-field>
+                    </template>
+        </gmap-autocomplete>
+```
+
+The ref on the element must be called input, if the element is a vue component then it must have a child ref called input (like in vuetify text-field) or speciy a custom name via childRefName property (only works one level deep into a component).
+
+The v-on:listeners is rquired, v-on:attrs may or may not be required depending on your implementation.
+
+This requires vue 2.6 or higher for the new slot support.
 
 ### Adding your own components
 
