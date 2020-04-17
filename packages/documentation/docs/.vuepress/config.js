@@ -1,15 +1,17 @@
 module.exports = {
-  title: 'Vue2 Google Maps plugin',
-  description: 'Documentation for vue2-google-maps plugin',
+  title: 'Gmap-vue plugin',
+  description: 'Documentation for gmap-vue plugin',
   themeConfig: {
     sidebarDepth: 2,
     nav: [
-      {text: 'vue2-google-maps', link: '/'},
+      {text: 'gmap-vue', link: '/'},
       {text: 'code examples', link: '/examples/'},
     ],
     sidebar: {
       '/examples/': [
         ['', 'Using a CDN'],
+        ['map-center', 'Map center'],
+        ['map-center-twoway', 'Map center two way binding'],
         ['basic-autocomplete', 'Autocomplete basic'],
         ['autocomplete', 'Autocomplete'],
         ['kml-layer', 'Kml layer'],
@@ -23,6 +25,12 @@ module.exports = {
         ['window-information', 'Window information'],
         ['map-type-id', 'Map type id'],
         ['overlay', 'Overlay'],
+        ['polyline', 'Polyline'],
+        ['polygon-simple', 'Poligon simple'],
+        ['polygon-advanced', 'Poligon advanced'],
+        ['resize-bus', 'Resize bus'],
+        ['map-destroy', 'Map destroy'],
+        ['street-view-panorama', 'Street view panorama']
       ],
       '/': [
         ['', 'Getting started']

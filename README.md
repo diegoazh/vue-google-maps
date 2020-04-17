@@ -1,3 +1,5 @@
+[![](https://data.jsdelivr.com/v1/package/npm/gmap-vue/badge)](https://www.jsdelivr.com/package/npm/gmap-vue)
+
 # CONTRIBUTORS NEEDED!
 
 It's been increasingly difficult for me to make time to maintain this project.

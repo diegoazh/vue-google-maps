@@ -15,10 +15,10 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.0/vue.js"></script>
-  <script src="https://unpkg.com/vue2-google-maps@latest/dist/vue-google-maps.js"></script>
+  <script src="https://unpkg.com/gmap-vue@1.0.0/dist/gmap-vue.js"></script>
 
   <script>
-    Vue.use(VueGoogleMaps, {
+    Vue.use(GmapVue, {
       load: {
         key: 'AIzaSyDf43lPdwlF98RCBsJOFNKOkoEjkwxb5Sc', // use a valid key
         v: '3.26',
@@ -28,8 +28,8 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-      Vue.component('google-map', VueGoogleMaps.Map);
-      Vue.component('ground-overlay', VueGoogleMaps.mapElementFactory({
+      Vue.component('google-map', GmapVue.Map);
+      Vue.component('ground-overlay', GmapVue.mapElementFactory({
         mappedProps: {
           'opacity': {}
         },

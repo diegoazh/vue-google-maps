@@ -6,11 +6,12 @@
   "author": "Diego A. Zapata Hantsch",
   "license": "MIT",
   "scripts": {
-    "dev": "vuepress dev docs",
-    "build": "vuepress build docs"
+    "dev": "npx vuepress dev docs",
+    "build": "npx vuepress build docs"
   },
   "dependencies": {
-    "vue2-google-maps": "^0.10.7",
+    "gmap-vue": "^1.0.0",
+    "lodash": "^4.17.15",
     "vuepress": "^1.2.0"
   },
   "devDependencies": {}

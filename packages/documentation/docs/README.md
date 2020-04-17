@@ -1,23 +1,31 @@
+## About GmapVue
+
+GmapVue is a fork from [vue2-google-maps](https://github.com/xkjyeah/vue-google-maps).
+
+This project has all features added to `vue2-google-maps` plugin up to [v0.10.8](https://github.com/xkjyeah/vue-google-maps/releases/tag/v0.10.8), but in the case of `gmap-vue` it has **the last features** added to `vue2-google-maps` repository by the community developers in many PRs, that they can't landed in a new version of that project, for different reasons.
+
+Because of that we fork the project and plain to continue working and adding new features to this great plugin.
+
 ## Installation
 
 ### npm
 
 ```shell
-npm install vue2-google-maps --save
+npm install gmap-vue --save
 ```
 
 ### yarn
 
 ```shell
-yarn add vue2-google-maps
+yarn add gmap-vue
 ```
 
 ### Manually
 
-Just download `dist/vue-google-maps.js` file and include it from your HTML.
+Just download `dist/gmap-vue.js` file and include it from your HTML.
 
 ```html
-<script src="./vue-google-maps.js"></script>
+<script src="./gmap-vue.js"></script>
 ```
 
 ### jsdelivr
@@ -25,7 +33,7 @@ Just download `dist/vue-google-maps.js` file and include it from your HTML.
 You can use a free CDN like [jsdelivr](https://www.jsdelivr.com) to include this plugin in your html file
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/vue2-google-maps@latest/dist/vue-google-maps.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.0.0/dist/gmap-vue.min.js"></script>
 ```
 
 ### unpkg
@@ -33,7 +41,7 @@ You can use a free CDN like [jsdelivr](https://www.jsdelivr.com) to include this
 You can use a free CDN like [unpkg](https://unpkg.com) to include this plugin in your html file
 
 ```html
-<script src="https://unpkg.com/vue2-google-maps@latest/dist/vue-google-maps.js"></script>
+<script src="https://unpkg.com/gmap-vue@1.0.0/dist/gmap-vue.js"></script>
 ```
 
 ::: warning
@@ -41,7 +49,7 @@ Be aware that if you use this method, you cannot use TitleCase for your componen
 That is, instead of writing `<GmapMap>`, you need to write `<gmap-map>`.
 :::
 
-[Source code](/examples/) - [Live example](http://xkjyeah.github.io/vue-google-maps/overlay.html).
+[Source code](/examples/) - [Live example](http://diegoazh.github.io/gmap-vue/overlay.html).
 
 ## Basic usage
 
@@ -75,9 +83,9 @@ In your `main.js` or inside a Nuxt plugin:
 
 ```js
 import Vue from 'vue'
-import * as VueGoogleMaps from 'vue2-google-maps'
+import * as GmapVue from 'gmap-vue'
 
-Vue.use(VueGoogleMaps, {
+Vue.use(GmapVue, {
   load: {
     key: 'YOUR_API_TOKEN',
     libraries: 'places', // This is required if you use the Autocomplete plugin
@@ -96,7 +104,7 @@ Vue.use(VueGoogleMaps, {
   // autobindAllEvents: false,
 
   //// If you want to manually install components, e.g.
-  //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
+  //// import {GmapMarker} from 'gmap-vue/src/components/marker'
   //// Vue.component('GmapMarker', GmapMarker)
   //// then set installComponents to 'false'.
   //// If you want to automatically install all the components this property must be set to 'true':
@@ -133,7 +141,7 @@ If you need to gain access to the `google` object:
   </GmapMap>
 </template>
 <script>
-  import {gmapApi} from 'vue2-google-maps'
+  import {gmapApi} from 'gmap-vue'
 
   export default {
     computed: {
@@ -167,7 +175,7 @@ Add region and language localization:
 For more information about google [Localization](https://developers.google.com/maps/documentation/javascript/localization) visit the link.
 
 ```js
-Vue.use(VueGoogleMaps, {
+Vue.use(GmapVue, {
   load: {
     region: 'VI',
     language: 'vi',
@@ -177,16 +185,16 @@ Vue.use(VueGoogleMaps, {
 
 ### Nuxt.js config
 
-For Nuxt.js projects, please import VueGoogleMaps in the following way:
+For Nuxt.js projects, please import GmapVue in the following way:
 
 ```js
-import * as VueGoogleMaps from '~/node_modules/vue2-google-maps'
+import * as GmapVue from '~/node_modules/gmap-vue'
 ```
 
 Add the following to your `nuxt.config.js`'s `build.extend()`:
 
 ```js
-transpile: [/^vue2-google-maps($|\/)/]
+transpile: [/^gmap-vue($|\/)/]
 ```
 
 ### Officially supported components:
@@ -202,11 +210,11 @@ The list of officially support components are:
 - Cluster* (via `marker-clusterer-plus`)
 
 You can find examples of this on [examples](/examples/).
-Auto-generated API documentation for these components are [here](http://xkjyeah.github.io/vue-google-maps/autoapi.html).
+Auto-generated API documentation for these components are [here](http://diegoazh.github.io/gmap-vue/autoapi.html).
 
 For `Cluster`, you **must** import the class specifically, e.g.
 ```js
-import GmapCluster from 'vue2-google-maps/dist/components/cluster' // replace dist with src if you have Babel issues
+import GmapCluster from 'gmap-vue/dist/components/cluster' // replace dist with src if you have Babel issues
 
 Vue.component('GmapCluster', GmapCluster)
 ```
@@ -216,13 +224,13 @@ in their source code.
 ### Adding your own components
 
 It should be relatively easy to add your own components (e.g. Heatmap, GroundOverlay). please refer to the
-[source code for `mapElementFactory`](https://github.com/xkjyeah/vue-google-maps/blob/vue2/src/factories/map-element.js).
+[source code for `mapElementFactory`](https://github.com/diegoazh/gmap-vue/blob/vue2/src/factories/map-element.js).
 
 Example for [DirectionsRenderer](https://developers.google.com/maps/documentation/javascript/reference/3/#DirectionsRenderer):
 
 ```js
 // DirectionsRenderer.js
-import { mapElementFactory } from 'vue2-google-maps'
+import { mapElementFactory } from 'gmap-vue'
 
 export default mapElementFactory({
   name: 'directionsRenderer',

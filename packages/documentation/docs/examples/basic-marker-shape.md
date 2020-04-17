@@ -19,10 +19,10 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.0/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue2-google-maps@latest/dist/vue-google-maps.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.0.0/dist/gmap-vue.min.js"></script>
 
   <script>
-    Vue.use(VueGoogleMaps, {
+    Vue.use(GmapVue, {
       load: {
         key: 'AIzaSyDf43lPdwlF98RCBsJOFNKOkoEjkwxb5Sc'
       },
@@ -31,8 +31,8 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-      Vue.component('google-map', VueGoogleMaps.Map);
-      Vue.component('google-marker', VueGoogleMaps.Marker);
+      Vue.component('google-map', GmapVue.Map);
+      Vue.component('google-marker', GmapVue.Marker);
 
       new Vue({
         el: '#root',

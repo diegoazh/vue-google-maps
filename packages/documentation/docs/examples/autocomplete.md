@@ -29,10 +29,10 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue2-google-maps@latest/dist/vue-google-maps.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.0.0/dist/gmap-vue.min.js"></script>
 
   <script>
-    Vue.use(VueGoogleMaps, {
+    Vue.use(GmapVue, {
       load: {
         key: 'AIzaSyDf43lPdwlF98RCBsJOFNKOkoEjkwxb5Sc',
         libraries: 'places'
@@ -70,3 +70,29 @@
   </script>
 </body>
 ```
+
+::: tip
+The autocomplete supports cutsom text field via scoped slot
+
+```html
+          <gmap-autocomplete class="introInput" >
+                    <template v-slot:input="slotProps">
+                        <v-text-field outlined
+                                      prepend-inner-icon="place"
+                                      placeholder="Location Of Event"
+                                      ref="input"
+                                      v-on:listeners="slotProps.listeners"
+                                      v-on:attrs="slotProps.attrs">
+                        </v-text-field>
+                    </template>
+        </gmap-autocomplete>
+```
+
+The ref on the element must be called input, if the element is a vue component then it must have a child ref called input (like in vuetify text-field) or speciy a custom name via childRefName property (only works one level deep into a component).
+
+The v-on:listeners is rquired, v-on:attrs may or may not be required depending on your implementation.
+:::
+
+::: warning
+Cutsom text fields via scoped slot requires vue 2.6 or higher for the new slot support.
+:::

@@ -1,4 +1,4 @@
-import * as VueGoogleMaps from 'vue2-google-maps';
+import * as GmapVue from 'gmap-vue';
 
 export default ({
   Vue, // the version of Vue being used in the VuePress app
@@ -6,12 +6,12 @@ export default ({
   router, // the router instance for the app
   siteData // site metadata
 }) => {
-  Vue.use(VueGoogleMaps, {
+  Vue.use(GmapVue, {
     key: 'AIzaSyDf43lPdwlF98RCBsJOFNKOkoEjkwxb5Sc',
-    libraries: 'places'
+    libraries: 'places',
   })
 
-  Vue.component('ground-overlay', VueGoogleMaps.MapElementFactory({
+  Vue.component('ground-overlay', GmapVue.MapElementFactory({
     mappedProps: {
       'opacity': {}
     },
