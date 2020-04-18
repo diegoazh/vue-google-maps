@@ -1,9 +1,9 @@
-#GmapVue
+# GmapVue
 
 [![Build Status](https://travis-ci.org/diegoazh/gmap-vue.svg?branch=master)](https://travis-ci.org/diegoazh/gmap-vue)
 [![](https://data.jsdelivr.com/v1/package/npm/gmap-vue/badge)](https://www.jsdelivr.com/package/npm/gmap-vue)
 
-# Documentation
+## Documentation
 
 The new documentation page is ready and it contains all examples for any component in the plugin.
 
@@ -17,7 +17,7 @@ Please follow next link to our [documentation](https://diegoazh.github.io/gmap-v
 
 This is the Vue 2.x port of vue-google-maps!
 
-# CONTRIBUTORS NEEDED!
+## CONTRIBUTORS NEEDED!
 
 It's been increasingly difficult for me to make time to maintain this project.
 My projects at work have also gradually migrated away from Google Maps (but still on Vue -- Vue's awesome!),
