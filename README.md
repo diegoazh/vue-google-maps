@@ -1,4 +1,15 @@
+[![Build Status](https://travis-ci.org/diegoazh/gmap-vue.svg?branch=master)](https://travis-ci.org/diegoazh/gmap-vue)
 [![](https://data.jsdelivr.com/v1/package/npm/gmap-vue/badge)](https://www.jsdelivr.com/package/npm/gmap-vue)
+
+# Documentation
+
+The new documentation page is ready and it contains all examples for any component in the plugin.
+
+You can use your own gmap key in order to test it in the live example section.
+
+We have planed improve and grow all required documentation about the plugin.
+
+Please follow next link to our [documentation](https://diegoazh.github.io/gmap-vue/).
 
 # CONTRIBUTORS NEEDED!
 
@@ -299,6 +310,6 @@ export default {
 
 More automated tests should be written to help new contributors.
 
-Meanwhile, please test your changes against the suite of [examples](examples).
+Meanwhile, please test your changes against the suite of [examples](https://diegoazh.github.io/gmap-vue/).
 
 Improvements to the tests are welcome :)
