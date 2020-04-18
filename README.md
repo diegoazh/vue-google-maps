@@ -1,3 +1,5 @@
+#GmapVue
+
 [![Build Status](https://travis-ci.org/diegoazh/gmap-vue.svg?branch=master)](https://travis-ci.org/diegoazh/gmap-vue)
 [![](https://data.jsdelivr.com/v1/package/npm/gmap-vue/badge)](https://www.jsdelivr.com/package/npm/gmap-vue)
 
@@ -10,6 +12,10 @@ You can use your own gmap key in order to test it in the live example section.
 We have planed improve and grow all required documentation about the plugin.
 
 Please follow next link to our [documentation](https://diegoazh.github.io/gmap-vue/).
+
+## Vue-2 port of vue-google-maps
+
+This is the Vue 2.x port of vue-google-maps!
 
 # CONTRIBUTORS NEEDED!
 
@@ -28,19 +34,11 @@ What's urgently needed are:
 
 The above three will go a long way to keeping the project maintainable and contributable, and will address many of the open issues.
 
-# vue-google-maps
-
-[![Build Status](https://travis-ci.org/xkjyeah/vue-google-maps.svg?branch=vue2)](https://travis-ci.org/xkjyeah/vue-google-maps)
-
-## Vue-2 port of vue-google-maps
-
-This is the Vue 2.x port of vue-google-maps!
-
 ## Installation
 
 ### With npm (Recommended)
 
-```
+```sh
 npm install vue2-google-maps
 ```
 
