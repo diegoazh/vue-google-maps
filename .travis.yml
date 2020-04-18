@@ -1,16 +1,18 @@
 language: node_js
 node_js:
-  - '10'
+  - '12'
+cache: npm
+install:
+  - npm ci
 script:
-  - npm run test
-before_deploy: 'npm run build:examples'
+  - npm run build
 deploy:
   provider: pages
+  local_dir: packages/documentation/docs/.vuepress/dist
   github_token: $GITHUB_TOKEN
   keep_history: true
-  local_dir: examples
-  on:
-    branch: vue2
   skip_cleanup: true
+  on:
+    branch: master
 env:
   - THIS_IS_ON_TRAVIS_AND_SANDBOX_IS_NOT_ALLOWED=true

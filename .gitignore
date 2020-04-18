@@ -1,6 +1,6 @@
 .DS_Store
-node_modules
-examples/dist
-examples/vue-google-maps.js
 .idea
-dist
+
+node_modules
+packages/**/dist
+packages/**/vue-google-maps.js

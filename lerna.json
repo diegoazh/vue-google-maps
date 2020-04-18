@@ -1,0 +1,20 @@
+{
+  "command": {
+    "publish": {
+      "ignoreChanges": ["ignored-file", "*.md"],
+      "message": "chore(release): publish"
+    },
+    "bootstrap": {
+      "ignore": "",
+      "npmClientArgs": []
+    },
+    "version": {
+      "allowBranch": "vue2"
+    }
+  },
+  "npmClient": "npm",
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent"
+}

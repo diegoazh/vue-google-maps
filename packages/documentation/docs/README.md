@@ -1,48 +1,57 @@
-[![](https://data.jsdelivr.com/v1/package/npm/gmap-vue/badge)](https://www.jsdelivr.com/package/npm/gmap-vue)
+## About GmapVue
 
-# CONTRIBUTORS NEEDED!
+GmapVue is a fork from [vue2-google-maps](https://github.com/xkjyeah/vue-google-maps).
 
-It's been increasingly difficult for me to make time to maintain this project.
-My projects at work have also gradually migrated away from Google Maps (but still on Vue -- Vue's awesome!),
-so there's less and less incentive to maintain.
+This project has all features added to `vue2-google-maps` plugin up to [v0.10.8](https://github.com/xkjyeah/vue-google-maps/releases/tag/v0.10.8), but in the case of `gmap-vue` it has **the last features** added to `vue2-google-maps` repository by the community developers in many PRs, that they can't landed in a new version of that project, for different reasons.
 
-If you have time to contribute to a rather frequently used library, feel free to make a PR!
-For more background, please refer to [this issue](https://github.com/xkjyeah/vue-google-maps/issues/514).
-
-What's urgently needed are:
-
-1. Better automated tests
-2. Better integration tests with the popular frameworks, especially Nuxt and Vue template
-3. Better documentation (examples, recommendations)
-
-The above three will go a long way to keeping the project maintainable and contributable, and will address many of the open issues.
-
-# vue-google-maps
-
-[![Build Status](https://travis-ci.org/xkjyeah/vue-google-maps.svg?branch=vue2)](https://travis-ci.org/xkjyeah/vue-google-maps)
-
-## Vue-2 port of vue-google-maps
-
-This is the Vue 2.x port of vue-google-maps!
+Because of that we fork the project and plain to continue working and adding new features to this great plugin.
 
 ## Installation
 
-### With npm (Recommended)
+### npm
 
+```shell
+npm install gmap-vue --save
 ```
-npm install vue2-google-maps
+
+### yarn
+
+```shell
+yarn add gmap-vue
 ```
 
 ### Manually
 
-Just download `dist/vue-google-maps.js` file and include it from your HTML.
+Just download `dist/gmap-vue.js` file and include it from your HTML.
 
+```html
+<script src="./gmap-vue.js"></script>
+```
+
+### jsdelivr
+
+You can use a free CDN like [jsdelivr](https://www.jsdelivr.com) to include this plugin in your html file
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.0.0/dist/gmap-vue.min.js"></script>
+```
+
+### unpkg
+
+You can use a free CDN like [unpkg](https://unpkg.com) to include this plugin in your html file
+
+```html
+<script src="https://unpkg.com/gmap-vue@1.0.0/dist/gmap-vue.js"></script>
+```
+
+::: warning
 Be aware that if you use this method, you cannot use TitleCase for your components and your attributes.
 That is, instead of writing `<GmapMap>`, you need to write `<gmap-map>`.
+:::
 
-[Example](http://xkjyeah.github.io/vue-google-maps/overlay.html) ([Source code](https://github.com/xkjyeah/vue-google-maps/blob/no-deferred-ready/examples/overlay.html)).
+[Source code](/examples/) - [Live example](http://diegoazh.github.io/gmap-vue/overlay.html).
 
-## Basic usage / Documentation
+## Basic usage
 
 ### Get an API key from Google
 
@@ -74,9 +83,9 @@ In your `main.js` or inside a Nuxt plugin:
 
 ```js
 import Vue from 'vue'
-import * as VueGoogleMaps from 'vue2-google-maps'
+import * as GmapVue from 'gmap-vue'
 
-Vue.use(VueGoogleMaps, {
+Vue.use(GmapVue, {
   load: {
     key: 'YOUR_API_TOKEN',
     libraries: 'places', // This is required if you use the Autocomplete plugin
@@ -95,7 +104,7 @@ Vue.use(VueGoogleMaps, {
   // autobindAllEvents: false,
 
   //// If you want to manually install components, e.g.
-  //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
+  //// import {GmapMarker} from 'gmap-vue/src/components/marker'
   //// Vue.component('GmapMarker', GmapMarker)
   //// then set installComponents to 'false'.
   //// If you want to automatically install all the components this property must be set to 'true':
@@ -106,43 +115,46 @@ Vue.use(VueGoogleMaps, {
 If you need to gain access to the `Map` instance (e.g. to call `panToBounds`, `panTo`):
 ```vue
 <template>
-<GmapMap ref="mapRef" ...>
-</GmapMap>
+  <GmapMap ref="mapRef" ...>
+  </GmapMap>
 </template>
 <script>
-export default {
-  mounted () {
-    // At this point, the child GmapMap has been mounted, but
-    // its map has not been initialized.
-    // Therefore we need to write mapRef.$mapPromise.then(() => ...)
+  export default {
+    mounted () {
+      // At this point, the child GmapMap has been mounted, but
+      // its map has not been initialized.
+      // Therefore we need to write mapRef.$mapPromise.then(() => ...)
 
-    this.$refs.mapRef.$mapPromise.then((map) => {
-      map.panTo({lat: 1.38, lng: 103.80})
-    })
+      this.$refs.mapRef.$mapPromise.then((map) => {
+        map.panTo({lat: 1.38, lng: 103.80})
+      })
+    }
   }
-}
+</script>
 ```
 
 If you need to gain access to the `google` object:
 ```vue
 <template>
-  <GmapMarker ref="myMarker"
-    :position="google && new google.maps.LatLng(1.38, 103.8)" />
+  <GmapMap ref="mapRef" ...>
+    <GmapMarker ref="myMarker" :position="google && new google.maps.LatLng(1.38, 103.8)" />
+  </GmapMap>
 </template>
 <script>
-import {gmapApi} from 'vue2-google-maps'
+  import {gmapApi} from 'gmap-vue'
 
-export default {
-  computed: {
-    google: gmapApi
+  export default {
+    computed: {
+      google: gmapApi
+    }
   }
-}
 </script>
 ```
 
 Control the options of the map with the options property:
 
-Example of [MapOptions](https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions):
+For more information about google [MapOptions](https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions) visit the link.
+
  ```vue
  <GmapMap
   :options="{
@@ -152,7 +164,7 @@ Example of [MapOptions](https://developers.google.com/maps/documentation/javascr
     streetViewControl: false,
     rotateControl: false,
     fullscreenControl: true,
-    disableDefaultUI: false
+    disableDefaultUi: false
   }"
 >
 </GmapMap>
@@ -160,9 +172,10 @@ Example of [MapOptions](https://developers.google.com/maps/documentation/javascr
 
 Add region and language localization:
 
-Example for [Localization](https://developers.google.com/maps/documentation/javascript/localization):
-```vue
-Vue.use(VueGoogleMaps, {
+For more information about google [Localization](https://developers.google.com/maps/documentation/javascript/localization) visit the link.
+
+```js
+Vue.use(GmapVue, {
   load: {
     region: 'VI',
     language: 'vi',
@@ -172,16 +185,16 @@ Vue.use(VueGoogleMaps, {
 
 ### Nuxt.js config
 
-For Nuxt.js projects, please import VueGoogleMaps in the following manner:
+For Nuxt.js projects, please import GmapVue in the following way:
 
 ```js
-import * as VueGoogleMaps from '~/node_modules/vue2-google-maps'
+import * as GmapVue from '~/node_modules/gmap-vue'
 ```
 
 Add the following to your `nuxt.config.js`'s `build.extend()`:
 
 ```js
-transpile: [/^vue2-google-maps($|\/)/]
+transpile: [/^gmap-vue($|\/)/]
 ```
 
 ### Officially supported components:
@@ -196,52 +209,30 @@ The list of officially support components are:
 - Autocomplete
 - Cluster* (via `marker-clusterer-plus`)
 
-You can find examples of this [on the website](http://xkjyeah.github.io/vue-google-maps/).
-Auto-generated API documentation for these components are [here](http://xkjyeah.github.io/vue-google-maps/autoapi.html).
+You can find examples of this on [examples](/examples/).
+Auto-generated API documentation for these components are [here](http://diegoazh.github.io/gmap-vue/autoapi.html).
 
 For `Cluster`, you **must** import the class specifically, e.g.
 ```js
-import GmapCluster from 'vue2-google-maps/dist/components/cluster' // replace src with dist if you have Babel issues
+import GmapCluster from 'gmap-vue/dist/components/cluster' // replace dist with src if you have Babel issues
 
 Vue.component('GmapCluster', GmapCluster)
 ```
 Inconvenient, but this means all other users don't have to bundle the marker clusterer package
 in their source code.
 
-### Autocomplete component
-The autocomplete supports cutsom text field via scoped slot
-
-```html
-          <gmap-autocomplete class="introInput" >
-                    <template v-slot:input="slotProps">
-                        <v-text-field outlined
-                                      prepend-inner-icon="place"
-                                      placeholder="Location Of Event"
-                                      ref="input"
-                                      v-on:listeners="slotProps.listeners"
-                                      v-on:attrs="slotProps.attrs">
-                        </v-text-field>
-                    </template>
-        </gmap-autocomplete>
-```
-
-The ref on the element must be called input, if the element is a vue component then it must have a child ref called input (like in vuetify text-field) or speciy a custom name via childRefName property (only works one level deep into a component).
-
-The v-on:listeners is rquired, v-on:attrs may or may not be required depending on your implementation.
-
-This requires vue 2.6 or higher for the new slot support.
-
 ### Adding your own components
 
 It should be relatively easy to add your own components (e.g. Heatmap, GroundOverlay). please refer to the
-[source code for `MapElementFactory`](https://github.com/xkjyeah/vue-google-maps/blob/vue2/src/components/mapElementFactory.js).
+[source code for `mapElementFactory`](https://github.com/diegoazh/gmap-vue/blob/vue2/src/factories/map-element.js).
 
 Example for [DirectionsRenderer](https://developers.google.com/maps/documentation/javascript/reference/3/#DirectionsRenderer):
+
 ```js
 // DirectionsRenderer.js
-import {MapElementFactory} from 'vue2-google-maps'
+import { mapElementFactory } from 'gmap-vue'
 
-export default MapElementFactory({
+export default mapElementFactory({
   name: 'directionsRenderer',
   ctr: () => google.maps.DirectionsRenderer,
   //// The following is optional, but necessary if the constructor takes multiple arguments
@@ -280,6 +271,7 @@ export default MapElementFactory({
 ```
 
 Thereafter, it's easy to use the newly-minted component!
+
 ```vue
 <template>
   <GmapMap :zoom="..." :center="...">

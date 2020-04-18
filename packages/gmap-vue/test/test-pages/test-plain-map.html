@@ -1,0 +1,28 @@
+<head>
+  <style>
+    .map-container {
+      width: 400px;
+      height: 400px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="test1">
+    <h2>Test 1</h2>
+    <gmap-map :center="{lat: 1.38, lng: 103.8}" :zoom="12" class="map-container" ref="map"></gmap-map>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+  <script src="../../dist/gmap-vue.js"></script>
+
+  <script>
+    Vue.use(GmapVue, {
+      load: {
+        key: 'AIzaSyDf43lPdwlF98RCBsJOFNKOkoEjkwxb5Sc'
+      }
+    })
+
+  </script>
+</body>
