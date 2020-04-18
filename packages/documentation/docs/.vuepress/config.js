@@ -1,4 +1,5 @@
 module.exports = {
+  base: '/gmap-vue/',
   title: 'Gmap-vue plugin',
   description: 'Documentation for gmap-vue plugin',
   themeConfig: {
