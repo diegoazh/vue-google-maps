@@ -14,11 +14,11 @@
     <gmap-map :center="{lat: 1.38, lng: 103.8}" :zoom="12" class="map-container" ref="map"></gmap-map>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
-  <script src="../../dist/vue-google-maps.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+  <script src="../../dist/gmap-vue.js"></script>
 
   <script>
-    Vue.use(VueGoogleMaps, {
+    Vue.use(GmapVue, {
       load: {
         key: 'AIzaSyDf43lPdwlF98RCBsJOFNKOkoEjkwxb5Sc'
       }

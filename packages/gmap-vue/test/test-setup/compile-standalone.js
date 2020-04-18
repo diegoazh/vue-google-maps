@@ -13,8 +13,8 @@ export default new Promise((resolve, reject) => {
     (err, status) => {
       if (!err) {
         shell.cp(
-          path.resolve(__dirname, '../../dist/vue-google-maps.js'),
-          path.resolve(__dirname, '../../examples/vue-google-maps.js')
+          path.resolve(__dirname, '../../dist/gmap-vue.js'),
+          path.resolve(__dirname, '../../examples/gmap-vue.js')
         )
         resolve()
       } else {

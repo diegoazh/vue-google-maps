@@ -17,7 +17,7 @@ lab.experiment('Examples test', { timeout: 15000 }, function () {
   lab.before({ timeout: 15000 }, getPage(p => { page = p }))
 
   lab.test('Test all examples pages load without errors (does not test functionality)', { timeout: 50000 }, async function () {
-    const files = fs.readdirSync(path.join(__dirname, '../../examples')).filter(f => f.endsWith('.html'))
+    const files = fs.readdirSync(path.join(__dirname, '../examples')).filter(f => f.endsWith('.html'))
     let isErrored = false
 
     page.on('error', (err) => {
@@ -30,7 +30,7 @@ lab.experiment('Examples test', { timeout: 15000 }, function () {
     assert(!isErrored)
 
     for (const file of files) {
-      await loadPage('../../examples/' + file)
+      await loadPage('../examples/' + file)
       if (isErrored) {
         throw new Error(`The example file ../../examples/${file} threw an error ${isErrored}`)
       }

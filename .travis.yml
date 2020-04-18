@@ -5,7 +5,6 @@ cache: npm
 install:
   - npm ci
 script:
-  - npm run test
   - npm run build
 deploy:
   provider: pages

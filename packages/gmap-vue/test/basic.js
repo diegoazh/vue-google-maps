@@ -82,7 +82,7 @@ lab.experiment('Basic tests', { timeout: 15000 }, function () {
 
   lab.test('Lodash library is not bloating up the library', async () => {
     const libraryOutput = fs.readFileSync(
-      path.join(__dirname, '..', 'dist', 'vue-google-maps.js'),
+      path.join(__dirname, '..', 'dist', 'gmap-vue.js'),
       'utf-8'
     )
 
