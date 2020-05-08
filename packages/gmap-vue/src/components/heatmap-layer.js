@@ -19,7 +19,7 @@ const events = [];
  *
  * Heatmap Layer class
  */
-export default MapElementFactory({
+export default mapElementFactory({
     mappedProps: props,
     events: events,
     name: 'heatmapLayer',
