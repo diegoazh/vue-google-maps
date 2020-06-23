@@ -26,7 +26,7 @@ const events = [
  *
  * Drawing Manager class
  */
-export default MapElementFactory({
+export default mapElementFactory({
 	name: 'drawingManager',
 	ctr: () => google.maps.drawing.DrawingManager,
 	events: events,
