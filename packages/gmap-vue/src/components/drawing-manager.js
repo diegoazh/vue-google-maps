@@ -1,4 +1,4 @@
-import {gmapApi, MapElementFactory} from 'gmap-vue';
+import mapElementFactory from '../factories/map-element';
 
 const props = {
 	drawingMode: {
@@ -28,7 +28,7 @@ const events = [
  */
 export default MapElementFactory({
 	name: 'drawingManager',
-	ctr: () => gmapApi().maps.drawing.DrawingManager,
+	ctr: () => google.maps.drawing.DrawingManager,
 	events: events,
 	mappedProps: props,
 });
