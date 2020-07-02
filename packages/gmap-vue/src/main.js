@@ -7,6 +7,7 @@ import Polyline from './components/polyline'
 import Polygon from './components/polygon'
 import Circle from './components/circle'
 import Rectangle from './components/rectangle'
+import DrawingManager from './components/drawing-manager.vue'
 
 // Vue component imports
 import InfoWindow from './components/info-window.vue'
@@ -33,7 +34,7 @@ let GmapApi = null
 
 // export everything
 export {
-  loadGmapApi, KmlLayer, Marker, Polyline, Polygon, Circle, Cluster, Rectangle,
+  loadGmapApi, KmlLayer, Marker, Polyline, Polygon, Circle, Cluster, Rectangle, DrawingManager,
   InfoWindow, Map, PlaceInput, MapElementMixin, MapElementFactory, Autocomplete,
   MountableMixin, StreetViewPanorama
 }
@@ -80,6 +81,7 @@ export function install (Vue, options) {
     Vue.component('GmapPolygon', Polygon)
     Vue.component('GmapCircle', Circle)
     Vue.component('GmapRectangle', Rectangle)
+    Vue.component('GmapDrawingManager', DrawingManager)
     Vue.component('GmapAutocomplete', Autocomplete)
     Vue.component('GmapPlaceInput', PlaceInput)
     Vue.component('GmapStreetViewPanorama', StreetViewPanorama)
