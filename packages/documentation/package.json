@@ -7,12 +7,16 @@
   "license": "MIT",
   "scripts": {
     "dev": "npx vuepress dev docs",
-    "build": "npx vuepress build docs"
+    "build": "npx vuepress build docs",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "gmap-vue": "^1.0.0",
     "lodash": "^4.17.16",
     "vuepress": "^1.4.1"
+    "snyk": "^1.316.1"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "snyk": true
 }
