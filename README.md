@@ -15,13 +15,9 @@ Please follow next link to our [documentation](https://diegoazh.github.io/gmap-v
 
 ## Vue-2 port of vue-google-maps
 
-This is the Vue 2.x port of vue-google-maps!
+This is a fork of the popuplar vue2-google-maps. As the author of the library no longer commit to maintain the project, we forked it to develop and maintain the project. 
 
 ## CONTRIBUTORS NEEDED!
-
-It's been increasingly difficult for me to make time to maintain this project.
-My projects at work have also gradually migrated away from Google Maps (but still on Vue -- Vue's awesome!),
-so there's less and less incentive to maintain.
 
 If you have time to contribute to a rather frequently used library, feel free to make a PR!
 For more background, please refer to [this issue](https://github.com/xkjyeah/vue-google-maps/issues/514).
@@ -30,7 +26,7 @@ What's urgently needed are:
 
 1. Better automated tests
 2. Better integration tests with the popular frameworks, especially Nuxt and Vue template
-3. Better documentation (examples, recommendations)
+3. ~Better documentation (examples, recommendations)~
 
 The above three will go a long way to keeping the project maintainable and contributable, and will address many of the open issues.
 
@@ -39,12 +35,12 @@ The above three will go a long way to keeping the project maintainable and contr
 ### With npm (Recommended)
 
 ```sh
-npm install vue2-google-maps
+npm i gmap-vue
 ```
 
 ### Manually
 
-Just download `dist/vue-google-maps.js` file and include it from your HTML.
+Just download `dist/gmap-vue.js` file and include it from your HTML.
 
 Be aware that if you use this method, you cannot use TitleCase for your components and your attributes.
 That is, instead of writing `<GmapMap>`, you need to write `<gmap-map>`.
@@ -190,7 +186,7 @@ import * as VueGoogleMaps from '~/node_modules/vue2-google-maps'
 Add the following to your `nuxt.config.js`'s `build.extend()`:
 
 ```js
-transpile: [/^vue2-google-maps($|\/)/]
+transpile: [/^gmap-vue($|\/)/]
 ```
 
 ### Officially supported components:
@@ -210,7 +206,7 @@ Auto-generated API documentation for these components are [here](http://xkjyeah.
 
 For `Cluster`, you **must** import the class specifically, e.g.
 ```js
-import GmapCluster from 'vue2-google-maps/dist/components/cluster' // replace src with dist if you have Babel issues
+import GmapCluster from 'gmap-vue/dist/components/cluster' // replace src with dist if you have Babel issues
 
 Vue.component('GmapCluster', GmapCluster)
 ```
