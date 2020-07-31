@@ -3,5 +3,9 @@
     "packages/**/dist": true
   },
   "files.insertFinalNewline": true,
-  "files.trimTrailingWhitespace": true
+  "files.trimTrailingWhitespace": true,
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#bd3232",
+    "titleBar.inactiveBackground": "#7c7c7c",
+  }
 }
