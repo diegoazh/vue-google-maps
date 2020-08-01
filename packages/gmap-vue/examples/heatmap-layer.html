@@ -30,7 +30,14 @@
           markers: [],	
         },
         methods: {
-        }
+          setMarkers() {
+            this.markers = [
+              { location: new google.maps.LatLng({ lat: 3, lng: 101 }), weight: 100 },
+              { location: new google.maps.LatLng({ lat: 5, lng: 99 }), weight: 50  },
+              { location: new google.maps.LatLng({ lat: 6, lng: 97 }), weight: 80 },
+            ];
+          }
+        },
       });
     });
 
