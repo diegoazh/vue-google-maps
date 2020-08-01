@@ -132,7 +132,8 @@ export default mapElementFactory({
 
   methods: {
     setDrawingMode (mode) {
-      this.$drawingmanagerObject.setDrawingMode(mode);
+      this.$drawingManagerObject.setDrawingMode(mode);
+
     },
     drawAll () {
       const shapeType = {
