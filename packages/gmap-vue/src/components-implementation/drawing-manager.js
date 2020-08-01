@@ -51,13 +51,15 @@ export default mapElementFactory({
   props,
   events: [],
   beforeCreate (options) {
-    const drawingModes = [];
-    for (const opt of Object.keys(options)) {
+    const drawingModes = Object.keys(options).reduce((modes, opt) => {
       const val = opt.split('Options');
+
       if (val.length > 1) {
-        drawingModes.push(val[0]);
+        modes.push(val[0]);
       }
-    }
+      
+      return modes;
+    }, []);
     const position = (this.position && google.maps.ControlPosition[this.position])
       ? google.maps.ControlPosition[this.position]
       : google.maps.ControlPosition.TOP_LEFT;
