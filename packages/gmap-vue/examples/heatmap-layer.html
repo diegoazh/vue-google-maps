@@ -6,7 +6,7 @@
       <br><br>
     <gmap-map ref="mapRef" :zoom="7" :center="center" map-type-id="roadmap" style="width: 100%; height: 500px">
         <gmap-marker v-for="(m, index) in markers" :key="index" :position="m.location" :clickable="true" :draggable="true" @click="center=m.location" />
-        <gmap-heatmap :data="markers" :options="{maxIntensity: 120, dissipating: false}" />
+        <gmap-heatmap-layer :data="markers" :options="{maxIntensity: 120, dissipating: false}" />
     </gmap-map>
   </div>
 
