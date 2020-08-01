@@ -21,7 +21,7 @@ const events = [];
  */
 export default mapElementFactory({
     mappedProps: props,
-    events: events,
+    events,
     name: 'heatmapLayer',
     ctr: () => google.maps.visualization.HeatmapLayer
 });
