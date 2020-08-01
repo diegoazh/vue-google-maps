@@ -86,30 +86,28 @@
 		      clickable: true
 		    },
         },
-		watch: {
-			mapMode (newMode, oldMode) {
-				if (newMode === 'ready') {
-					if (oldMode === 'edit') {
-						this.mapDraggable = true;
-						this.mapCursor = null;
-						return;
-					}
-				}
+        watch: {
+          mapMode(newMode, oldMode) {
+            if (newMode === "ready") {
+              if (oldMode === "edit") {
+                this.mapDraggable = true;
+                this.mapCursor = null;
+                return;
+              }
+            }
 
-				if (newMode === 'edit') {
-					this.mapDraggable = false;
-					this.mapCursor = 'default';
-				}
-			}
-		},
-		mounted () {
-			this.mapMode = 'ready';
-		},
-        methods: {
-        }
+            if (newMode === "edit") {
+              this.mapDraggable = false;
+              this.mapCursor = "default";
+            }
+          },
+        },
+        mounted() {
+          this.mapMode = "ready";
+        },
+        methods: {},
       });
     });
-
   </script>
 
 </body>
