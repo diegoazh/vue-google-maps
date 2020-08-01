@@ -105,8 +105,9 @@ export default mapElementFactory({
       }
     },
     markerOptions (markerOptions) {
-      if (this.$drawingmanagerObject) {
-        this.$drawingmanagerObject.setOptions({ markerOptions });
+      if (this.$drawingManagerObject) {
+        this.$drawingManagerObject.setOptions({ markerOptions });
+
       }
     },
     polygonOptions (polygonOptions) {
