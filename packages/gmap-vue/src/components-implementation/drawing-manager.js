@@ -39,7 +39,7 @@ const props = {
 };
 
 export default mapElementFactory({
-  name: 'drawingmanager',
+  name: 'drawingManager',
   ctr: () => google.maps.drawing.DrawingManager,
   options: {
     drawingControl: true,
