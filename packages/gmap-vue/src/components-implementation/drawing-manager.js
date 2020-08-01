@@ -123,8 +123,9 @@ export default mapElementFactory({
       }
     },
     rectangleOptions (rectangleOptions) {
-      if (this.$drawingmanagerObject) {
-        this.$drawingmanagerObject.setOptions({ rectangleOptions });
+      if (this.$drawingManagerObject) {
+        this.$drawingManagerObject.setOptions({ rectangleOptions });
+
       }
     }
   },
