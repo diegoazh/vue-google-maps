@@ -151,9 +151,9 @@ export default mapElementFactory({
     },
     clearAll () {
       this.clearSelection();
-      for (const shape of this.shapes) {
+      this.shapes.forEach((shape) => {
         shape.overlay.setMap(null);
-      }
+      });
     },
     clearSelection () {
       if (this.selectedShape) {
