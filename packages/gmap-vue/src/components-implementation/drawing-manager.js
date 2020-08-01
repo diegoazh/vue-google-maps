@@ -117,8 +117,9 @@ export default mapElementFactory({
       }
     },
     polylineOptions (polylineOptions) {
-      if (this.$drawingmanagerObject) {
-        this.$drawingmanagerObject.setOptions({ polylineOptions });
+      if (this.$drawingManagerObject) {
+        this.$drawingManagerObject.setOptions({ polylineOptions });
+
       }
     },
     rectangleOptions (rectangleOptions) {
