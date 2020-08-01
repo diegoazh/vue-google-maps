@@ -111,8 +111,9 @@ export default mapElementFactory({
       }
     },
     polygonOptions (polygonOptions) {
-      if (this.$drawingmanagerObject) {
-        this.$drawingmanagerObject.setOptions({ polygonOptions });
+      if (this.$drawingManagerObject) {
+        this.$drawingManagerObject.setOptions({ polygonOptions });
+
       }
     },
     polylineOptions (polylineOptions) {
