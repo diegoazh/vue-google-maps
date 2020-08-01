@@ -140,14 +140,14 @@ export default mapElementFactory({
       };
 
       const _this = this;
-      for (const shape of this.shapes) {
+      this.shapes.forEach((shape) => {
         const shapeDrawing = new shapeType[shape.type](shape.overlay);
         shapeDrawing.setMap(this.$map);
         shape.overlay = shapeDrawing;
         google.maps.event.addListener(shapeDrawing, 'click', () => {
           _this.setSelection(shape);
         });
-      }
+      });
     },
     clearAll () {
       this.clearSelection();
