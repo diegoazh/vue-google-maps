@@ -104,8 +104,9 @@ export default mapElementFactory({
       }
     },
     circleOptions (circleOptions) {
-      if (this.$drawingmanagerObject) {
-        this.$drawingmanagerObject.setOptions({ circleOptions });
+      if (this.$drawingManagerObject) {
+        this.$drawingManagerObject.setOptions({ circleOptions });
+
       }
     },
     markerOptions (markerOptions) {
