@@ -91,7 +91,8 @@ export default mapElementFactory({
 
   watch: {
     position (position) {
-      if (this.$drawingmanagerObject) {
+      if (this.$drawingManagerObject) {
+
         const drawingControlOptions = {
           position: (position && google.maps.ControlPosition[position])
             ? google.maps.ControlPosition[position]
