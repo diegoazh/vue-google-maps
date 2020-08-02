@@ -82,7 +82,8 @@ export default mapElementFactory({
   },
   destroyed () {
     this.clearAll();
-    this.$drawingmanagerObject.setMap(null);
+    this.$drawingManagerObject.setMap(null);
+
   },
 
   data: () => ({
