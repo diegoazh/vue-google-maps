@@ -73,7 +73,8 @@ export default mapElementFactory({
     return options;
   },
   afterCreate () {
-    this.$drawingmanagerObject.addListener('overlaycomplete', (e) => this.addShape(e));
+    this.$drawingManagerObject.addListener('overlaycomplete', (e) => this.addShape(e));
+
     this.$map.addListener('click', this.clearSelection);
     if (this.shapes.length > 0) {
       this.drawAll();
