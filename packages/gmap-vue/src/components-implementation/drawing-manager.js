@@ -99,7 +99,8 @@ export default mapElementFactory({
             ? google.maps.ControlPosition[position]
             : google.maps.ControlPosition.TOP_LEFT
         };
-        this.$drawingmanagerObject.setOptions({ drawingControlOptions });
+        this.$drawingManagerObject.setOptions({ drawingControlOptions });
+
       }
     },
     circleOptions (circleOptions) {
