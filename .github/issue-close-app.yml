@@ -1,0 +1,28 @@
+# Comment that will be sent if an issue is judged to be closed.
+comment: "This issue is closed because it does not meet our issue template. Please read it."
+issueConfigs:
+# There can be several configs for different kind of issues.
+- content:
+# Example 1: bug report
+  - "Expected Behavior"
+  - "Current Behavior"
+  - "Steps to Reproduce"
+  - "Detailed Description"
+- content:
+# Example 2: feature request
+  - "Motivation / Use Case"
+  - "Expected Behavior"
+  - "Other Information"
+# Optional configuration:
+#
+# whether the keywords are case-insensitive
+# default value is false, which means keywords are case-sensitive
+caseInsensitive: false
+# the label that will be added when the bot close an issue
+# The bot will only add a label if this property is set.
+label: "closed by bot"
+# The bot will ignore any issues that are opened or reopened by the user names in exception
+exception:
+  - "diegoazh"
+# The issue is judged to be legal if it includes all keywords from any of these two configs.
+# Or it will be closed by the app.

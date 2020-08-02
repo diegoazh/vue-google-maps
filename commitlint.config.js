@@ -5,6 +5,7 @@ module.exports = {
     '@commitlint/config-lerna-scopes',
   ],
   rules: {
+    'type-enum': [2, 'always', ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert']],
     'type-case': [2, 'always', 'lowerCase'],
     'type-empty': [2, 'never'],
     'scope-enum': async ctx =>

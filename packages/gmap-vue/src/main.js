@@ -2,6 +2,7 @@ import loadGmapApi from './manager/initializer'
 import promiseLazyFactory from './factories/promise-lazy'
 
 import KmlLayer from './components/kml-layer'
+import HeatmapLayer from './components/heatmap-layer'
 import Marker from './components/marker'
 import Polyline from './components/polyline'
 import Polygon from './components/polygon'
@@ -34,7 +35,7 @@ let GmapApi = null
 
 // export everything
 export {
-  loadGmapApi, KmlLayer, Marker, Polyline, Polygon, Circle, Cluster, Rectangle, DrawingManager,
+  loadGmapApi, HeatmapLayer, KmlLayer, Marker, Polyline, Polygon, Circle, Cluster, Rectangle, DrawingManager,
   InfoWindow, Map, PlaceInput, MapElementMixin, MapElementFactory, Autocomplete,
   MountableMixin, StreetViewPanorama
 }
@@ -76,6 +77,7 @@ export function install (Vue, options) {
     Vue.component('GmapMap', Map)
     Vue.component('GmapMarker', Marker)
     Vue.component('GmapInfoWindow', InfoWindow)
+    Vue.component('GmapHeatmapLayer', HeatmapLayer)
     Vue.component('GmapKmlLayer', KmlLayer)
     Vue.component('GmapPolyline', Polyline)
     Vue.component('GmapPolygon', Polygon)
