@@ -34,9 +34,9 @@
 	        :shapes="shapes"
 	      >
 			  <div>
-			    <button @click="on.setDrawingMode('rectangle')">Rectangle</button>
-			    <button @click="on.setDrawingMode('circle')">Circle</button>
-			    <button @click="on.deleteSelection()">Delete</button>
+			    <button @click="setDrawingMode('rectangle')">Rectangle</button>
+			    <button @click="setDrawingMode('circle')">Circle</button>
+			    <button @click="deleteSelection()">Delete</button>
 			    <button @click="mapMode='ready'">Save</button>
 			  </div>
 	      </gmap-drawing-manager>
