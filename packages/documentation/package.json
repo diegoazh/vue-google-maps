@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "documentation of vue2=google-maps",
   "main": "index.js",
   "author": "Diego A. Zapata Hantsch",
@@ -12,10 +12,10 @@
     "prepare": "npm run snyk-protect"
   },
   "dependencies": {
-    "gmap-vue": "^1.0.0",
+    "gmap-vue": "^1.2.0",
     "lodash": "^4.17.16",
-    "vuepress": "^1.4.1",
-    "snyk": "^1.316.1"
+    "snyk": "^1.316.1",
+    "vuepress": "^1.4.1"
   },
   "devDependencies": {},
   "snyk": true

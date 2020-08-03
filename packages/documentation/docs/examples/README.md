@@ -15,7 +15,7 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.0/vue.js"></script>
-  <script src="https://unpkg.com/gmap-vue@1.0.0/dist/gmap-vue.js"></script>
+  <script src="https://unpkg.com/gmap-vue@1.2.0/dist/gmap-vue.js"></script>
 
   <script>
     Vue.use(GmapVue, {

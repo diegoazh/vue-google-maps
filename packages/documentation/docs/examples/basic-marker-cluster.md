@@ -23,7 +23,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.0/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/markerclustererplus/2.1.4/markerclusterer.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.0.0/dist/gmap-vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.0/dist/gmap-vue.min.js"></script>
 
   <script>
     Vue.use(GmapVue, {
