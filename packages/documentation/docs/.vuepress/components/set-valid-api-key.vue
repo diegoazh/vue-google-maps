@@ -20,6 +20,9 @@
 <script>
 export default {
   name: 'set-valid-api-key',
+  props: {
+    libraries: String,
+  },
   data () {
     return {
       options: {
@@ -62,5 +65,10 @@ export default {
       this.$emit('is-valid', true)
     }
   },
+  mounted() {
+    if (this.libraries) {
+      this.options.libraries = this.libraries;
+    }
+  }
 }
 </script>

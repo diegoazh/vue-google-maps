@@ -1,3 +1,12 @@
+## Live example
+
+<eg-base libraries="visualization">
+  <eg-heat-map-layer />
+</eg-base>
+
+## Source code
+
+```html
 <body>
   <div id="root">
     <button @click="setMarkers">
@@ -27,7 +36,7 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
-  <script src="gmap-vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.0/dist/gmap-vue.min.js"></script>
 
   <script>
     Vue.use(GmapVue, {
@@ -66,3 +75,4 @@
     });
   </script>
 </body>
+```

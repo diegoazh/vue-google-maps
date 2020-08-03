@@ -31,7 +31,8 @@ module.exports = {
         ['polygon-advanced', 'Poligon advanced'],
         ['resize-bus', 'Resize bus'],
         ['map-destroy', 'Map destroy'],
-        ['street-view-panorama', 'Street view panorama']
+        ['street-view-panorama', 'Street view panorama'],
+        ['heat-map-layer', 'Heat Map Layer'],
       ],
       '/': [
         ['', 'Getting started']
