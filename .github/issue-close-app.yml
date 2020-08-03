@@ -4,15 +4,20 @@ issueConfigs:
 # There can be several configs for different kind of issues.
 - content:
 # Example 1: bug report
-  - "Expected Behavior"
+  - "Describe the bug"
+  - "To Reproduce"
+  - "Expected behavior"
   - "Current Behavior"
-  - "Steps to Reproduce"
-  - "Detailed Description"
+  - "Screenshots"
+  - "Desktop (please complete the following information):"
+  - "Smartphone (please complete the following information):"
+  - "Additional context"
 - content:
 # Example 2: feature request
-  - "Motivation / Use Case"
-  - "Expected Behavior"
-  - "Other Information"
+  - "Is your feature request related to a problem? Please describe."
+  - "Describe the solution you'd like"
+  - "Describe alternatives you've considered"
+  - "Additional context"
 # Optional configuration:
 #
 # whether the keywords are case-insensitive
@@ -24,5 +29,6 @@ label: "closed by bot"
 # The bot will ignore any issues that are opened or reopened by the user names in exception
 exception:
   - "diegoazh"
+  - "dgaletto"
 # The issue is judged to be legal if it includes all keywords from any of these two configs.
 # Or it will be closed by the app.
