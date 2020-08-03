@@ -1,18 +1,18 @@
 import mapElementFactory from '../factories/map-element'
 
 const props = {
-    options: {
-        type: Object,
-        twoWay: false,
-        default: () => {},
-    },
-    data: {
-        type: Array,
-        twoWay: true        
-    },
-};
+  options: {
+    type: Object,
+    twoWay: false,
+    default: () => {}
+  },
+  data: {
+    type: Array,
+    twoWay: true
+  }
+}
 
-const events = [];
+const events = []
 
 /**
  * @class Heatmap Layer
@@ -20,8 +20,8 @@ const events = [];
  * Heatmap Layer class
  */
 export default mapElementFactory({
-    mappedProps: props,
-    events,
-    name: 'heatmapLayer',
-    ctr: () => google.maps.visualization.HeatmapLayer
-});
+  mappedProps: props,
+  events,
+  name: 'heatmapLayer',
+  ctr: () => google.maps.visualization.HeatmapLayer
+})

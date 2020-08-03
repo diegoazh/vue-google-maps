@@ -8,5 +8,5 @@
 </template>
 
 <script>
-export default ((x) => x.default || x)(require('../components-implementation/drawing-manager'));
+export default ((x) => x.default || x)(require('../components-implementation/drawing-manager'))
 </script>

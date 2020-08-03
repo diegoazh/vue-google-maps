@@ -1,4 +1,4 @@
-import mapElementFactory from '../factories/map-element';
+import mapElementFactory from '../factories/map-element'
 
 const mappedProps = {
   circleOptions: {
@@ -26,7 +26,7 @@ const mappedProps = {
     twoWay: false,
     noBind: true
   }
-};
+}
 
 const props = {
   position: {
@@ -36,15 +36,14 @@ const props = {
     type: Array,
     required: true
   }
-};
+}
 
 export default mapElementFactory({
   name: 'drawingManager',
   ctr: () => google.maps.drawing.DrawingManager,
   options: {
     drawingControl: true,
-    drawingControlOptions: {
-    },
+    drawingControlOptions: {},
     drawingMode: null
   },
   mappedProps,
@@ -52,38 +51,39 @@ export default mapElementFactory({
   events: [],
   beforeCreate (options) {
     const drawingModes = Object.keys(options).reduce((modes, opt) => {
-      const val = opt.split('Options');
+      const val = opt.split('Options')
 
       if (val.length > 1) {
-        modes.push(val[0]);
+        modes.push(val[0])
       }
-      
-      return modes;
-    }, []);
-    const position = (this.position && google.maps.ControlPosition[this.position])
-      ? google.maps.ControlPosition[this.position]
-      : google.maps.ControlPosition.TOP_LEFT;
 
-    options.drawingMode = null;
-    options.drawingControl = !this.$scopedSlots.default;
+      return modes
+    }, [])
+    const position =
+      this.position && google.maps.ControlPosition[this.position]
+        ? google.maps.ControlPosition[this.position]
+        : google.maps.ControlPosition.TOP_LEFT
+
+    options.drawingMode = null
     options.drawingControlOptions = {
       drawingModes,
       position
-    };
-    return options;
+    }
+    return options
   },
   afterCreate () {
-    this.$drawingManagerObject.addListener('overlaycomplete', (e) => this.addShape(e));
+    this.$drawingManagerObject.addListener('overlaycomplete', e =>
+      this.addShape(e)
+    )
 
-    this.$map.addListener('click', this.clearSelection);
+    this.$map.addListener('click', this.clearSelection)
     if (this.shapes.length > 0) {
-      this.drawAll();
+      this.drawAll()
     }
   },
   destroyed () {
-    this.clearAll();
-    this.$drawingManagerObject.setMap(null);
-
+    this.clearAll()
+    this.$drawingManagerObject.setMap(null)
   },
 
   data: () => ({
@@ -93,52 +93,45 @@ export default mapElementFactory({
   watch: {
     position (position) {
       if (this.$drawingManagerObject) {
-
         const drawingControlOptions = {
-          position: (position && google.maps.ControlPosition[position])
-            ? google.maps.ControlPosition[position]
-            : google.maps.ControlPosition.TOP_LEFT
-        };
-        this.$drawingManagerObject.setOptions({ drawingControlOptions });
-
+          position:
+            position && google.maps.ControlPosition[position]
+              ? google.maps.ControlPosition[position]
+              : google.maps.ControlPosition.TOP_LEFT
+        }
+        this.$drawingManagerObject.setOptions({ drawingControlOptions })
       }
     },
     circleOptions (circleOptions) {
       if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ circleOptions });
-
+        this.$drawingManagerObject.setOptions({ circleOptions })
       }
     },
     markerOptions (markerOptions) {
       if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ markerOptions });
-
+        this.$drawingManagerObject.setOptions({ markerOptions })
       }
     },
     polygonOptions (polygonOptions) {
       if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ polygonOptions });
-
+        this.$drawingManagerObject.setOptions({ polygonOptions })
       }
     },
     polylineOptions (polylineOptions) {
       if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ polylineOptions });
-
+        this.$drawingManagerObject.setOptions({ polylineOptions })
       }
     },
     rectangleOptions (rectangleOptions) {
       if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ rectangleOptions });
-
+        this.$drawingManagerObject.setOptions({ rectangleOptions })
       }
     }
   },
 
   methods: {
     setDrawingMode (mode) {
-      this.$drawingManagerObject.setDrawingMode(mode);
-
+      this.$drawingManagerObject.setDrawingMode(mode)
     },
     drawAll () {
       const shapeType = {
@@ -147,58 +140,58 @@ export default mapElementFactory({
         polygon: google.maps.Polygon,
         polyline: google.maps.Polyline,
         rectangle: google.maps.Rectangle
-      };
+      }
 
-      const _this = this;
-      this.shapes.forEach((shape) => {
-        const shapeDrawing = new shapeType[shape.type](shape.overlay);
-        shapeDrawing.setMap(this.$map);
-        shape.overlay = shapeDrawing;
+      const _this = this
+      this.shapes.forEach(shape => {
+        const shapeDrawing = new shapeType[shape.type](shape.overlay)
+        shapeDrawing.setMap(this.$map)
+        shape.overlay = shapeDrawing
         google.maps.event.addListener(shapeDrawing, 'click', () => {
-          _this.setSelection(shape);
-        });
-      });
+          _this.setSelection(shape)
+        })
+      })
     },
     clearAll () {
-      this.clearSelection();
-      this.shapes.forEach((shape) => {
-        shape.overlay.setMap(null);
-      });
+      this.clearSelection()
+      this.shapes.forEach(shape => {
+        shape.overlay.setMap(null)
+      })
     },
     clearSelection () {
       if (this.selectedShape) {
-        this.selectedShape.overlay.set('fillColor', '#777');
-        this.selectedShape.overlay.set('strokeColor', '#999');
-        this.selectedShape.overlay.setEditable(false);
-        this.selectedShape.overlay.setDraggable(false);
-        this.selectedShape = null;
+        this.selectedShape.overlay.set('fillColor', '#777')
+        this.selectedShape.overlay.set('strokeColor', '#999')
+        this.selectedShape.overlay.setEditable(false)
+        this.selectedShape.overlay.setDraggable(false)
+        this.selectedShape = null
       }
     },
     setSelection (shape) {
-      this.clearSelection();
-      this.selectedShape = shape;
-      shape.overlay.setEditable(true);
-      shape.overlay.setDraggable(true);
-      this.selectedShape.overlay.set('fillColor', '#555');
-      this.selectedShape.overlay.set('strokeColor', '#777');
+      this.clearSelection()
+      this.selectedShape = shape
+      shape.overlay.setEditable(true)
+      shape.overlay.setDraggable(true)
+      this.selectedShape.overlay.set('fillColor', '#555')
+      this.selectedShape.overlay.set('strokeColor', '#777')
     },
     deleteSelection () {
       if (this.selectedShape) {
-        this.selectedShape.overlay.setMap(null);
-        const index = this.shapes.indexOf(this.selectedShape);
+        this.selectedShape.overlay.setMap(null)
+        const index = this.shapes.indexOf(this.selectedShape)
         if (index > -1) {
-          this.shapes.splice(index, 1);
+          this.shapes.splice(index, 1)
         }
       }
     },
     addShape (shape) {
-      this.setDrawingMode(null);
-      this.shapes.push(shape);
-      const _this = this;
+      this.setDrawingMode(null)
+      this.shapes.push(shape)
+      const _this = this
       google.maps.event.addListener(shape.overlay, 'click', () => {
-        _this.setSelection(shape);
-      });
-      this.setSelection(shape);
+        _this.setSelection(shape)
+      })
+      this.setSelection(shape)
     }
   }
-});
+})
