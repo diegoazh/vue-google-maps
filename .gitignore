@@ -3,4 +3,4 @@
 
 node_modules
 packages/**/dist
-packages/**/vue-google-maps.js
+packages/**/gmap-vue.js

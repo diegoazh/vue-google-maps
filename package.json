@@ -2,12 +2,12 @@
   "name": "monorepo-gmap-vue",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:xkjyeah/vue-google-maps.git",
+  "repository": "git@github.com:diegoazh/gmap-vue.git",
   "author": "\"Daniel Sim, Guillaume Leclerc\",",
   "license": "MIT",
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "serve:docs": "lerna run dev",
+    "start:docs": "lerna run dev",
     "test": "lerna run test",
     "build": "lerna run build"
   },
