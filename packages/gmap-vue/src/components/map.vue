@@ -9,7 +9,11 @@
 </template>
 
 <script>
-export default ((x) => x.default || x)(require('../components-implementation/map'))
+export default ((x) => x.default || x)(
+  // TODO: this should be analyzed after to find a better way to do this
+  // eslint-disable-next-line global-require -- old style
+  require('../components-implementation/map')
+);
 </script>
 
 <style lang="css">
@@ -18,7 +22,10 @@ export default ((x) => x.default || x)(require('../components-implementation/map
 }
 
 .vue-map-container .vue-map {
-  left: 0; right: 0; top: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   position: absolute;
 }
 .vue-map-hidden {

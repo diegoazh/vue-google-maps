@@ -6,7 +6,11 @@
 </template>
 
 <script>
-export default ((x) => x.default || x)(require('../components-implementation/street-view-panorama'))
+export default ((x) => x.default || x)(
+  // TODO: should be analyzed if we can find a better way to do this
+  // eslint-disable-next-line global-require -- old style
+  require('../components-implementation/street-view-panorama')
+);
 </script>
 
 <style lang="css">
@@ -15,7 +19,10 @@ export default ((x) => x.default || x)(require('../components-implementation/str
 }
 
 .vue-street-view-pano-container .vue-street-view-pano {
-  left: 0; right: 0; top: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   position: absolute;
 }
 </style>

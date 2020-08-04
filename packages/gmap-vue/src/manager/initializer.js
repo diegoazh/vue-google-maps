@@ -28,52 +28,60 @@
  */
 
 export default (() => {
-  let isApiSetUp = false
+  let isApiSetUp = false;
 
   return (options, loadCn) => {
     if (typeof document === 'undefined') {
       // Do nothing if run from server-side
-      return
+      return;
     }
 
     if (!isApiSetUp) {
-      isApiSetUp = true
+      isApiSetUp = true;
 
-      const googleMapScript = document.createElement('SCRIPT')
+      const googleMapScript = document.createElement('SCRIPT');
 
       // Allow options to be an object.
       // This is to support more esoteric means of loading Google Maps,
       // such as Google for business
       // https://developers.google.com/maps/documentation/javascript/get-api-key#premium-auth
       if (typeof options !== 'object') {
-        throw new Error('options should  be an object')
+        throw new Error('options should  be an object');
       }
 
       // libraries
-      if (Object.prototype.isPrototypeOf.call(Array.prototype, options.libraries)) {
-        options.libraries = options.libraries.join(',')
+      if (
+        Object.prototype.isPrototypeOf.call(Array.prototype, options.libraries)
+      ) {
+        // TODO: all eslint disabled rules in this file should be analyzed
+        // eslint-disable-next-line no-param-reassign -- old style should be analyzed
+        options.libraries = options.libraries.join(',');
       }
 
-      options.callback = 'vueGoogleMapsInit'
+      // eslint-disable-next-line no-param-reassign -- old style should be analyzed
+      options.callback = 'vueGoogleMapsInit';
 
-      let baseUrl = 'https://maps.googleapis.com/'
+      let baseUrl = 'https://maps.googleapis.com/';
 
       if (typeof loadCn === 'boolean' && loadCn === true) {
-        baseUrl = 'https://maps.google.cn/'
+        baseUrl = 'https://maps.google.cn/';
       }
 
       const query = Object.keys(options)
-        .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(options[key]))
-        .join('&')
+        .map(
+          (key) =>
+            `${encodeURIComponent(key)}=${encodeURIComponent(options[key])}`
+        )
+        .join('&');
 
-      const url = `${baseUrl}maps/api/js?${query}`
+      const url = `${baseUrl}maps/api/js?${query}`;
 
-      googleMapScript.setAttribute('src', url)
-      googleMapScript.setAttribute('async', '')
-      googleMapScript.setAttribute('defer', '')
-      document.head.appendChild(googleMapScript)
+      googleMapScript.setAttribute('src', url);
+      googleMapScript.setAttribute('async', '');
+      googleMapScript.setAttribute('defer', '');
+      document.head.appendChild(googleMapScript);
     } else {
-      throw new Error('You already started the loading of google maps')
+      throw new Error('You already started the loading of google maps');
     }
-  }
-})()
+  };
+})();

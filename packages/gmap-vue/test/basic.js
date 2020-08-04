@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import { getPage, loadFile } from './test-setup/test-common'
 const Lab = require('@hapi/lab')
-const lab = exports.lab = Lab.script()
+const lab = (exports.lab = Lab.script())
 
 lab.experiment('Basic tests', { timeout: 15000 }, function () {
   let page = null
@@ -15,34 +15,50 @@ lab.experiment('Basic tests', { timeout: 15000 }, function () {
   }
 
   async function mountVue () {
-    return page.evaluateHandle(() =>
-      new Promise((resolve) => {
-        new Vue({
-          created () {
-            resolve(this)
-          }
-        }).$mount('#test1')
-      }))
+    return page.evaluateHandle(
+      () =>
+        new Promise((resolve) => {
+          new Vue({
+            created () {
+              resolve(this)
+            }
+          }).$mount('#test1')
+        })
+    )
   }
 
-  lab.before({ timeout: 15000 }, getPage(p => { page = p }))
+  lab.before(
+    { timeout: 15000 },
+    getPage((p) => {
+      page = p
+    })
+  )
 
   lab.test('Maps API is loaded', async function () {
     await loadPage()
     const vue = await mountVue()
 
-    assert(await page.evaluate(
-      (vue) =>
-        vue.$refs.map.$mapPromise
-          .then(() => vue.$refs.map.$mapObject instanceof google.maps.Map),
-      vue), '$mapPromise is defined')
+    assert(
+      await page.evaluate(
+        (vue) =>
+          vue.$refs.map.$mapPromise.then(
+            () => vue.$refs.map.$mapObject instanceof google.maps.Map
+          ),
+        vue
+      ),
+      '$mapPromise is defined'
+    )
 
-    assert(await page.evaluate(
-      (vue) =>
-        vue.$refs.map.$mapObject
-          .getDiv().parentNode.classList.contains('map-container'),
-      vue),
-    'Parent of $mapObject.div is a .map-container')
+    assert(
+      await page.evaluate(
+        (vue) =>
+          vue.$refs.map.$mapObject
+            .getDiv()
+            .parentNode.classList.contains('map-container'),
+        vue
+      ),
+      'Parent of $mapObject.div is a .map-container'
+    )
   })
 
   lab.test('Panning of map works', { timeout: 30000 }, async function () {
@@ -60,16 +76,19 @@ lab.experiment('Basic tests', { timeout: 15000 }, function () {
     })
 
     // Wait for map to load first...
-    await page.evaluate((vue) =>
-      vue.$refs.map.$mapPromise
-        .then(() => new Promise(resolve => setTimeout(resolve, 500))),
-    vue)
+    await page.evaluate(
+      (vue) =>
+        vue.$refs.map.$mapPromise.then(
+          () => new Promise((resolve) => setTimeout(resolve, 500))
+        ),
+      vue
+    )
 
     // Then try to pan the page
     await page.mouse.move(right - 4, top + 4)
     await page.mouse.down()
     await page.mouse.move(left + 4, bottom - 4, { steps: 20 })
-    await new Promise(resolve => setTimeout(resolve, 100))
+    await new Promise((resolve) => setTimeout(resolve, 100))
     await page.mouse.up()
 
     const { lat, lng } = await page.evaluate((vue) => {
@@ -87,8 +106,10 @@ lab.experiment('Basic tests', { timeout: 15000 }, function () {
     )
 
     if (/Lodash <http(.*)>/.test(libraryOutput)) {
-      assert(false,
-        'Lodash found! This is bad because you are bloating up the library')
+      assert(
+        false,
+        'Lodash found! This is bad because you are bloating up the library'
+      )
     }
   })
 })

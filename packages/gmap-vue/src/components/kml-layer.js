@@ -1,15 +1,15 @@
-import mapElementFactory from '../factories/map-element'
+import mapElementFactory from '../factories/map-element';
 
 const props = {
   url: {
     twoWay: false,
-    type: String
+    type: String,
   },
   map: {
     twoWay: true,
-    type: Object
-  }
-}
+    type: Object,
+  },
+};
 
 const events = [
   'click',
@@ -18,8 +18,8 @@ const events = [
   'mouseup',
   'mousedown',
   'mouseover',
-  'mouseout'
-]
+  'mouseout',
+];
 
 /**
  * @class KML Layer
@@ -30,5 +30,5 @@ export default mapElementFactory({
   mappedProps: props,
   events,
   name: 'kmlLayer',
-  ctr: () => google.maps.KmlLayer
-})
+  ctr: () => google.maps.KmlLayer,
+});

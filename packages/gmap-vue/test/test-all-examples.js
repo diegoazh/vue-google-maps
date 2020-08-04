@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import { getPage, loadFile } from './test-setup/test-common'
 const Lab = require('@hapi/lab')
-const lab = exports.lab = Lab.script()
+const lab = (exports.lab = Lab.script())
 
 lab.experiment('Examples test', { timeout: 15000 }, function () {
   let page = null
@@ -14,26 +14,39 @@ lab.experiment('Examples test', { timeout: 15000 }, function () {
     })
   }
 
-  lab.before({ timeout: 15000 }, getPage(p => { page = p }))
-
-  lab.test('Test all examples pages load without errors (does not test functionality)', { timeout: 50000 }, async function () {
-    const files = fs.readdirSync(path.join(__dirname, '../examples')).filter(f => f.endsWith('.html'))
-    let isErrored = false
-
-    page.on('error', (err) => {
-      isErrored = err
+  lab.before(
+    { timeout: 15000 },
+    getPage((p) => {
+      page = p
     })
-    page.on('pageerror', (err) => {
-      isErrored = err
-    })
+  )
 
-    assert(!isErrored)
+  lab.test(
+    'Test all examples pages load without errors (does not test functionality)',
+    { timeout: 50000 },
+    async function () {
+      const files = fs
+        .readdirSync(path.join(__dirname, '../examples'))
+        .filter((f) => f.endsWith('.html'))
+      let isErrored = false
 
-    for (const file of files) {
-      await loadPage('../examples/' + file)
-      if (isErrored) {
-        throw new Error(`The example file ../../examples/${file} threw an error ${isErrored}`)
+      page.on('error', (err) => {
+        isErrored = err
+      })
+      page.on('pageerror', (err) => {
+        isErrored = err
+      })
+
+      assert(!isErrored)
+
+      for (const file of files) {
+        await loadPage('../examples/' + file)
+        if (isErrored) {
+          throw new Error(
+            `The example file ../../examples/${file} threw an error ${isErrored}`
+          )
+        }
       }
     }
-  })
+  )
 })

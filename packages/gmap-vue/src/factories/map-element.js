@@ -1,7 +1,7 @@
-import bindEvents from '../utils/bind-events'
-import { bindProps, getPropsValues } from '../utils/bind-props'
-import MapElementMixin from '../mixins/map-element'
-import mappedPropsToVueProps from '../utils/mapped-props-to-vue-props'
+import bindEvents from '../utils/bind-events';
+import { bindProps, getPropsValues } from '../utils/bind-props';
+import MapElementMixin from '../mixins/map-element';
+import mappedPropsToVueProps from '../utils/mapped-props-to-vue-props';
 
 /**
  *
@@ -47,12 +47,14 @@ import mappedPropsToVueProps from '../utils/mapped-props-to-vue-props'
 
 /**
  * Custom assert for local validation
- **/
-function _assert (v, message) {
-  if (!v) throw new Error(message)
+ * */
+// TODO: All disabled eslint rules must be analyzed after
+// eslint-disable-next-line no-underscore-dangle -- old style should be analyzed
+function _assert(v, message) {
+  if (!v) throw new Error(message);
 }
 
-export default function (options) {
+export default function mapElement(providedOptions) {
   const {
     mappedProps,
     name,
@@ -63,73 +65,82 @@ export default function (options) {
     afterCreate,
     props,
     ...rest
-  } = options
+  } = providedOptions;
 
-  const promiseName = `$${name}Promise`
-  const instanceName = `$${name}Object`
+  const promiseName = `$${name}Promise`;
+  const instanceName = `$${name}Object`;
 
-  _assert(!(rest.props instanceof Array), '`props` should be an object, not Array')
+  _assert(
+    !(rest.props instanceof Array),
+    '`props` should be an object, not Array'
+  );
 
   return {
-    ...(typeof GENERATE_DOC !== 'undefined' ? { $vgmOptions: options } : {}),
+    ...(typeof GENERATE_DOC !== 'undefined'
+      ? { $vgmOptions: providedOptions }
+      : {}),
     mixins: [MapElementMixin],
     props: {
       ...props,
-      ...mappedPropsToVueProps(mappedProps)
+      ...mappedPropsToVueProps(mappedProps),
     },
-    render () { return '' },
-    provide () {
-      const promise = this.$mapPromise.then((map) => {
-        // Infowindow needs this to be immediately available
-        this.$map = map
+    render() {
+      return '';
+    },
+    provide() {
+      const promise = this.$mapPromise
+        .then((map) => {
+          // Infowindow needs this to be immediately available
+          this.$map = map;
 
-        // Initialize the maps with the given options
-        const initialOptions = {
-          ...this.options,
-          map,
-          ...getPropsValues(this, mappedProps)
-        }
-        // don't use delete keyword in order to create a more predictable code for the engine
-        let { options, ...finalOptions } = initialOptions // delete the extra options
-        options = finalOptions
+          // Initialize the maps with the given options
+          const initialOptions = {
+            ...this.options,
+            map,
+            ...getPropsValues(this, mappedProps),
+          };
+          // don't use delete keyword in order to create a more predictable code for the engine
+          const { options: extraOptions, ...finalOptions } = initialOptions; // delete the extra options
+          const options = finalOptions;
 
-        if (beforeCreate) {
-          const result = beforeCreate.bind(this)(options)
+          if (beforeCreate) {
+            const result = beforeCreate.bind(this)(options);
 
-          if (result instanceof Promise) {
-            return result.then(() => ({ options }))
+            if (result instanceof Promise) {
+              return result.then(() => ({ options }));
+            }
           }
-        }
-        return { options }
-      }).then(({ options }) => {
-        const ConstructorObject = ctr()
-        // https://stackoverflow.com/questions/1606797/use-of-apply-with-new-operator-is-this-possible
-        this[instanceName] = ctrArgs
-          ? new (Function.prototype.bind.call(
-            ConstructorObject,
-            null,
-            ...ctrArgs(options, getPropsValues(this, props || {}))
-          ))()
-          : new ConstructorObject(options)
+          return { options };
+        })
+        .then(({ options }) => {
+          const ConstructorObject = ctr();
+          // https://stackoverflow.com/questions/1606797/use-of-apply-with-new-operator-is-this-possible
+          this[instanceName] = ctrArgs
+            ? new (Function.prototype.bind.call(
+                ConstructorObject,
+                null,
+                ...ctrArgs(options, getPropsValues(this, props || {}))
+              ))()
+            : new ConstructorObject(options);
 
-        bindProps(this, this[instanceName], mappedProps)
-        bindEvents(this, this[instanceName], events)
+          bindProps(this, this[instanceName], mappedProps);
+          bindEvents(this, this[instanceName], events);
 
-        if (afterCreate) {
-          afterCreate.bind(this)(this[instanceName])
-        }
-        return this[instanceName]
-      })
+          if (afterCreate) {
+            afterCreate.bind(this)(this[instanceName]);
+          }
+          return this[instanceName];
+        });
 
-      this[promiseName] = promise
-      return { [promiseName]: promise }
+      this[promiseName] = promise;
+      return { [promiseName]: promise };
     },
-    destroyed () {
+    destroyed() {
       // Note: not all Google Maps components support maps
       if (this[instanceName] && this[instanceName].setMap) {
-        this[instanceName].setMap(null)
+        this[instanceName].setMap(null);
       }
     },
-    ...rest
-  }
+    ...rest,
+  };
 }

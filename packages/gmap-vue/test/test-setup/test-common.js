@@ -14,7 +14,7 @@ const puppeteerPromise = CompileStandalone.then(() => {
 
 export function getPage (p) {
   return async () => {
-    p(await puppeteerPromise.then(browser => browser.newPage()))
+    p(await puppeteerPromise.then((browser) => browser.newPage()))
   }
 }
 

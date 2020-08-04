@@ -11,8 +11,7 @@
     "build:examples:after": "npm run build && shx cp ./dist/gmap-vue.js ./examples",
     "build:examples:webpack": "cd ./examples && cross-env NODE_ENV=production webpack",
     "lab:tests": "lab -T test/test-setup/babel-transform.js -l -S test",
-    "lint": "eslint --ext .vue,.js src && eslint --ext .vue,.html,.js test",
-    "lint:fix": "eslint --fix --ext .vue,.js src && eslint --ext .vue,.html,.js test",
+    "lint": "prettier --write src test && eslint --fix --ext .vue,.js src && eslint --fix --ext .vue,.html,.js test",
     "test": "npm run lab:tests && npm run lint",
     "deploy": "npm run build:examples && gh-pages -d examples",
     "prepare": "npm run build",
@@ -48,10 +47,13 @@
     "consolidate": "^0.15.1",
     "cross-env": "^7.0.2",
     "css-loader": "^3.5.2",
-    "eslint": "^6.8.0",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-html": "^6.0.2",
-    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
@@ -63,6 +65,7 @@
     "lerna": "^3.20.2",
     "lint-staged": ">=10",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "prettier": "^2.0.5",
     "puppeteer": "^3.0.0",
     "raw-loader": "^4.0.1",
     "rimraf": "^3.0.2",
@@ -84,10 +87,5 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "lint-staged": {
-    "*.{vue,js,vue,html,js}": [
-      "eslint --fix"
-    ]
   }
 }

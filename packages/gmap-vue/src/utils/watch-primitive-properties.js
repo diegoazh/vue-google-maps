@@ -5,20 +5,25 @@
  *
  * In effect, it throttles the multiple $watch to execute at most once per tick.
  */
-export default function watchPrimitiveProperties (vueInst, propertiesToTrack, handler, immediate = false) {
-  let isHandled = false
+export default function watchPrimitiveProperties(
+  vueInst,
+  propertiesToTrack,
+  handler,
+  immediate = false
+) {
+  let isHandled = false;
 
-  function requestHandle () {
+  function requestHandle() {
     if (!isHandled) {
-      isHandled = true
+      isHandled = true;
       vueInst.$nextTick(() => {
-        isHandled = false
-        handler()
-      })
+        isHandled = false;
+        handler();
+      });
     }
   }
 
-  for (const prop of propertiesToTrack) {
-    vueInst.$watch(prop, requestHandle, { immediate })
-  }
+  propertiesToTrack.forEach((prop) => {
+    vueInst.$watch(prop, requestHandle, { immediate });
+  });
 }

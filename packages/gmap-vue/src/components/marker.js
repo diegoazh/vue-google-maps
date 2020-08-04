@@ -1,63 +1,62 @@
-import mapElementFactory from '../factories/map-element'
+import mapElementFactory from '../factories/map-element';
 
 const props = {
   animation: {
     twoWay: true,
-    type: Number
+    type: Number,
   },
   attribution: {
-    type: Object
+    type: Object,
   },
   clickable: {
     type: Boolean,
     twoWay: true,
-    default: true
+    default: true,
   },
   cursor: {
     type: String,
-    twoWay: true
+    twoWay: true,
   },
   draggable: {
     type: Boolean,
     twoWay: true,
-    default: false
+    default: false,
   },
   icon: {
-    twoWay: true
+    twoWay: true,
   },
-  label: {
-  },
+  label: {},
   opacity: {
     type: Number,
-    default: 1
+    default: 1,
   },
   options: {
-    type: Object
+    type: Object,
   },
   place: {
-    type: Object
+    type: Object,
   },
   position: {
     type: Object,
-    twoWay: true
+    twoWay: true,
   },
   shape: {
     type: Object,
-    twoWay: true
+    twoWay: true,
   },
   title: {
     type: String,
-    twoWay: true
+    twoWay: true,
   },
   zIndex: {
     type: Number,
-    twoWay: true
+    twoWay: true,
   },
   visible: {
     twoWay: true,
-    default: true
-  }
-}
+    default: true,
+  },
+};
 
 const events = [
   'click',
@@ -69,8 +68,8 @@ const events = [
   'mouseup',
   'mousedown',
   'mouseover',
-  'mouseout'
-]
+  'mouseout',
+];
 
 /**
  * @class Marker
@@ -92,48 +91,50 @@ export default mapElementFactory({
 
   inject: {
     $clusterPromise: {
-      default: null
-    }
+      default: null,
+    },
   },
 
-  render (h) {
+  render(h) {
     if (!this.$slots.default || this.$slots.default.length === 0) {
-      return ''
-    } else if (this.$slots.default.length === 1) { // So that infowindows can have a marker parent
-      return this.$slots.default[0]
-    } else {
-      return h(
-        'div',
-        this.$slots.default
-      )
+      return '';
     }
+    if (this.$slots.default.length === 1) {
+      // So that infowindows can have a marker parent
+      return this.$slots.default[0];
+    }
+    return h('div', this.$slots.default);
   },
 
-  destroyed () {
-    if (!this.$markerObject) { return }
+  destroyed() {
+    if (!this.$markerObject) {
+      return;
+    }
 
     if (this.$clusterObject) {
       // Repaint will be performed in `updated()` of cluster
-      this.$clusterObject.removeMarker(this.$markerObject, true)
+      this.$clusterObject.removeMarker(this.$markerObject, true);
     } else {
-      this.$markerObject.setMap(null)
+      this.$markerObject.setMap(null);
     }
   },
 
-  beforeCreate (options) {
+  beforeCreate(options) {
     if (this.$clusterPromise) {
-      options.map = null
+      // TODO: this should be analyzed after
+      // eslint-disable-next-line no-param-reassign -- we need to set a property in null
+      options.map = null;
     }
 
-    return this.$clusterPromise
+    return this.$clusterPromise;
   },
 
-  afterCreate (inst) {
+  afterCreate(inst) {
     if (this.$clusterPromise) {
       this.$clusterPromise.then((co) => {
-        co.addMarker(inst)
-        this.$clusterObject = co
-      })
+        co.addMarker(inst);
+        this.$clusterObject = co;
+      });
     }
-  }
-})
+  },
+});

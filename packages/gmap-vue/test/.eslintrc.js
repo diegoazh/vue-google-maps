@@ -14,14 +14,9 @@ module.exports = {
     es6: true,
     node: true
   },
-  extends: [
-    'plugin:vue/essential',
-    'standard'
-  ],
+  extends: ['plugin:vue/essential', 'standard'],
   // required to lint *.vue files
-  plugins: [
-    'vue'
-  ],
+  plugins: ['vue'],
   globals: {
     google: true,
     Vue: true,

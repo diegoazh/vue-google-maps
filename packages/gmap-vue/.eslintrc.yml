@@ -1,0 +1,33 @@
+env:
+  browser: true
+  commonjs: true
+  es6: true
+  node: true
+extends:
+  - 'plugin:vue/essential'
+  - 'airbnb-base'
+  - 'prettier'
+  - 'prettier/vue'
+  - 'plugin:eslint-comments/recommended'
+parserOptions:
+  parser: 'babel-eslint'
+  ecmaVersion: 6
+  sourceType: module
+  ecmaFeatures: {
+    modules: true
+  }
+plugins:
+  - vue
+globals: {
+  google: true
+}
+root: true
+rules: {
+  'eslint-comments/disable-enable-pair': 'error',
+  'eslint-comments/no-aggregating-enable': 'error',
+  'eslint-comments/no-duplicate-disable': 'error',
+  'eslint-comments/no-unlimited-disable': 'error',
+  'eslint-comments/no-unused-disable': 'error',
+  'eslint-comments/no-unused-enable': 'error',
+  'eslint-comments/require-description': ['error', { ignore: ['eslint-enable'] }],
+}

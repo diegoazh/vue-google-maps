@@ -1,42 +1,42 @@
-import mapElementFactory from '../factories/map-element'
+import mapElementFactory from '../factories/map-element';
 
 const mappedProps = {
   circleOptions: {
     type: Object,
     twoWay: false,
-    noBind: true
+    noBind: true,
   },
   markerOptions: {
     type: Object,
     twoWay: false,
-    noBind: true
+    noBind: true,
   },
   polygonOptions: {
     type: Object,
     twoWay: false,
-    noBind: true
+    noBind: true,
   },
   polylineOptions: {
     type: Object,
     twoWay: false,
-    noBind: true
+    noBind: true,
   },
   rectangleOptions: {
     type: Object,
     twoWay: false,
-    noBind: true
-  }
-}
+    noBind: true,
+  },
+};
 
 const props = {
   position: {
-    type: String
+    type: String,
   },
   shapes: {
     type: Array,
-    required: true
-  }
-}
+    required: true,
+  },
+};
 
 export default mapElementFactory({
   name: 'drawingManager',
@@ -44,155 +44,158 @@ export default mapElementFactory({
   options: {
     drawingControl: true,
     drawingControlOptions: {},
-    drawingMode: null
+    drawingMode: null,
   },
   mappedProps,
   props,
   events: [],
-  beforeCreate (options) {
+  beforeCreate(options) {
     const drawingModes = Object.keys(options).reduce((modes, opt) => {
-      const val = opt.split('Options')
+      const val = opt.split('Options');
 
       if (val.length > 1) {
-        modes.push(val[0])
+        modes.push(val[0]);
       }
 
-      return modes
-    }, [])
+      return modes;
+    }, []);
     const position =
       this.position && google.maps.ControlPosition[this.position]
         ? google.maps.ControlPosition[this.position]
-        : google.maps.ControlPosition.TOP_LEFT
+        : google.maps.ControlPosition.TOP_LEFT;
 
     options.drawingMode = null
     options.drawingControl = !this.$scopedSlots.default
     options.drawingControlOptions = {
       drawingModes,
-      position
-    }
-    return options
+      position,
+    };
+    /* eslint-enable no-param-reassign */
+    return options;
   },
-  afterCreate () {
-    this.$drawingManagerObject.addListener('overlaycomplete', e =>
+  afterCreate() {
+    this.$drawingManagerObject.addListener('overlaycomplete', (e) =>
       this.addShape(e)
-    )
+    );
 
-    this.$map.addListener('click', this.clearSelection)
+    this.$map.addListener('click', this.clearSelection);
     if (this.shapes.length > 0) {
-      this.drawAll()
+      this.drawAll();
     }
   },
-  destroyed () {
-    this.clearAll()
-    this.$drawingManagerObject.setMap(null)
+  destroyed() {
+    this.clearAll();
+    this.$drawingManagerObject.setMap(null);
   },
 
   data: () => ({
-    selectedShape: null
+    selectedShape: null,
   }),
 
   watch: {
-    position (position) {
+    position(position) {
       if (this.$drawingManagerObject) {
         const drawingControlOptions = {
           position:
             position && google.maps.ControlPosition[position]
               ? google.maps.ControlPosition[position]
-              : google.maps.ControlPosition.TOP_LEFT
-        }
-        this.$drawingManagerObject.setOptions({ drawingControlOptions })
+              : google.maps.ControlPosition.TOP_LEFT,
+        };
+        this.$drawingManagerObject.setOptions({ drawingControlOptions });
       }
     },
-    circleOptions (circleOptions) {
+    circleOptions(circleOptions) {
       if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ circleOptions })
+        this.$drawingManagerObject.setOptions({ circleOptions });
       }
     },
-    markerOptions (markerOptions) {
+    markerOptions(markerOptions) {
       if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ markerOptions })
+        this.$drawingManagerObject.setOptions({ markerOptions });
       }
     },
-    polygonOptions (polygonOptions) {
+    polygonOptions(polygonOptions) {
       if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ polygonOptions })
+        this.$drawingManagerObject.setOptions({ polygonOptions });
       }
     },
-    polylineOptions (polylineOptions) {
+    polylineOptions(polylineOptions) {
       if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ polylineOptions })
+        this.$drawingManagerObject.setOptions({ polylineOptions });
       }
     },
-    rectangleOptions (rectangleOptions) {
+    rectangleOptions(rectangleOptions) {
       if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ rectangleOptions })
+        this.$drawingManagerObject.setOptions({ rectangleOptions });
       }
-    }
+    },
   },
 
   methods: {
-    setDrawingMode (mode) {
-      this.$drawingManagerObject.setDrawingMode(mode)
+    setDrawingMode(mode) {
+      this.$drawingManagerObject.setDrawingMode(mode);
     },
-    drawAll () {
+    drawAll() {
       const shapeType = {
         circle: google.maps.Circle,
         marker: google.maps.Marker,
         polygon: google.maps.Polygon,
         polyline: google.maps.Polyline,
-        rectangle: google.maps.Rectangle
-      }
+        rectangle: google.maps.Rectangle,
+      };
 
-      const _this = this
-      this.shapes.forEach(shape => {
-        const shapeDrawing = new shapeType[shape.type](shape.overlay)
-        shapeDrawing.setMap(this.$map)
-        shape.overlay = shapeDrawing
+      const self = this;
+      this.shapes.forEach((shape) => {
+        const shapeDrawing = new shapeType[shape.type](shape.overlay);
+        shapeDrawing.setMap(this.$map);
+        // TODO: analyze if exists a better way to do the below assignment
+        // eslint-disable-next-line no-param-reassign -- we need to assign properties to this shape
+        shape.overlay = shapeDrawing;
         google.maps.event.addListener(shapeDrawing, 'click', () => {
-          _this.setSelection(shape)
-        })
-      })
+          self.setSelection(shape);
+        });
+      });
     },
-    clearAll () {
-      this.clearSelection()
-      this.shapes.forEach(shape => {
-        shape.overlay.setMap(null)
-      })
+    clearAll() {
+      this.clearSelection();
+      this.shapes.forEach((shape) => {
+        shape.overlay.setMap(null);
+      });
     },
-    clearSelection () {
+    clearSelection() {
       if (this.selectedShape) {
-        this.selectedShape.overlay.set('fillColor', '#777')
-        this.selectedShape.overlay.set('strokeColor', '#999')
-        this.selectedShape.overlay.setEditable(false)
-        this.selectedShape.overlay.setDraggable(false)
-        this.selectedShape = null
+        this.selectedShape.overlay.set('fillColor', '#777');
+        this.selectedShape.overlay.set('strokeColor', '#999');
+        this.selectedShape.overlay.setEditable(false);
+        this.selectedShape.overlay.setDraggable(false);
+        this.selectedShape = null;
       }
     },
-    setSelection (shape) {
-      this.clearSelection()
-      this.selectedShape = shape
-      shape.overlay.setEditable(true)
-      shape.overlay.setDraggable(true)
-      this.selectedShape.overlay.set('fillColor', '#555')
-      this.selectedShape.overlay.set('strokeColor', '#777')
+    setSelection(shape) {
+      this.clearSelection();
+      this.selectedShape = shape;
+      shape.overlay.setEditable(true);
+      shape.overlay.setDraggable(true);
+      this.selectedShape.overlay.set('fillColor', '#555');
+      this.selectedShape.overlay.set('strokeColor', '#777');
     },
-    deleteSelection () {
+    deleteSelection() {
       if (this.selectedShape) {
-        this.selectedShape.overlay.setMap(null)
-        const index = this.shapes.indexOf(this.selectedShape)
+        this.selectedShape.overlay.setMap(null);
+        const index = this.shapes.indexOf(this.selectedShape);
         if (index > -1) {
-          this.shapes.splice(index, 1)
+          this.shapes.splice(index, 1);
         }
       }
     },
-    addShape (shape) {
-      this.setDrawingMode(null)
-      this.shapes.push(shape)
-      const _this = this
+    addShape(shape) {
+      this.setDrawingMode(null);
+      this.shapes.push(shape);
+      const self = this;
       google.maps.event.addListener(shape.overlay, 'click', () => {
-        _this.setSelection(shape)
-      })
-      this.setSelection(shape)
-    }
-  }
-})
+        self.setSelection(shape);
+      });
+      this.setSelection(shape);
+    },
+  },
+});

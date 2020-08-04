@@ -9,10 +9,10 @@
  * */
 export default {
   inject: {
-    $mapPromise: { default: 'abcdef' }
+    $mapPromise: { default: 'abcdef' },
   },
 
-  provide () {
+  provide() {
     // Note: although this mixin is not "providing" anything,
     // components' expect the `$map` property to be present on the component.
     // In order for that to happen, this mixin must intercept the $mapPromise
@@ -23,9 +23,9 @@ export default {
     // already set by the time the
     // component's provide() is called.
     this.$mapPromise.then((map) => {
-      this.$map = map
-    })
+      this.$map = map;
+    });
 
-    return {}
-  }
-}
+    return {};
+  },
+};

@@ -1,23 +1,23 @@
-import mapElementFactory from '../factories/map-element'
+import mapElementFactory from '../factories/map-element';
 
 const props = {
   bounds: {
     type: Object,
-    twoWay: true
+    twoWay: true,
   },
   draggable: {
     type: Boolean,
-    default: false
+    default: false,
   },
   editable: {
     type: Boolean,
-    default: false
+    default: false,
   },
   options: {
     type: Object,
-    twoWay: false
-  }
-}
+    twoWay: false,
+  },
+};
 
 const events = [
   'click',
@@ -30,12 +30,12 @@ const events = [
   'mouseout',
   'mouseover',
   'mouseup',
-  'rightclick'
-]
+  'rightclick',
+];
 
 export default mapElementFactory({
   mappedProps: props,
   name: 'rectangle',
   ctr: () => google.maps.Rectangle,
-  events
-})
+  events,
+});
