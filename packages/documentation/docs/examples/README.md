@@ -14,7 +14,7 @@
     </google-map>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.0/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
   <script src="https://unpkg.com/gmap-vue@1.2.2/dist/gmap-vue.js"></script>
 
   <script>
