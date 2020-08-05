@@ -1,9 +1,5 @@
 <template>
   <div>
-    <button @click="setMarkers">
-      Set markers on heatmap
-    </button>
-    <br /><br />
     <gmap-map
       ref="mapRef"
       :zoom="7"
@@ -29,30 +25,29 @@
 
 <script>
 export default {
-  name: "eg-heat-map-layer",
+  name: 'eg-heat-map-layer',
   data() {
     return {
       center: { lat: 4.5, lng: 99 },
       markers: [],
     }
   },
-  methods: {
-    setMarkers() {
-      this.markers = [
-        {
-          location: new google.maps.LatLng({ lat: 3, lng: 101 }),
-          weight: 100
-        },
-        {
-          location: new google.maps.LatLng({ lat: 5, lng: 99 }),
-          weight: 50
-        },
-        {
-          location: new google.maps.LatLng({ lat: 6, lng: 97 }),
-          weight: 80
-        }
-      ];
-    }
+  async mounted() {
+    await this.$gmapApiPromiseLazy();
+    this.markers = [
+      {
+        location: new google.maps.LatLng({ lat: 3, lng: 101 }),
+        weight: 100
+      },
+      {
+        location: new google.maps.LatLng({ lat: 5, lng: 99 }),
+        weight: 50
+      },
+      {
+        location: new google.maps.LatLng({ lat: 6, lng: 97 }),
+        weight: 80
+      }
+    ];
   }
 };
 </script>

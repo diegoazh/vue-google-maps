@@ -65,6 +65,7 @@ export default mapElementFactory({
         : google.maps.ControlPosition.TOP_LEFT
 
     options.drawingMode = null
+    options.drawingControl = !this.$scopedSlots.default
     options.drawingControlOptions = {
       drawingModes,
       position

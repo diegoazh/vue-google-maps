@@ -58,7 +58,6 @@ export default {
         googleMapScript.setAttribute('async', '')
         googleMapScript.setAttribute('defer', '')
         document.head.appendChild(googleMapScript)
-        document.head.appendChild(googleMapScript)
       }
 
       this.stateProcess = 'Gmap is ready :)'
