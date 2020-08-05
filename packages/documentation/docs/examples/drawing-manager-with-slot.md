@@ -62,7 +62,7 @@ you need to pre-compile the templates into render functions, or use the compiler
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.1/dist/gmap-vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.2/dist/gmap-vue.min.js"></script>
 
   <script>
     const toolbarTemplate =

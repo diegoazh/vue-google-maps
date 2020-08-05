@@ -33,7 +33,7 @@ Just download `dist/gmap-vue.js` file and include it from your HTML.
 You can use a free CDN like [jsdelivr](https://www.jsdelivr.com) to include this plugin in your html file
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.1/dist/gmap-vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.2/dist/gmap-vue.min.js"></script>
 ```
 
 ### unpkg
@@ -41,7 +41,7 @@ You can use a free CDN like [jsdelivr](https://www.jsdelivr.com) to include this
 You can use a free CDN like [unpkg](https://unpkg.com) to include this plugin in your html file
 
 ```html
-<script src="https://unpkg.com/gmap-vue@1.2.1/dist/gmap-vue.js"></script>
+<script src="https://unpkg.com/gmap-vue@1.2.2/dist/gmap-vue.js"></script>
 ```
 
 ::: warning
