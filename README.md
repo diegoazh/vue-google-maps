@@ -1,7 +1,12 @@
 # GmapVue
 
 [![Build Status](https://travis-ci.org/diegoazh/gmap-vue.svg?branch=master)](https://travis-ci.org/diegoazh/gmap-vue)
+[![npm version](https://badge.fury.io/js/gmap-vue.svg)](https://badge.fury.io/js/gmap-vue)
 [![](https://data.jsdelivr.com/v1/package/npm/gmap-vue/badge)](https://www.jsdelivr.com/package/npm/gmap-vue)
+
+## Dependencies
+
+- **VueJs** [![npm version](https://badge.fury.io/js/vue.svg)](https://badge.fury.io/js/vue)
 
 ## Documentation
 
@@ -15,7 +20,7 @@ Please follow next link to our [documentation](https://diegoazh.github.io/gmap-v
 
 ## Vue-2 port of vue-google-maps
 
-This is a fork of the popuplar vue2-google-maps. As the author of the library no longer commit to maintain the project, we forked it to develop and maintain the project. 
+This is a fork of the popuplar vue2-google-maps. As the author of the library no longer commit to maintain the project, we forked it to develop and maintain the project.
 
 ## CONTRIBUTORS NEEDED!
 
