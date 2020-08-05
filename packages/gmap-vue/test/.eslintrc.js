@@ -6,7 +6,7 @@ module.exports = {
     ecmaVersion: 6,
     ecmaFeatures: {
       modules: true
-    },
+    }
   },
   env: {
     browser: true,

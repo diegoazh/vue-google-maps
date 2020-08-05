@@ -3,12 +3,12 @@ import ExamplePageDefault from './ExamplePageDefault.vue'
 import ExamplePage from './ExamplePage.vue'
 import Examples from '../examples-index'
 import Vue from 'vue'
-import * as VueGoogleMaps from '../../dist/main.js'
+import * as GmapVue from '../../dist/main.js'
 import VueRouter from 'vue-router'
 
 Vue.config.optionMergeStrategies.description = (a, b) => a || b
 
-Vue.use(VueGoogleMaps, {
+Vue.use(GmapVue, {
   load: {
     key: 'AIzaSyDf43lPdwlF98RCBsJOFNKOkoEjkwxb5Sc',
     libraries: 'places'

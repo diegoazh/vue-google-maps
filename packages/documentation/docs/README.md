@@ -33,7 +33,7 @@ Just download `dist/gmap-vue.js` file and include it from your HTML.
 You can use a free CDN like [jsdelivr](https://www.jsdelivr.com) to include this plugin in your html file
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.1/dist/gmap-vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.2/dist/gmap-vue.min.js"></script>
 ```
 
 ### unpkg
@@ -41,7 +41,7 @@ You can use a free CDN like [jsdelivr](https://www.jsdelivr.com) to include this
 You can use a free CDN like [unpkg](https://unpkg.com) to include this plugin in your html file
 
 ```html
-<script src="https://unpkg.com/gmap-vue@1.2.1/dist/gmap-vue.js"></script>
+<script src="https://unpkg.com/gmap-vue@1.2.2/dist/gmap-vue.js"></script>
 ```
 
 ::: warning
@@ -182,6 +182,83 @@ Vue.use(GmapVue, {
   },
 })
 ```
+
+### Lazy loading
+
+If you need to wait for google maps API to be ready, you can use the `this.$gmapApiPromiseLazy()` function to wait for it. This function is automatically added to your components when you use GmapVue plugin, also, you can find a reference of this function in your Vue instance if you have a reference of following common practice to assign it to `vm` variable.
+
+A simple example
+
+```js
+export default {
+  name: 'your-component-name',
+  data() {
+    return {
+      center: { lat: 4.5, lng: 99 },
+      markers: [],
+    }
+  },
+  async mounted() {
+    // if you have a reference of Vue in a `vm` variable
+    // the following option should work too
+    // await vm.$gmapApiPromiseLazy();
+
+    await this.$gmapApiPromiseLazy();
+    this.markers = [
+      {
+        location: new google.maps.LatLng({ lat: 3, lng: 101 }),
+        weight: 100
+      },
+      {
+        location: new google.maps.LatLng({ lat: 5, lng: 99 }),
+        weight: 50
+      },
+      {
+        location: new google.maps.LatLng({ lat: 6, lng: 97 }),
+        weight: 80
+      }
+    ];
+  }
+};
+```
+
+### GmapVue slots
+
+GmapVue has two slots with a different behavior.
+The default slot is wrapped in a class that sets `display: none;` so by default any component you add to your map will be invisible.
+
+This is ok for most of the supplied components that interact directly with the Google map object, but it's not good if you want to bring up things like toolboxes, etc.
+
+There is a second slot named **"visible"** that must be used if you want to display content within the responsive wrapper for the map, hence that's why you'll see this in the [drawing manager with slot example](/examples/drawing-manager-with-slot.html). It's actually not required in the [first example](/examples/drawing-manager.html) because the default toolbox is part of the Google map object.
+
+> Thanks to [@davydnorris](https://github.com/davydnorris) to document this part of GmapVue.
+
+### Accessing Google Maps API
+
+If you need to access the Google maps API directly you can use the exported `gmapApi()` function like this
+
+```js
+import { gmapApi } from 'gmap-vue';
+
+export default {
+  name: 'your-component-name',
+  data() {
+    return {
+      center: { lat: 4.5, lng: 99 },
+      markers: [],
+    }
+  },
+  computed: {
+    // The below example is the same as writing
+    // google() {
+    //   return gmapApi();
+    // },
+    google: gmapApi,
+  },
+};
+```
+
+You will get an object with a `maps` property and inside of it you can find all the Google maps API.
 
 ### Nuxt.js config
 

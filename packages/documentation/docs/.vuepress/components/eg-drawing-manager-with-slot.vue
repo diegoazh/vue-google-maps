@@ -1,23 +1,23 @@
 <template>
   <div id="container">
     <h3>Drawing Manager Example</h3>
-    <div style="width: 100%;">
+    <div style="width: 100%; display: flex; flex-direction: column;">
       <span style="width: auto;" />
       <ul>
         <li><strong>Mode:</strong> {{ mapMode }}</li>
       </ul>
       <span style="width: auto;" />
-      <button @click="setMapMode">
-        {{ mapMode === "ready" ? "Edit" : "Ready" }}
-      </button>
+      <div>
+        <button @click="mapMode = 'edit'">Edit</button>
+      </div>
     </div>
     <br />
     <gmap-map
       ref="mapRef"
       :center="mapCenter"
-      :zoom="17"
+      :zoom="7"
       map-type-id="roadmap"
-      style="width: 100%; height: 100%;"
+      style="width: 100%; height: 500px; display:flex; justify-content: center; align-items: flex-start;"
       :options="{
         zoomControl: true,
         mapTypeControl: true,
@@ -35,14 +35,17 @@
           v-if="mapMode === 'edit'"
           :rectangle-options="rectangleOptions"
           :circle-options="circleOptions"
+          :polyline-options="polylineOptions"
+          :polygon-options="polygonOptions"
           :shapes="shapes"
         >
-          <div>
-            <button @click="setDrawingMode('rectangle')">Rectangle</button>
-            <button @click="setDrawingMode('circle')">Circle</button>
-            <button @click="deleteSelection()">Delete</button>
-            <button @click="mapMode = 'ready'">Save</button>
-          </div>
+          <template v-slot="on">
+            <eg-custom-drawing-toolbar
+              @drawingmode_changed="on.setDrawingMode($event)"
+              @delete_selection="on.deleteSelection()"
+              @save="mapMode = 'ready'"
+            />
+          </template>
         </gmap-drawing-manager>
       </template>
     </gmap-map>
@@ -50,62 +53,72 @@
 </template>
 
 <script>
+
 export default {
-  name: "eg-drawing-manager-with-slot",
+  name: 'eg-drawing-manager-with-slot',
   data() {
     return {
-      mapCenter: { lat: 0, lng: 0 },
+      mapCenter: { lat: 4.5, lng: 99 },
       mapMode: null,
       mapDraggable: true,
       mapCursor: null,
       shapes: [],
       rectangleOptions: {
-        fillColor: "#777",
+        fillColor: '#777',
         fillOpacity: 0.4,
         strokeWeight: 2,
-        strokeColor: "#999",
+        strokeColor: '#999',
         draggable: false,
         editable: false,
         clickable: true
       },
       circleOptions: {
-        fillColor: "#777",
+        fillColor: '#777',
         fillOpacity: 0.4,
         strokeWeight: 2,
-        strokeColor: "#999",
+        strokeColor: '#999',
         draggable: false,
         editable: false,
         clickable: true
-      }
+      },
+      polylineOptions: {
+        fillColor: '#777',
+        fillOpacity: 0.4,
+        strokeWeight: 2,
+        strokeColor: '#999',
+        draggable: false,
+        editable: false,
+        clickable: true
+      },
+      polygonOptions: {
+        fillColor: '#777',
+        fillOpacity: 0.4,
+        strokeWeight: 2,
+        strokeColor: '#999',
+        draggable: false,
+        editable: false,
+        clickable: true
+      },
     };
   },
   watch: {
     mapMode(newMode, oldMode) {
-      if (newMode === "ready") {
-        if (oldMode === "edit") {
+      if (newMode === 'ready') {
+        if (oldMode === 'edit') {
           this.mapDraggable = true;
           this.mapCursor = null;
           return;
         }
       }
 
-      if (newMode === "edit") {
+      if (newMode === 'edit') {
         this.mapDraggable = false;
-        this.mapCursor = "default";
+        this.mapCursor = 'default';
       }
     }
   },
   mounted() {
-    this.mapMode = "ready";
-  },
-  methods: {
-    setMapMode() {
-      if (this.mapMode === "edit") {
-        this.mapMode = "ready";
-      } else {
-        this.mapMode = "edit";
-      }
-    }
+    this.mapMode = 'ready';
   }
 };
 </script>
@@ -113,7 +126,6 @@ export default {
 <style scoped>
 #container {
   width: 700px;
-  height: 300px;
-  margin-bottom: 9rem;
+  margin-bottom: 1rem;
 }
 </style>

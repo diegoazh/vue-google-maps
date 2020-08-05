@@ -9,7 +9,7 @@
 #     <p>For example to wrap around the <code>GroundOverlay</code>
 #     class, one would write something like:</p>
 #     <pre>
-#     Vue.component('ground-overlay', VueGoogleMaps.MapElementFactory({
+#     Vue.component('ground-overlay', GmapVue.MapElementFactory({
 #       mappedProps: {
 #         'opacity': {}
 #       },

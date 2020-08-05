@@ -9,10 +9,6 @@
 ```html
 <body>
   <div id="root">
-    <button @click="setMarkers">
-      Set markers on heatmap
-    </button>
-    <br /><br />
     <gmap-map
       ref="mapRef"
       :zoom="7"
@@ -35,42 +31,41 @@
     </gmap-map>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.1/dist/gmap-vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.2/dist/gmap-vue.min.js"></script>
 
   <script>
     Vue.use(GmapVue, {
       load: {
-        key: "AIzaSyDf43lPdwlF98RCBsJOFNKOkoEjkwxb5Sc",
-        libraries: "visualization",
-      },
+        key: 'AIzaSyDf43lPdwlF98RCBsJOFNKOkoEjkwxb5Sc',
+        libraries: 'visualization'
+      }
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener('DOMContentLoaded', function() {
       new Vue({
-        el: "#root",
+        el: '#root',
         data: {
           center: { lat: 4.5, lng: 99 },
           markers: [],
         },
-        methods: {
-          setMarkers() {
-            this.markers = [
-              {
-                location: new google.maps.LatLng({ lat: 3, lng: 101 }),
-                weight: 100,
-              },
-              {
-                location: new google.maps.LatLng({ lat: 5, lng: 99 }),
-                weight: 50,
-              },
-              {
-                location: new google.maps.LatLng({ lat: 6, lng: 97 }),
-                weight: 80,
-              },
-            ];
-          },
-        },
+        async mounted() {
+          await this.$gmapApiPromiseLazy();
+          this.markers = [
+            {
+              location: new google.maps.LatLng({ lat: 3, lng: 101 }),
+              weight: 100
+            },
+            {
+              location: new google.maps.LatLng({ lat: 5, lng: 99 }),
+              weight: 50
+            },
+            {
+              location: new google.maps.LatLng({ lat: 6, lng: 97 }),
+              weight: 80
+            }
+          ];
+        }
       });
     });
   </script>

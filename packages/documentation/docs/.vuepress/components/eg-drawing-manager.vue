@@ -1,7 +1,7 @@
 <template>
   <div id="container">
     <h3>Drawing Manager Example</h3>
-    <div style="width: 100%;">
+    <div style="width: 100%; display: flex; flex-direction: column;">
       <span style="width: auto;" />
       <ul>
         <li>
@@ -12,16 +12,18 @@
         </li>
       </ul>
       <span style="width: auto;" />
-      <button @click="setPos">Position</button>
-      <button @click="setMapMode">{{mapMode === 'ready' ? 'Edit' : 'Ready'}}</button>
+      <div>
+        <button @click="setPos">Position</button>
+        <button @click="setMapMode">{{mapMode === 'ready' ? 'change to Edit' : 'change to Ready'}}</button>
+      </div>
     </div>
     <br />
     <gmap-map
       ref="mapRef"
       :center="mapCenter"
-      :zoom="17"
+      :zoom="7"
       map-type-id="roadmap"
-      style="width: 100%; height: 100%;"
+      style="width: 100%; height: 500px"
       :options="{
         zoomControl: true,
         mapTypeControl: true,
@@ -53,35 +55,35 @@ export default {
   name: "eg-drawing-manager",
   data() {
     return {
-      mapCenter: { lat: 0, lng: 0 },
+      mapCenter: { lat: 4.5, lng: 99 },
       mapMode: null,
-      toolbarPosition: "TOP_CENTER",
+      toolbarPosition: 'TOP_CENTER',
       mapDraggable: true,
       mapCursor: null,
       shapes: [],
       rectangleOptions: {
-        fillColor: "#777",
+        fillColor: '#777',
         fillOpacity: 0.4,
         strokeWeight: 2,
-        strokeColor: "#999",
+        strokeColor: '#999',
         draggable: false,
         editable: false,
         clickable: true
       },
       circleOptions: {
-        fillColor: "#777",
+        fillColor: '#777',
         fillOpacity: 0.4,
         strokeWeight: 2,
-        strokeColor: "#999",
+        strokeColor: '#999',
         draggable: false,
         editable: false,
         clickable: true
       },
       polylineOptions: {
-        fillColor: "#777",
+        fillColor: '#777',
         fillOpacity: 0.4,
         strokeWeight: 2,
-        strokeColor: "#999",
+        strokeColor: '#999',
         draggable: false,
         editable: false,
         clickable: true
@@ -90,38 +92,38 @@ export default {
   },
   watch: {
     mapMode(newMode, oldMode) {
-      if (newMode === "ready") {
-        if (oldMode === "edit") {
+      if (newMode === 'ready') {
+        if (oldMode === 'edit') {
           this.mapDraggable = true;
           this.mapCursor = null;
           return;
         }
       }
 
-      if (newMode === "edit") {
+      if (newMode === 'edit') {
         this.mapDraggable = false;
-        this.mapCursor = "default";
+        this.mapCursor = 'default';
       }
     }
   },
   mounted() {
-    this.mapMode = "ready";
+    this.mapMode = 'ready';
   },
   methods: {
     setPos() {
       const posTypes = [
-        "TOP_CENTER",
-        "TOP_LEFT",
-        "TOP_RIGHT",
-        "LEFT_TOP",
-        "RIGHT_TOP",
-        "LEFT_CENTER",
-        "RIGHT_CENTER",
-        "LEFT_BOTTOM",
-        "RIGHT_BOTTOM",
-        "BOTTOM_CENTER",
-        "BOTTOM_LEFT",
-        "BOTTOM_RIGHT"
+        'TOP_CENTER',
+        'TOP_LEFT',
+        'TOP_RIGHT',
+        'LEFT_TOP',
+        'RIGHT_TOP',
+        'LEFT_CENTER',
+        'RIGHT_CENTER',
+        'LEFT_BOTTOM',
+        'RIGHT_BOTTOM',
+        'BOTTOM_CENTER',
+        'BOTTOM_LEFT',
+        'BOTTOM_RIGHT'
       ];
 
       this.toolbarPosition =
@@ -141,7 +143,6 @@ export default {
 <style scoped>
 #container {
   width: 700px;
-  height: 300px;
-  margin-bottom: 9rem;
+  margin-bottom: 1rem;
 }
 </style>

@@ -31,6 +31,7 @@ const Cluster = (process.env.BUILD_DEV === '1')
   ? undefined
   : ((s) => s.default || s)(require('./components/cluster'))
 
+// TODO: This should be checked if it must be GmapVue, Gmap.api or something else
 let GmapApi = null
 
 // export everything
@@ -51,7 +52,7 @@ export function install (Vue, options) {
   // Update the global `GmapApi`. This will allow
   // components to use the `google` global reactively
   // via:
-  //   import {gmapApi} from 'vue2-google-maps'
+  //   import { gmapApi } from 'gmap-vue'
   //   export default {  computed: { google: gmapApi }  }
   GmapApi = new Vue({ data: { gmapApi: null } })
 
