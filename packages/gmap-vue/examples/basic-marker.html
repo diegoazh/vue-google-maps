@@ -6,10 +6,10 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.0/vue.js"></script>
-  <script src="vue-google-maps.js"></script>
+  <script src="gmap-vue.js"></script>
 
   <script>
-    Vue.use(VueGoogleMaps, {
+    Vue.use(GmapVue, {
       load: {
         key: 'AIzaSyDf43lPdwlF98RCBsJOFNKOkoEjkwxb5Sc'
       },
@@ -18,8 +18,8 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-      Vue.component('google-map', VueGoogleMaps.Map);
-      Vue.component('google-marker', VueGoogleMaps.Marker);
+      Vue.component('google-map', GmapVue.Map);
+      Vue.component('google-marker', GmapVue.Marker);
 
       new Vue({
         el: '#root',
