@@ -233,6 +233,33 @@ There is a second slot named **"visible"** that must be used if you want to disp
 
 > Thanks to [@davydnorris](https://github.com/davydnorris) to document this part of GmapVue.
 
+### Accessing Google Maps API
+
+If you need to access the Google maps API directly you can use the exported `gmapApi()` function like this
+
+```js
+import { gmapApi } from 'gmap-vue';
+
+export default {
+  name: 'your-component-name',
+  data() {
+    return {
+      center: { lat: 4.5, lng: 99 },
+      markers: [],
+    }
+  },
+  computed: {
+    // The below example is the same as writing
+    // google() {
+    //   return gmapApi();
+    // },
+    google: gmapApi,
+  },
+};
+```
+
+You will get an object with a `maps` property and inside of it you can find all the Google maps API.
+
 ### Nuxt.js config
 
 For Nuxt.js projects, please import GmapVue in the following way:
