@@ -65,6 +65,8 @@ you need to pre-compile the templates into render functions, or use the compiler
   <script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.2/dist/gmap-vue.min.js"></script>
 
   <script>
+    // Only for example purposes
+    // In a real application you would simply create a separate component
     const toolbarTemplate =
       '<div style="background-color: #040404; display: flex; position: absolute; padding: 8px">' +
       "  <div><button @click=\"$emit('drawingmode_changed', 'rectangle')\">Rectangle</button></div>" +

@@ -6,6 +6,10 @@
 
 ## Source code
 
+::: warning
+This component is one of the few components where you must use the Google `LatLng` object to create the markers, you can't use a generic object like `{ lat: 0, lng: 0 }` to generate them.
+:::
+
 ```html
 <body>
   <div id="root">
@@ -70,4 +74,50 @@
     });
   </script>
 </body>
+```
+
+You also can use a computed property like below
+
+```vue
+<template>
+  <gmap-map
+    ref="mapRef"
+    :zoom="7"
+    :center="center"
+    map-type-id="roadmap"
+    style="width: 100%; height: 500px;"
+  >
+    <gmap-marker
+      v-for="(m, index) in markers"
+      :key="index"
+      :position="m.location"
+      :clickable="true"
+      :draggable="true"
+      @click="center=m.location"
+    />
+    <gmap-heatmap-layer
+      :data="markers"
+      :options="{maxIntensity: 120, dissipating: false}"
+    />
+  </gmap-map>
+</template>
+<script>
+  import { gmapApi } from 'gmap-vue';
+
+  export default {
+    computed: {
+      google: gmapApi,
+      markers() {
+        if (this.google) {
+          return [
+            { location: new google.maps.LatLng({ lat: 3, lng: 101 }), weight: 100 },
+            { location: new google.maps.LatLng({ lat: 5, lng: 99 }), weight: 50  },
+            { location: new google.maps.LatLng({ lat: 6, lng: 97 }), weight: 80 }
+          ];
+        }
+        return [];
+      },
+    },
+  };
+</script>
 ```

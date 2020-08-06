@@ -112,6 +112,8 @@ Vue.use(GmapVue, {
 })
 ```
 
+### Getting a map reference
+
 If you need to gain access to the `Map` instance (e.g. to call `panToBounds`, `panTo`):
 ```vue
 <template>
@@ -133,7 +135,10 @@ If you need to gain access to the `Map` instance (e.g. to call `panToBounds`, `p
 </script>
 ```
 
-If you need to gain access to the `google` object:
+### Accessing Google Maps API
+
+If you need to access the Google maps API directly you can use the exported `gmapApi()` function like this
+
 ```vue
 <template>
   <GmapMap ref="mapRef" ...>
@@ -141,19 +146,26 @@ If you need to gain access to the `google` object:
   </GmapMap>
 </template>
 <script>
-  import {gmapApi} from 'gmap-vue'
+import { gmapApi } from 'gmap-vue';
 
-  export default {
-    computed: {
-      google: gmapApi
-    }
-  }
+export default {
+  name: 'your-component-name',
+  computed: {
+    // The below example is the same as writing
+    // google() {
+    //   return gmapApi();
+    // },
+    google: gmapApi,
+  },
+};
 </script>
 ```
 
-Control the options of the map with the options property:
+You will get an object with a `maps` property and inside of it you can find all the Google maps API.
 
-For more information about google [MapOptions](https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions) visit the link.
+### Map Options
+
+Control the options of the map with the options property. For more information about google [MapOptions](https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions) visit the link.
 
  ```vue
  <GmapMap
@@ -170,9 +182,9 @@ For more information about google [MapOptions](https://developers.google.com/map
 </GmapMap>
 ```
 
-Add region and language localization:
+### Region and language localization
 
-For more information about google [Localization](https://developers.google.com/maps/documentation/javascript/localization) visit the link.
+To add region and language localization. For more information about google [Localization](https://developers.google.com/maps/documentation/javascript/localization) visit the link.
 
 ```js
 Vue.use(GmapVue, {
@@ -222,9 +234,9 @@ export default {
 };
 ```
 
-### GmapVue slots
+### GmapMap slots
 
-GmapVue has two slots with a different behavior.
+GmapMap component has two slots with a different behavior.
 The default slot is wrapped in a class that sets `display: none;` so by default any component you add to your map will be invisible.
 
 This is ok for most of the supplied components that interact directly with the Google map object, but it's not good if you want to bring up things like toolboxes, etc.
@@ -232,33 +244,6 @@ This is ok for most of the supplied components that interact directly with the G
 There is a second slot named **"visible"** that must be used if you want to display content within the responsive wrapper for the map, hence that's why you'll see this in the [drawing manager with slot example](/examples/drawing-manager-with-slot.html). It's actually not required in the [first example](/examples/drawing-manager.html) because the default toolbox is part of the Google map object.
 
 > Thanks to [@davydnorris](https://github.com/davydnorris) to document this part of GmapVue.
-
-### Accessing Google Maps API
-
-If you need to access the Google maps API directly you can use the exported `gmapApi()` function like this
-
-```js
-import { gmapApi } from 'gmap-vue';
-
-export default {
-  name: 'your-component-name',
-  data() {
-    return {
-      center: { lat: 4.5, lng: 99 },
-      markers: [],
-    }
-  },
-  computed: {
-    // The below example is the same as writing
-    // google() {
-    //   return gmapApi();
-    // },
-    google: gmapApi,
-  },
-};
-```
-
-You will get an object with a `maps` property and inside of it you can find all the Google maps API.
 
 ### Nuxt.js config
 
@@ -285,9 +270,12 @@ The list of officially support components are:
 - InfoWindow
 - Autocomplete
 - Cluster* (via `marker-clusterer-plus`)
+- Heat map
+- Drawing map: rectangle, circle, polygon, line
 
 You can find examples of this on [examples](/examples/).
-Auto-generated API documentation for these components are [here](http://diegoazh.github.io/gmap-vue/autoapi.html).
+
+~~Auto-generated API documentation for these components are [here](http://diegoazh.github.io/gmap-vue/autoapi.html).~~ (coming soon).
 
 For `Cluster`, you **must** import the class specifically, e.g.
 ```js
