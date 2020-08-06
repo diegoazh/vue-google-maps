@@ -9,7 +9,7 @@
       "npmClientArgs": []
     },
     "version": {
-      "allowBranch": "vue2"
+      "allowBranch": "master"
     }
   },
   "npmClient": "npm",
