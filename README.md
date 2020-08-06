@@ -7,6 +7,7 @@
 ## Dependencies
 
 - **VueJs** [![npm version](https://badge.fury.io/js/vue.svg)](https://badge.fury.io/js/vue)
+- **marker-clusterer-plus** [![npm version](https://badge.fury.io/js/marker-clusterer-plus.svg)](https://badge.fury.io/js/marker-clusterer-plus)
 
 ## Documentation
 
