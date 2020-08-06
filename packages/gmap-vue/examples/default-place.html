@@ -1,12 +1,14 @@
 <body>
   <div id="root">
     <h1>Test</h1> "Singapore" should appear in the text box on page load. No errors in console.
-    <gmap-place-input default-place="Singapore" @place_changed="updatePlace">
-    </gmap-place-input>
-    {{place && place.lat}}, {{place && place.lng}},
+    <gmap-autocomplete placeholder="This is a placeholder text" @place_changed="setPlace">
+    </gmap-autocomplete>
+    <br/>
+    <strong>lat:</strong> {{place && place.lat}}
+    <strong>lng:</strong> {{place && place.lng}}
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.6/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.js"></script>
   <script src="gmap-vue.js"></script>
 
@@ -27,10 +29,10 @@
           place: null
         },
         methods: {
-          updatePlace(what) {
+          setPlace(place) {
             this.place = {
-              lat: what.geometry.location.lat(),
-              lng: what.geometry.location.lng()
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng(),
             };
           }
         }

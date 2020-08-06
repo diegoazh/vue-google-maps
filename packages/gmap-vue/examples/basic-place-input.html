@@ -4,15 +4,14 @@
     <button @click="setPlaceText('Tokyo')">Set to Tokyo</button><br/>
     <button @click="setPlaceText('Shanghai')">Set to Shanghai</button><br/>
     <button @click="setPlaceText('Seoul')">Set to Seoul</button><br/>
-    <gmap-place-input :default-place="place"
-      @place_changed="setPlace">
-    </gmap-place-input>
+    <gmap-autocomplete placeholder="This is a placeholder text" @place_changed="setPlace">
+    </gmap-autocomplete>
     <br/>
-    {{latLng.lat}},
-    {{latLng.lng}}
+    <strong>lat:</strong> {{latLng.lat}}
+    <strong>lng:</strong> {{latLng.lng}}
   </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.js"></script>
 <script src="gmap-vue.js"></script>
 

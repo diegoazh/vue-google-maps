@@ -33,7 +33,7 @@ const Cluster =
     : ((s) => s.default || s)(require('./components/cluster'));
 
 // TODO: This should be checked if it must be GmapVue, Gmap.api or something else
-let GmapApi = null
+let GmapApi = null;
 
 // export everything
 export {

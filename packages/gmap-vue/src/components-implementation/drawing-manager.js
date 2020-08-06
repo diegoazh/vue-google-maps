@@ -64,8 +64,10 @@ export default mapElementFactory({
         ? google.maps.ControlPosition[this.position]
         : google.maps.ControlPosition.TOP_LEFT;
 
-    options.drawingMode = null
-    options.drawingControl = !this.$scopedSlots.default
+    // TODO: should be analyzed after this PR
+    /* eslint-disable no-param-reassign -- needed to add options */
+    options.drawingMode = null;
+    options.drawingControl = !this.$scopedSlots.default;
     options.drawingControlOptions = {
       drawingModes,
       position,
