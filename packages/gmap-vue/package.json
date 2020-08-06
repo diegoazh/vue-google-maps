@@ -15,7 +15,8 @@
     "test": "npm run lab:tests && npm run lint",
     "deploy": "npm run build:examples && gh-pages -d examples",
     "prepare": "npm run build",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "docs": "jsdoc -c 'jsdoc.json'"
   },
   "files": [
     "dist"
@@ -44,6 +45,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-minify-dead-code-elimination": "^0.5.1",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "better-docs": "^2.3.0",
     "consolidate": "^0.15.1",
     "cross-env": "^7.0.2",
     "css-loader": "^3.5.2",
@@ -61,6 +63,7 @@
     "file-loader": "^6.0.0",
     "gh-pages": "^2.2.0",
     "husky": ">=4",
+    "jsdoc": "^3.6.5",
     "json-loader": "^0.5.7",
     "lerna": "^3.20.2",
     "lint-staged": ">=10",
