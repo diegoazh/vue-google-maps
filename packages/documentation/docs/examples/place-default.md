@@ -1,5 +1,9 @@
 ## Live example
 
+::: warning
+DEPRECATED, use [autocomplete](/examples/autocomplete.html) component instead.
+:::
+
 <eg-base>
   <eg-place-default />
 </eg-base>
