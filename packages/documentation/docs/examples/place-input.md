@@ -1,6 +1,6 @@
 ## Live example
 
-::: warning
+::: danger
 DEPRECATED, use [autocomplete](/examples/autocomplete.html) component instead.
 :::
 
