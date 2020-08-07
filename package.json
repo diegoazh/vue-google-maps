@@ -10,7 +10,8 @@
     "start:docs": "lerna run dev",
     "build": "lerna run build",
     "test": "lerna run test",
-    "lint": "lerna run lint"
+    "lint": "lerna run lint",
+    "release": "lerna version --conventional-commits --create-release github --yes"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",

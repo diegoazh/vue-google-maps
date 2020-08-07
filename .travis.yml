@@ -7,13 +7,16 @@ install:
 script:
   - npm run test
   - npm run build
+after_success:
+  - git remote set-url --push origin https://${GH_TOKEN}@github.com/diegoazh/gmap-vue.git
+  - npm run release
 deploy:
-  provider: pages
-  local_dir: packages/documentation/docs/.vuepress/dist
-  github_token: $GITHUB_TOKEN
-  keep_history: true
-  skip_cleanup: true
-  on:
-    branch: master
+  - provider: pages
+    local_dir: packages/documentation/docs/.vuepress/dist
+    github_token: $GH_TOKEN
+    keep_history: true
+    skip_cleanup: true
+    on:
+      branch: master
 env:
   - THIS_IS_ON_TRAVIS_AND_SANDBOX_IS_NOT_ALLOWED=true
