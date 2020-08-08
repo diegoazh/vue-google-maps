@@ -9,8 +9,11 @@ script:
   - npm run build
 after_success:
   - git remote set-url --push origin https://${GH_TOKEN}@github.com/diegoazh/gmap-vue.git
-  - npm run release
 deploy:
+  - provider: script
+    script: npm run release
+    on:
+      branch: develop
   - provider: pages
     local_dir: packages/documentation/docs/.vuepress/dist
     github_token: $GH_TOKEN
