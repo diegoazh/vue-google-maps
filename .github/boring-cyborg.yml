@@ -58,7 +58,7 @@ insertIssueLinkInPrDescription:
 # Verifies if commit/PR titles match the regexp specified
 verifyTitles:
   # Regular expression that should be matched by titles of commits or PR
-  titleRegexp: ^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\()(root|all|gmap-vue|documentation)(\))(:)(\s{1}[a-z0-9\s]+)$
+  titleRegexp: ^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\()(deps|root|all|gmap-vue|documentation)(\))(:)(\s{1}[\.\/\-\_a-z0-9\s]+)$
   # If set to true, it will always check the PR title (as opposed to the individual commits).
   alwaysUsePrTitle: true
   # If set to true, it will only check the commit in case there is a single commit.

@@ -10,6 +10,7 @@ titleAndCommits: true
 anyCommit: true
 # You can define a list of valid scopes
 scopes:
+  - deps
   - root # apply only to the root folder
   - all # a change in all scopes
   - documentation
