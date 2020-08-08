@@ -7,11 +7,16 @@ install:
 script:
   - npm run test
   - npm run build
-after_success:
-  - git remote set-url --push origin https://${GH_TOKEN}@github.com/diegoazh/gmap-vue.git
+before_deploy:
+  - git config --global user.email ${GITHUB_EMAIL}
+  - git config --global user.name ${GITHUB_USER}
+  - git remote set-url origin "https://${GH_TOKEN}@github.com/diegoazh/gmap-vue.git" > /dev/null 2>&1
+  # - git checkout release
+  # - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
 deploy:
   - provider: script
-    script: npm run release
+    script: "npm run release"
+    skip_cleanup: true
     on:
       branch: develop
   - provider: pages
