@@ -11,7 +11,7 @@ before_deploy:
   - git config --global user.email ${GITHUB_EMAIL}
   - git config --global user.name ${GITHUB_USER}
   - git remote set-url origin "https://${GH_TOKEN}@github.com/diegoazh/gmap-vue.git" > /dev/null 2>&1
-  # - git checkout release
+  - git checkout develop
   # - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
 deploy:
   - provider: script
