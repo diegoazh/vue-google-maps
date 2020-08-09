@@ -11,14 +11,13 @@ before_deploy:
   - git config --global user.email ${GITHUB_EMAIL}
   - git config --global user.name ${GITHUB_USER}
   - git remote set-url origin "https://${GH_TOKEN}@github.com/diegoazh/gmap-vue.git" > /dev/null 2>&1
-  - git checkout develop
   # - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
 deploy:
   - provider: script
     script: "npm run release"
     skip_cleanup: true
     on:
-      branch: develop
+      branch: master
   - provider: pages
     local_dir: packages/documentation/docs/.vuepress/dist
     github_token: $GH_TOKEN

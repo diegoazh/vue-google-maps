@@ -9,7 +9,7 @@
       "npmClientArgs": []
     },
     "version": {
-      "allowBranch": ["master", "develop"]
+      "allowBranch": ["master"]
     }
   },
   "npmClient": "npm",
