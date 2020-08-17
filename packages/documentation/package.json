@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "gmap-vue": "^1.4.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "snyk": "^1.370.1",
     "vuepress": "^1.5.3"
   },
