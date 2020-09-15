@@ -72,9 +72,10 @@ export function install(Vue, options) {
   // via:
   //   import { gmapApi } from 'gmap-vue'
   //   export default {  computed: { google: gmapApi }  }
-  GmapApi = new Vue({ data: { gmapApi: null } });
+  // GmapApi = new Vue({ data: { gmapApi: null } });
+  GmapApi = { gmapApi: null };
 
-  const defaultResizeBus = new Vue();
+  const defaultResizeBus = {};
 
   // Use a lazy to only load the API when
   // a VGM component is loaded

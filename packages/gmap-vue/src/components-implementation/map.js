@@ -53,6 +53,8 @@ const events = [
   'resize',
   'rightclick',
   'tilesloaded',
+  "zoom_changed",
+  "center_changed"
 ];
 
 // Plain Google Maps methods exposed here for convenience
@@ -103,7 +105,7 @@ const recyclePrefix = '__gmc__';
 export default {
   mixins: [mountableMixin],
   props: mappedPropsToVueProps(props),
-
+  emits: events,
   provide() {
     this.$mapPromise = new Promise((resolve, reject) => {
       this.$mapPromiseDeferred = { resolve, reject };
