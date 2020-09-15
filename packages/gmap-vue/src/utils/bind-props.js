@@ -36,7 +36,7 @@ export function bindProps(vueInst, googleMapsInst, props) {
           // eslint-disable-next-line no-underscore-dangle -- old code should be analyzed
           `${setMethodName} is not a method of (the Maps object corresponding to) ${vueInst.$options._componentTag}`
         );
-      }
+      } 
 
       // We need to avoid an endless
       // propChanged -> event emitted -> propChanged -> event emitted loop
