@@ -22,7 +22,7 @@ export default function promiseLazy(loadGmapApi, GmapApi) {
         return new Promise((resolve, reject) => {
           try {
             window.vueGoogleMapsInit = resolve;
-            loadGmapApi(options.load, options.loadCn);
+            loadGmapApi(options, options.loadCn);
           } catch (err) {
             reject(err);
           }
