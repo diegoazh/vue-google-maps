@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "documentation of vue2=google-maps",
   "main": "index.js",
   "author": "Diego A. Zapata Hantsch",
@@ -15,7 +15,7 @@
     "gmap-vue": "^1.4.0",
     "lodash": "^4.17.20",
     "snyk": "^1.373.1",
-    "vuepress": "^1.5.3"
+    "vuepress": "^1.5.4"
   },
   "snyk": true
 }

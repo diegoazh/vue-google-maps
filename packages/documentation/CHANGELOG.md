@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.8](https://github.com/diegoazh/gmap-vue/compare/docs@1.0.7...docs@1.0.8) (2020-10-17)
+
+
+### Bug Fixes
+
+* upgrade vuepress from 1.5.3 to 1.5.4 ([#91](https://github.com/diegoazh/gmap-vue/issues/91)) ([0125598](https://github.com/diegoazh/gmap-vue/commit/0125598bc8009a210d43dc9cc6708ce5729de26e))
+
+
+
+
+
 ## [1.0.7](https://github.com/diegoazh/gmap-vue/compare/docs@1.0.6...docs@1.0.7) (2020-09-03)
 
 
