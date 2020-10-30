@@ -18,6 +18,28 @@ issueConfigs:
   - "Describe the solution you'd like"
   - "Describe alternatives you've considered"
   - "Additional context"
+- content:
+# Example 3: need helps with the plugin
+  - "What you try to do"
+  - "What is the problem"
+  - "What kind of things have you already treated"
+  - "Steps to reproduce"
+  - "Os"
+  - "Mobile"
+  - "Versions"
+  - "Package manager"
+  - "Plugin version"
+- content:
+# Example 4: vulnerability
+  - "Vulnerability type"
+  - "Vulnerability place"
+  - "How do you found it?"
+  - "How do you think that it can be fixed? (optional)"
+  - "Os"
+  - "Mobile"
+  - "Versions"
+  - "Package manager"
+  - "Plugin version"
 # Optional configuration:
 #
 # whether the keywords are case-insensitive
