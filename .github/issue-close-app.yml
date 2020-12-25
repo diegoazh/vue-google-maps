@@ -12,6 +12,9 @@ issueConfigs:
   - "Desktop (please complete the following information):"
   - "Smartphone (please complete the following information):"
   - "Additional context"
+  - "Versions"
+  - "Package manager"
+  - "Plugin version"
 - content:
 # Example 2: feature request
   - "Is your feature request related to a problem? Please describe."
