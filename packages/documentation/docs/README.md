@@ -72,8 +72,8 @@ If you are using Webpack and Vue file components, just add the following to your
     :key="index"
     v-for="(m, index) in markers"
     :position="m.position"
-    :clickable="true"
-    :draggable="true"
+    :clickable=true
+    :draggable=true
     @click="center=m.position"
   />
 </GmapMap>
