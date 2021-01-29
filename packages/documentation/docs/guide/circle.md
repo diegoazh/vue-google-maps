@@ -2,7 +2,7 @@
 
 This component helps you to create a circle on Google Maps API.
 
-For more information read the Google Maps documentations for [circles](https://developers.google.com/maps/documentation/javascript/examples/circle-simple#maps_circle_simple-javascript).
+For more information read the Google Maps documentation for [circles](https://developers.google.com/maps/documentation/javascript/examples/circle-simple#maps_circle_simple-javascript).
 
 It is exported with the name `GmapCircle`.
 

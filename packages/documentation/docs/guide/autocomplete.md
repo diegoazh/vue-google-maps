@@ -2,7 +2,7 @@
 
 This component helps you to find and select a place on Google Maps API.
 
-For more information read the Google Maps documentations for [autocomplete](https://developers.google.com/maps/documentation/javascript/places-autocomplete).
+For more information read the Google Maps documentation for [autocomplete](https://developers.google.com/maps/documentation/javascript/places-autocomplete).
 
 It is exported with the name `GmapAutocomplete`.
 
@@ -263,7 +263,7 @@ If you need to know the API of this component please read it [here](/code/compon
 
 :::
 
-:::details Basic html example
+:::details Basic HTML example
 
 ```html
 <body>

@@ -9,27 +9,61 @@ import MapElementMixin from '../mixins/map-element';
 import { drawingManagerMappedProps } from '../utils/mapped-props-by-map-element';
 import { bindProps, getPropsValues } from '../utils/helpers';
 
+/**
+ * DrawingManager component
+ * @displayName GmapDrawingManager
+ * @see [source code](/guide/drawing-manager.html#source-code)
+ * @see [Official documentation](https://developers.google.com/maps/documentation/javascript/drawinglayer)
+ */
 export default {
   mixins: [MapElementMixin],
   props: {
+    /**
+     * The circle options
+     * @see [circleOptions interface](https://developers.google.com/maps/documentation/javascript/reference/polygon#CircleOptions)
+     */
     circleOptions: {
       type: Object,
     },
+    /**
+     * The marker options
+     * @see [markerOptions interface](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions)
+     */
     markerOptions: {
       type: Object,
     },
+    /**
+     * The polygon options
+     * @see [polygonOptions interface](https://developers.google.com/maps/documentation/javascript/reference/polygon#PolygonOptions)
+     */
     polygonOptions: {
       type: Object,
     },
+    /**
+     * The polyline options
+     * @see [polylineOptions interface](https://developers.google.com/maps/documentation/javascript/reference/polygon#PolylineOptions)
+     */
     polylineOptions: {
       type: Object,
     },
+    /**
+     * The rectangle options
+     * @see [rectangleOptions interface](https://developers.google.com/maps/documentation/javascript/reference/polygon#RectangleOptions)
+     */
     rectangleOptions: {
       type: Object,
     },
+    /**
+     * The position of the toolbar
+     * **Possible values**: `'TOP_CENTER', 'TOP_LEFT', 'TOP_RIGHT', 'LEFT_TOP', 'RIGHT_TOP', 'LEFT_CENTER',
+     * 'RIGHT_CENTER', 'LEFT_BOTTOM', 'RIGHT_BOTTOM', 'BOTTOM_CENTER', 'BOTTOM_LEFT', 'BOTTOM_RIGHT'`
+     */
     position: {
       type: String,
     },
+    /**
+     * An array of shapes that you can set to render in the map and saves on it the new shapes that you add.
+     */
     shapes: {
       type: Array,
       required: true,

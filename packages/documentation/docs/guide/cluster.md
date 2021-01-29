@@ -2,7 +2,7 @@
 
 This component helps you to create a cluster of markers on Google Maps API.
 
-For more information read the Google Maps documentations for [clustering](https://developers.google.com/maps/documentation/javascript/marker-clustering).
+For more information read the Google Maps documentation for [clustering](https://developers.google.com/maps/documentation/javascript/marker-clustering).
 
 It is exported with the name `GmapCluster`.
 

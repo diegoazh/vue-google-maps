@@ -54,7 +54,6 @@ module.exports = {
                 ['map-destroy', 'Map destroy'],
                 ['street-view-panorama', 'Street view panorama'],
                 ['heat-map-layer', 'Heat Map Layer'],
-                ['drawing-manager-with-slot', 'Drawing manager with slot']
               ]
             },
           ],
