@@ -54,6 +54,5 @@ label: "closed by bot"
 # The bot will ignore any issues that are opened or reopened by the user names in exception
 exception:
   - "diegoazh"
-  - "dgaletto"
 # The issue is judged to be legal if it includes all keywords from any of these two configs.
 # Or it will be closed by the app.
