@@ -7,19 +7,21 @@ assignees: ''
 
 ---
 
-# What you try to do
+> Please complete all the sections that you can but please **don't remove any section**, otherwise the bot will close your issue because it doesn't follow our issue template (you can remove this comment)
+
+## What you try to do
 
 Explain to us what you are trying to do or what is your goal.
 
-# What is the problem
+## What is the problem
 
 Explain to us what is the problem or what is the part of the documentation that is not clear.
 
-# What kind of things have you already treated
+## What kind of things have you already treated
 
 A small description of the solutions that you already treated.
 
-# Steps to reproduce
+## Steps to reproduce
 
 Explain to us how to get the same problem or provide a small example repository to work on it.
 
