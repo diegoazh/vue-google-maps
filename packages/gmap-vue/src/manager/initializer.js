@@ -1,30 +1,9 @@
 /**
- * @param apiKey    API Key, or object with the URL parameters. For example
- *                  to use Google Maps Premium API, pass
- *                    `{ client: <YOUR-CLIENT-ID> }`.
- *                  You may pass the libraries and/or version (as `v`) parameter into
- *                  this parameter and skip the next two parameters
- * @param version   Google Maps version
- * @param libraries Libraries to load (@see
- *                  https://developers.google.com/maps/documentation/javascript/libraries)
+ * @param options   Object. (@see https://developers.google.com/maps/documentation/javascript/url-params)
+ *                  `libraries` can be given as an array. (@see https://developers.google.com/maps/documentation/javascript/libraries)
+ *                  `callback` is ignored/overwritten.
  * @param loadCn    Boolean. If set to true, the map will be loaded from google maps China
  *                  (@see https://developers.google.com/maps/documentation/javascript/basics#GoogleMapsChina)
- *
- * Example:
- * ```
- *      import {load} from 'vue-google-maps'
- *
- *      load(<YOUR-API-KEY>)
- *
- *      load({
- *              key: <YOUR-API-KEY>,
- *      })
- *
- *      load({
- *              client: <YOUR-CLIENT-ID>,
- *              channel: <YOUR CHANNEL>
- *      })
- * ```
  */
 
 export default (() => {
