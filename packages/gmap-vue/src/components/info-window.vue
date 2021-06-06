@@ -1,18 +1,138 @@
-/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
-
 <template>
   <div>
     <div ref="flyaway">
       <!-- so named because it will fly away to another component -->
-      <slot> </slot>
+      <!-- @slot Used to set your info window.  -->
+      <slot></slot>
     </div>
   </div>
 </template>
 
 <script>
-export default ((x) => x.default || x)(
-  // TODO: this should be analyzed after to find a better way to do this
-  // eslint-disable-next-line global-require -- old style
-  require('../components-implementation/info-window')
-);
+import MapElementMixin from '../mixins/map-element';
+import { infoWindowMappedProps } from '../utils/mapped-props-by-map-element';
+import { bindEvents, bindProps, getPropsValues } from '../utils/helpers';
+
+/**
+ * InfoWindow component
+ * @displayName Info-Window
+ * @see [source code](/guide/info-window.html#source-code)
+ * @see [Official documentation](https://developers.google.com/maps/documentation/javascript/infowindows)
+ */
+export default {
+  mixins: [MapElementMixin],
+  props: {
+    /**
+     * Determines if the info-window is open or not
+     */
+    opened: {
+      type: Boolean,
+      default: true,
+    },
+    /**
+     * Extra options that you want to pass to the component
+     */
+    options: {
+      type: Object,
+      required: false,
+      default() {
+        return {};
+      },
+    },
+    /**
+     * Contains the LatLng at which this info window is anchored.
+     * Note: An InfoWindow may be attached either to a Marker object
+     * (in which case its position is based on the marker's location)
+     * or on the map itself at a specified LatLng.
+     */
+    position: {
+      type: Object,
+    },
+    /**
+     * The z-index property of the window
+     */
+    zIndex: {
+      type: Number,
+    },
+  },
+  methods: {
+    // TODO: we need to analyze the following method name
+    // eslint-disable-next-line no-underscore-dangle -- old code
+    _openInfoWindow() {
+      if (this.opened) {
+        if (this.$markerObject !== null) {
+          this.$infoWindowObject.open(this.$map, this.$markerObject);
+        } else {
+          this.$infoWindowObject.open(this.$map);
+        }
+      } else {
+        this.$infoWindowObject.close();
+      }
+    },
+  },
+  inject: {
+    $markerPromise: {
+      default: null,
+    },
+  },
+  async provide() {
+    const events = ['domready', 'closeclick', 'content_changed'];
+
+    // Infowindow needs this to be immediately available
+    this.$map = await this.$mapPromise;
+
+    // Initialize the maps with the given options
+    const initialOptions = {
+      // TODO: analyze the below line because I think it can be removed
+      ...this.options,
+      map: this.$map,
+      ...getPropsValues(this, infoWindowMappedProps),
+    };
+
+    const { options: extraOptions, position, ...finalOptions } = initialOptions;
+
+    this.beforeCreate(finalOptions);
+
+    this.$infoWindowObject = new google.maps.InfoWindow(finalOptions);
+
+    bindProps(this, this.$infoWindowObject, infoWindowMappedProps);
+    bindEvents(this, this.$infoWindowObject, events);
+
+    // TODO: analyze the efects of only returns the instance and remove completely the promise
+    this.$infoWindowPromise = this.$infoWindowObject;
+    return { $infoWindowPromise: this.$infoWindowObject };
+  },
+  beforeCreate(options) {
+    options.content = this.$refs.flyaway;
+
+    if (this.$markerPromise) {
+      return this.$markerPromise.then((mo) => {
+        this.$markerObject = mo;
+        return mo;
+      });
+    }
+
+    // this return is to follow the consistent-return rule of eslint, https://eslint.org/docs/rules/consistent-return
+    return undefined;
+  },
+  afterCreate() {
+    // TODO: This function names should be analyzed
+    /* eslint-disable no-underscore-dangle -- old style */
+    this._openInfoWindow();
+    this.$watch('opened', () => {
+      this._openInfoWindow();
+    });
+    /* eslint-enable no-underscore-dangle */
+  },
+  mounted() {
+    const el = this.$refs.flyaway;
+    el.parentNode.removeChild(el);
+  },
+  destroyed() {
+    // Note: not all Google Maps components support maps
+    if (this.$infoWindowObject && this.$infoWindowObject.setMap) {
+      this.$infoWindowObject.setMap(null);
+    }
+  },
+};
 </script>

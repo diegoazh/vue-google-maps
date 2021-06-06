@@ -15,16 +15,10 @@
     "gen:docs": "lerna run gen:api:docs"
   },
   "devDependencies": {
-    "@commitlint/cli": "^9.1.1",
-    "@commitlint/config-conventional": "^9.1.1",
-    "@commitlint/config-lerna-scopes": "^9.1.1",
-    "husky": "^4.2.5",
-    "lerna": "^3.22.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lerna run precommit --concurrency 1 --stream",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@commitlint/config-lerna-scopes": "^12.1.4",
+    "husky": "^4.3.8",
+    "lerna": "^4.0.0"
   }
 }

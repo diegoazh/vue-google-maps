@@ -74,8 +74,38 @@ DrawingManager component
 |`array`|-|An array of shapes that you can set to render in the map and saves on it the new shapes that you add.|
 
 
+## Methods
+
+### setDrawingMode (mode: `string`) -> `void`
+ The setDrawingMode method is binded into the default component slot
+
+::: tip Tags
+**method**: setDrawingMode<br />**param**: mode - Possible values 'marker', 'circle', 'polygon', 'polyline', 'rectangle', null<br />**returns**: undefined<br />**access**: public<br />
+:::
+
+#### Params
+| name | type | description
+|:-|:-|:-|
+|mode|`string`|mode - Possible values 'marker', 'circle', 'polygon', 'polyline', 'rectangle', null
+
+#### returns (void)
+ undefined
+### deleteSelection (undefined: `mixed`) -> `void`
+ The deleteSelection method is binded into the default component slot
+
+::: tip Tags
+**method**: deleteSelection<br />**param**: It doesn't requires any parameter<br />**returns**: undefined<br />**access**: public<br />
+:::
+
+#### Params
+| name | type | description
+|:-|:-|:-|
+|undefined|`mixed`|It doesn't requires any parameter
+
+#### returns (void)
+ undefined
 ## Slots
 
 ### default
-undefined
+Used to set your drawing manager
 

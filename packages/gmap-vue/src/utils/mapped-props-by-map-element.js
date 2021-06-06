@@ -145,9 +145,41 @@ export const drawingManagerMappedProps = {
   },
 };
 
+export const heatMapLayerMappedProps = {
+  options: {
+    type: Object,
+    twoWay: false,
+    default: () => {},
+  },
+  data: {
+    type: Array,
+    twoWay: true,
+  },
+};
+
+export const infoWindowMappedProps = {
+  options: {
+    type: Object,
+    required: false,
+    default() {
+      return {};
+    },
+  },
+  position: {
+    type: Object,
+    twoWay: true,
+  },
+  zIndex: {
+    type: Number,
+    twoWay: true,
+  },
+};
+
 export default {
   autocompleteMappedProps,
   circleMappedProps,
   clusterMappedProps,
   drawingManagerMappedProps,
+  heatMapLayerMappedProps,
+  infoWindowMappedProps,
 };

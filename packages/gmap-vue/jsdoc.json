@@ -1,27 +1,27 @@
 {
   "tags": {
-      "allowUnknownTags": true
+    "allowUnknownTags": true
   },
   "source": {
-      "include": ["./src"],
-      "includePattern": "\\.(vue|js)$"
+    "include": ["./src"],
+    "includePattern": "\\.(vue|js)$"
   },
   "plugins": [
-      "better-docs/component",
-      "better-docs/category",
-      "plugins/markdown"
+    "better-docs/component",
+    "better-docs/category",
+    "plugins/markdown"
   ],
   "opts": {
-      "encoding": "utf8",
-      "destination": "docs/",
-      "recurse": true,
-      "verbose": true,
-      "readme": "./readme.md",
-      "template": "node_modules/better-docs"
+    "encoding": "utf8",
+    "destination": "docs/",
+    "recurse": true,
+    "verbose": true,
+    "readme": "./readme.md",
+    "template": "node_modules/better-docs"
   },
   "templates": {
-      "better-docs": {
-          "name": "Gmap-Vue"
-      }
+    "better-docs": {
+      "name": "Gmap-Vue"
+    }
   }
 }

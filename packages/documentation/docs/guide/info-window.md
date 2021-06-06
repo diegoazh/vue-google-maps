@@ -1,0 +1,271 @@
+## Description
+
+This component helps you to create a info window in a marker.
+
+For more information read the Google Maps documentation for [info window](https://developers.google.com/maps/documentation/javascript/infowindows).
+
+It is exported with the name `GmapInfoWindow`.
+
+## Variables
+
+This component save the original Info-Window object provided by Google Maps in a property called `$infoWindowObject`, as the example below.
+
+```javascript
+  this.$infoWindowObject = new google.maps.InfoWindow(...);
+```
+
+## Source code
+
+:::details Click to se the source code of <code>info-window.vue</code> component
+
+```vue
+<template>
+  <div>
+    <div ref="flyaway">
+      <slot></slot>
+    </div>
+  </div>
+</template>
+
+<script>
+import MapElementMixin from '../mixins/map-element';
+import { infoWindowMappedProps } from '../utils/mapped-props-by-map-element';
+import { bindEvents, bindProps, getPropsValues } from '../utils/helpers';
+
+export default {
+  mixins: [MapElementMixin],
+  props: {
+    opened: {
+      type: Boolean,
+      default: true,
+    },
+    options: {
+      type: Object,
+      required: false,
+      default() {
+        return {};
+      },
+    },
+    position: {
+      type: Object,
+    },
+    zIndex: {
+      type: Number,
+    },
+  },
+  inject: {
+    $markerPromise: {
+      default: null,
+    },
+  },
+  async provide() {
+    const events = ['domready', 'closeclick', 'content_changed'];
+
+    this.$map = await this.$mapPromise;
+
+    const initialOptions = {
+      ...this.options,
+      map: this.$map,
+      ...getPropsValues(this, infoWindowMappedProps),
+    };
+
+    const { options: extraOptions, position, ...finalOptions } = initialOptions;
+
+    this.beforeCreate(finalOptions);
+
+    this.$infoWindowObject = new google.maps.InfoWindow(finalOptions);
+
+    bindProps(this, this.$infoWindowObject, infoWindowMappedProps);
+    bindEvents(this, this.$infoWindowObject, events);
+
+    this.$infoWindowPromise = this.$infoWindowObject;
+    return { $infoWindowPromise: this.$infoWindowObject };
+  },
+  beforeCreate(options) {
+    options.content = this.$refs.flyaway;
+
+    if (this.$markerPromise) {
+      return this.$markerPromise.then((mo) => {
+        this.$markerObject = mo;
+        return mo;
+      });
+    }
+
+    return undefined;
+  },
+  afterCreate() {
+    this._openInfoWindow();
+    this.$watch('opened', () => {
+      this._openInfoWindow();
+    });
+  },
+  mounted() {
+    const el = this.$refs.flyaway;
+    el.parentNode.removeChild(el);
+  },
+  methods: {
+    _openInfoWindow() {
+      if (this.opened) {
+        if (this.$markerObject !== null) {
+          this.$infoWindowObject.open(this.$map, this.$markerObject);
+        } else {
+          this.$infoWindowObject.open(this.$map);
+        }
+      } else {
+        this.$infoWindowObject.close();
+      }
+    },
+  },
+  destroyed() {
+    if (this.$infoWindowObject && this.$infoWindowObject.setMap) {
+      this.$infoWindowObject.setMap(null);
+    }
+  },
+};
+</script>
+
+```
+
+:::
+
+If you need to know what are `mappedProps` please read the general concepts of this application [here](/examples/#mapped-props).
+
+:::details Mapped Props of <code>GmapInfoWindow</code> component
+
+```javascript
+export const infoWindowMappedProps = {
+  options: {
+    type: Object,
+    required: false,
+    default() {
+      return {};
+    },
+  },
+  position: {
+    type: Object,
+    twoWay: true,
+  },
+  zIndex: {
+    type: Number,
+    twoWay: true,
+  },
+};
+```
+
+:::
+
+## How to use it
+
+```vue
+  <gmap-info-window
+    :options="infoOptions"
+    :position="infoWindowPos"
+    :opened="infoWinOpen"
+    @closeclick="infoWinOpen=false"
+  >
+  </gmap-info-window>
+```
+
+If you need to know the API of this component please read it [here](/code/components/info-window.html).
+
+## Html examples
+
+:::details HTML example
+
+```html
+<body>
+  <div id="root">
+    A basic example of using a single infowindow for 3 markers.
+
+    <gmap-map :center="center" :zoom="15" style="width: 100%; height: 500px">
+      <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" @closeclick="infoWinOpen=false">
+      </gmap-info-window>
+
+      <gmap-marker :key="i" v-for="(m,i) in markers" :position="m.position" :clickable="true" @click="toggleInfoWindow(m,i)"></gmap-marker>
+    </gmap-map>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.2/dist/gmap-vue.min.js"></script>
+
+  <script>
+    Vue.use(GmapVue, {
+      load: {
+        key: 'AIzaSyDf43lPdwlF98RCBsJOFNKOkoEjkwxb5Sc'
+      },
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      new Vue({
+        el: '#root',
+        data: {
+          center: {
+            lat: 47.376332,
+            lng: 8.547511
+          },
+          infoWindowPos: null,
+          infoWinOpen: false,
+          currentMidx: null,
+
+          infoOptions: {
+        	content: '',
+            //optional: offset infowindow so it visually sits nicely on top of our marker
+            pixelOffset: {
+              width: 0,
+              height: -35
+            }
+          },
+          markers: [{
+            position: {
+              lat: 47.376332,
+              lng: 8.547511
+            },
+            infoText: '<strong>Marker 1</strong>'
+          }, {
+            position: {
+              lat: 47.374592,
+              lng: 8.548867
+            },
+            infoText: '<strong>Marker 2</strong>'
+          }, {
+            position: {
+              lat: 47.379592,
+              lng: 8.549867
+            },
+            infoText: '<strong>Marker 3</strong>'
+          }]
+        },
+        methods: {
+          toggleInfoWindow: function(marker, idx) {
+            this.infoWindowPos = marker.position;
+            this.infoOptions.content = marker.infoText;
+
+            //check if its the same marker that was selected if yes toggle
+            if (this.currentMidx == idx) {
+              this.infoWinOpen = !this.infoWinOpen;
+            }
+
+            //if different marker set infowindow to open and reset current marker index
+            else {
+              this.infoWinOpen = true;
+              this.currentMidx = idx;
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+```
+
+:::
+
+## Test the component
+
+:::details Click to see the HTML example in action
+
+<eg-base>
+  <eg-info-window />
+</eg-base>
+
+:::

@@ -15,8 +15,8 @@
     "test": "npm run lab:tests",
     "deploy": "npm run build:examples && gh-pages -d examples",
     "prepare": "npm run build",
-    "pre-commit": "lint-staged",
-    "gen:api:docs": "rimraf ../documentation/docs/code && npx vuepress-jsdoc -d ../documentation/docs -t \"GmapVue API\""
+    "lint-staged": "lint-staged",
+    "gen:api:docs": "rimraf ../documentation/docs/code && npx vuepress-jsdoc -d ../documentation/docs -t \"GmapVue API\" -r ./README.md"
   },
   "files": [
     "dist"
@@ -90,10 +90,5 @@
     "yaml-loader": "^0.6.0"
   },
   "author": "Daniel Sim, Guillaume Leclerc",
-  "license": "MIT",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  }
+  "license": "MIT"
 }

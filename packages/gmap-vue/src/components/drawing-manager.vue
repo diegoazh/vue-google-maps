@@ -1,6 +1,10 @@
 <template>
   <div>
-    <slot :setDrawingMode="setDrawingMode" :deleteSelection="deleteSelection" />
+    <!-- @slot Used to set your drawing manager -->
+    <slot
+      v-bind:setDrawingMode="setDrawingMode"
+      v-bind:deleteSelection="deleteSelection"
+    />
   </div>
 </template>
 
@@ -80,6 +84,129 @@ export default {
       },
     };
   },
+  methods: {
+    /**
+     * The setDrawingMode method is binded into the default component slot
+     *
+     * @method setDrawingMode
+     * @param {string} mode - mode - Possible values 'marker', 'circle', 'polygon', 'polyline', 'rectangle', null
+     * @returns {void}
+     * @public
+     */
+    setDrawingMode(mode) {
+      this.$drawingManagerObject.setDrawingMode(mode);
+    },
+    drawAll() {
+      const shapeType = {
+        circle: google.maps.Circle,
+        marker: google.maps.Marker,
+        polygon: google.maps.Polygon,
+        polyline: google.maps.Polyline,
+        rectangle: google.maps.Rectangle,
+      };
+
+      const self = this;
+      this.shapes.forEach((shape) => {
+        const shapeDrawing = new shapeType[shape.type](shape.overlay);
+        shapeDrawing.setMap(this.$map);
+        shape.overlay = shapeDrawing;
+        google.maps.event.addListener(shapeDrawing, 'click', () => {
+          self.setSelection(shape);
+        });
+      });
+    },
+    clearAll() {
+      this.clearSelection();
+      this.shapes.forEach((shape) => {
+        shape.overlay.setMap(null);
+      });
+    },
+    clearSelection() {
+      if (this.selectedShape) {
+        this.selectedShape.overlay.set('fillColor', '#777');
+        this.selectedShape.overlay.set('strokeColor', '#999');
+        this.selectedShape.overlay.setEditable(false);
+        this.selectedShape.overlay.setDraggable(false);
+        this.selectedShape = null;
+      }
+    },
+    setSelection(shape) {
+      this.clearSelection();
+      this.selectedShape = shape;
+      shape.overlay.setEditable(true);
+      shape.overlay.setDraggable(true);
+      this.selectedShape.overlay.set('fillColor', '#555');
+      this.selectedShape.overlay.set('strokeColor', '#777');
+    },
+    /**
+     * The deleteSelection method is binded into the default component slot
+     *
+     * @method deleteSelection
+     * @param - It doesn't requires any parameter
+     * @returns {void}
+     * @public
+     */
+    deleteSelection() {
+      if (this.selectedShape) {
+        this.selectedShape.overlay.setMap(null);
+        const index = this.shapes.indexOf(this.selectedShape);
+        if (index > -1) {
+          this.shapes.splice(index, 1);
+        }
+      }
+    },
+    addShape(shape) {
+      this.setDrawingMode(null);
+      this.shapes.push(shape);
+      const self = this;
+      google.maps.event.addListener(shape.overlay, 'click', () => {
+        self.setSelection(shape);
+      });
+      google.maps.event.addListener(shape.overlay, 'rightclick', () => {
+        self.deleteSelection();
+      });
+      this.setSelection(shape);
+    },
+  },
+  watch: {
+    position(position) {
+      if (this.$drawingManagerObject) {
+        const drawingControlOptions = {
+          position:
+            position && google.maps.ControlPosition[position]
+              ? google.maps.ControlPosition[position]
+              : google.maps.ControlPosition.TOP_LEFT,
+          drawingModes: this.drawingModes,
+        };
+        this.$drawingManagerObject.setOptions({ drawingControlOptions });
+      }
+    },
+    circleOptions(circleOptions) {
+      if (this.$drawingManagerObject) {
+        this.$drawingManagerObject.setOptions({ circleOptions });
+      }
+    },
+    markerOptions(markerOptions) {
+      if (this.$drawingManagerObject) {
+        this.$drawingManagerObject.setOptions({ markerOptions });
+      }
+    },
+    polygonOptions(polygonOptions) {
+      if (this.$drawingManagerObject) {
+        this.$drawingManagerObject.setOptions({ polygonOptions });
+      }
+    },
+    polylineOptions(polylineOptions) {
+      if (this.$drawingManagerObject) {
+        this.$drawingManagerObject.setOptions({ polylineOptions });
+      }
+    },
+    rectangleOptions(rectangleOptions) {
+      if (this.$drawingManagerObject) {
+        this.$drawingManagerObject.setOptions({ rectangleOptions });
+      }
+    },
+  },
   async provide() {
     // Infowindow needs this to be immediately available
     this.$map = await this.$mapPromise;
@@ -136,113 +263,6 @@ export default {
     // TODO: analyze the efects of only returns the instance and remove completely the promise
     this.$drawingManagerPromise = this.$drawingManagerObject;
     return { $drawingManagerPromise: this.$drawingManagerObject };
-  },
-  methods: {
-    setDrawingMode(mode) {
-      this.$drawingManagerObject.setDrawingMode(mode);
-    },
-    drawAll() {
-      const shapeType = {
-        circle: google.maps.Circle,
-        marker: google.maps.Marker,
-        polygon: google.maps.Polygon,
-        polyline: google.maps.Polyline,
-        rectangle: google.maps.Rectangle,
-      };
-
-      const self = this;
-      this.shapes.forEach((shape) => {
-        const shapeDrawing = new shapeType[shape.type](shape.overlay);
-        shapeDrawing.setMap(this.$map);
-        shape.overlay = shapeDrawing;
-        google.maps.event.addListener(shapeDrawing, 'click', () => {
-          self.setSelection(shape);
-        });
-      });
-    },
-    clearAll() {
-      this.clearSelection();
-      this.shapes.forEach((shape) => {
-        shape.overlay.setMap(null);
-      });
-    },
-    clearSelection() {
-      if (this.selectedShape) {
-        this.selectedShape.overlay.set('fillColor', '#777');
-        this.selectedShape.overlay.set('strokeColor', '#999');
-        this.selectedShape.overlay.setEditable(false);
-        this.selectedShape.overlay.setDraggable(false);
-        this.selectedShape = null;
-      }
-    },
-    setSelection(shape) {
-      this.clearSelection();
-      this.selectedShape = shape;
-      shape.overlay.setEditable(true);
-      shape.overlay.setDraggable(true);
-      this.selectedShape.overlay.set('fillColor', '#555');
-      this.selectedShape.overlay.set('strokeColor', '#777');
-    },
-    deleteSelection() {
-      if (this.selectedShape) {
-        this.selectedShape.overlay.setMap(null);
-        const index = this.shapes.indexOf(this.selectedShape);
-        if (index > -1) {
-          this.shapes.splice(index, 1);
-        }
-      }
-    },
-    addShape(shape) {
-      this.setDrawingMode(null);
-      this.shapes.push(shape);
-      const self = this;
-      google.maps.event.addListener(shape.overlay, 'click', () => {
-        self.setSelection(shape);
-      });
-      google.maps.event.addListener(shape.overlay, 'rightclick', () => {
-        self.deleteSelection()
-      });
-      this.setSelection(shape);
-    },
-  },
-  watch: {
-    position(position) {
-      if (this.$drawingManagerObject) {
-        const drawingControlOptions = {
-          position:
-            position && google.maps.ControlPosition[position]
-              ? google.maps.ControlPosition[position]
-              : google.maps.ControlPosition.TOP_LEFT,
-          drawingModes: this.drawingModes,
-        };
-        this.$drawingManagerObject.setOptions({ drawingControlOptions });
-      }
-    },
-    circleOptions(circleOptions) {
-      if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ circleOptions });
-      }
-    },
-    markerOptions(markerOptions) {
-      if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ markerOptions });
-      }
-    },
-    polygonOptions(polygonOptions) {
-      if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ polygonOptions });
-      }
-    },
-    polylineOptions(polylineOptions) {
-      if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ polylineOptions });
-      }
-    },
-    rectangleOptions(rectangleOptions) {
-      if (this.$drawingManagerObject) {
-        this.$drawingManagerObject.setOptions({ rectangleOptions });
-      }
-    },
   },
   destroyed() {
     this.clearAll();

@@ -4,7 +4,7 @@ This component helps you to drawing shapes on over the map.
 
 For more information read the Google Maps documentation for [drawing manager](https://developers.google.com/maps/documentation/javascript/drawinglayer).
 
-It is exported with the name `GmapDrawingManager`
+It is exported with the name `GmapDrawingManager`.
 
 ## Variables
 
@@ -245,7 +245,7 @@ export default {
 
 If you need to know what are `mappedProps` please read the general concepts of this application [here](/examples/#mapped-props).
 
-::: details Mapped Props of <code>GmapDrawingManager</code> component
+:::details Mapped Props of <code>GmapDrawingManager</code> component
 
 ```javascript
 

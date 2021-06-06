@@ -24,16 +24,21 @@ import {
  * @param {Object} options.events - Google Maps API events
  *  that are not bound to a corresponding prop
  * @param {String} options.name - e.g. `polyline`
- * @param {=> String} options.ctr - constructor, e.g.
+ * @param {Function} options.ctr - constructor, e.g.
  *  `google.maps.Polyline`. However, since this is not
  *  generally available during library load, this becomes
  *  a function instead, e.g. () => google.maps.Polyline
  *  which will be called only after the API has been loaded
- * @param {(MappedProps, OtherVueProps) => Array} options.ctrArgs -
+ *
+ *  default: () => String
+ *
+ * @param {Function} options.ctrArgs -
  *   If the constructor in `ctr` needs to be called with
  *   arguments other than a single `options` object, e.g. for
  *   GroundOverlay, we call `new GroundOverlay(url, bounds, options)`
  *   then pass in a function that returns the argument list as an array
+ *
+ *   default: (MappedProps, OtherVueProps) => Array
  *
  * Otherwise, the constructor will be called with an `options` object,
  *   with property and values merged from:
@@ -41,17 +46,22 @@ import {
  *   1. the `options` property, if any
  *   2. a `map` property with the Google Maps
  *   3. all the properties passed to the component in `mappedProps`
- * @param {Object => Any} options.beforeCreate -
+ * @param {Function} options.beforeCreate -
  *  Hook to modify the options passed to the initializer
- * @param {(options.ctr, Object) => Any} options.afterCreate -
+ *
+ *  default: (Object) => Any
+ *
+ * @param {Function} options.afterCreate -
  *  Hook called when
+ *
+ *  default: (options.ctr, Object) => Any
  *
  */
 
 /**
  * Custom assert for local validation
  * */
-// TODO: All disabled eslint rules must be analyzed after
+// TODO: All disabled eslint rules must be analyzed after finish the refactor code
 // eslint-disable-next-line no-underscore-dangle -- old style should be analyzed
 function _assert(v, message) {
   if (!v) throw new Error(message);

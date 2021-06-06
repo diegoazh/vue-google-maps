@@ -3,7 +3,7 @@
  *
  * Extends components to include the following fields:
  *
- * @property $map        The Google map (valid only after the promise returns)
+ * @property $map The Google map (valid only after the promise returns)
  *
  *
  * */

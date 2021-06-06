@@ -1,11 +1,11 @@
 /**
- * @param apiKey    API Key, or object with the URL parameters. For example
+ * @param {string} apiKey    API Key, or object with the URL parameters. For example
  *                  to use Google Maps Premium API, pass
  *                    `{ client: <YOUR-CLIENT-ID> }`.
  *                  You may pass the libraries and/or version (as `v`) parameter into
  *                  this parameter and skip the next two parameters
- * @param version   Google Maps version
- * @param libraries Libraries to load (@see
+ * @param {string} version   Google Maps version
+ * @param {string | string[]} libraries Libraries to load (@see
  *                  https://developers.google.com/maps/documentation/javascript/libraries)
  * @param loadCn    Boolean. If set to true, the map will be loaded from google maps China
  *                  (@see https://developers.google.com/maps/documentation/javascript/basics#GoogleMapsChina)
