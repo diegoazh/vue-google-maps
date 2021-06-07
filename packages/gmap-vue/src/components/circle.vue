@@ -67,7 +67,7 @@ export default {
   render() {
     return '';
   },
-  async provide() {
+  provide() {
     // events to bind with toWay
     const events = [
       'click',

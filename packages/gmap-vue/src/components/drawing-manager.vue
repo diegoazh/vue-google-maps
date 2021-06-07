@@ -207,9 +207,9 @@ export default {
       }
     },
   },
-  async provide() {
+  provide() {
     // Infowindow needs this to be immediately available
-    const promise = await this.$mapPromise
+    const promise = this.$mapPromise
       .then((map) => {
         this.$map = map;
 

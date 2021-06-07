@@ -28,11 +28,11 @@ export default {
       type: Array,
     },
   },
-  async provide() {
+  provide() {
     const events = [];
 
     // Infowindow needs this to be immediately available
-    const promise = await this.$mapPromise
+    const promise = this.$mapPromise
       .then((map) => {
         this.$map = map;
 

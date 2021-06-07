@@ -75,11 +75,11 @@ export default {
       default: null,
     },
   },
-  async provide() {
+  provide() {
     const events = ['domready', 'closeclick', 'content_changed'];
 
     // Infowindow needs this to be immediately available
-    const promise = await this.$mapPromise
+    const promise = this.$mapPromise
       .then((map) => {
         this.$map = map;
 

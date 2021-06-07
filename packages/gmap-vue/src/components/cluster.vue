@@ -110,7 +110,7 @@ export default {
       type: Boolean,
     },
   },
-  async provide() {
+  provide() {
     // events to bind with toWay
     const events = [
       'click',
@@ -126,7 +126,7 @@ export default {
     ];
 
     // Infowindow needs this to be immediately available
-    const promise = await this.$mapPromise
+    const promise = this.$mapPromise
       .then((map) => {
         this.$map = map;
 
