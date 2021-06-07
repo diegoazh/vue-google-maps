@@ -208,7 +208,7 @@ If you need to know the API of this component please read it [here](/code/compon
           currentMidx: null,
 
           infoOptions: {
-        	content: '',
+          content: '',
             //optional: offset infowindow so it visually sits nicely on top of our marker
             pixelOffset: {
               width: 0,

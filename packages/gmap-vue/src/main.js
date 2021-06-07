@@ -5,7 +5,7 @@ import Circle from './components/circle.vue';
 import DrawingManager from './components/drawing-manager.vue';
 import HeatmapLayer from './components/heatmap-layer.vue';
 import InfoWindow from './components/info-window.vue';
-import KmlLayer from './components/kml-layer';
+import KmlLayer from './components/kml-layer.vue';
 import Map from './components/map.vue';
 import Marker from './components/marker';
 import PlaceInput from './components/place-input.vue';

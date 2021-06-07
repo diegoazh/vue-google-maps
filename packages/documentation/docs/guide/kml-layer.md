@@ -1,10 +1,102 @@
-## Live example
+## Description
 
-<eg-base>
-  <eg-kml-layer />
-</eg-base>
+This component helps you to create a Kml layer.
+
+For more information read the Google Maps documentation for [kml layers](https://developers.google.com/maps/documentation/javascript/kmllayer).
+
+It is exported with the name `GmapKmlLayer`.
+
+## Variables
+
+This component save the original Kml-layer object provided by Google Maps in a property called `$kmlLayerObject`, as the example below.
+
+```javascript
+  this.$kmlLayerObject = new google.maps.KmlLayer(...);
+```
 
 ## Source code
+
+:::details Click to se the source code of <code>info-window.vue</code> component
+
+```vue
+<script>
+import MapElementMixin from '../mixins/map-element';
+import { getPropsValues, bindEvents, bindProps } from '../utils/helpers';
+import { kmlLayerMappedProps } from '../utils/mapped-props-by-map-element';
+
+export default {
+  mixins: [MapElementMixin],
+  props: {
+    url: {
+      type: String,
+    },
+    map: {
+      type: Object,
+    },
+  },
+  async provide() {
+    const events = [
+      'click',
+      'rightclick',
+      'dblclick',
+      'mouseup',
+      'mousedown',
+      'mouseover',
+      'mouseout',
+    ];
+
+    this.$map = await this.$mapPromise;
+
+    const initialOptions = {
+      ...this.options,
+      map: this.$map,
+      ...getPropsValues(this, kmlLayerMappedProps),
+    };
+
+    const { options: extraOptions, ...finalOptions } = initialOptions;
+
+    this.$kmlLayerObject = new google.maps.KmlLayer(finalOptions);
+
+    bindProps(this, this.$infoWindowObject, kmlLayerMappedProps);
+    bindEvents(this, this.$infoWindowObject, events);
+
+    this.$kmlLayerPromise = this.$kmlLayerObject;
+    return { $kmlLayerPromise: this.$kmlLayerObject };
+  },
+  destroyed() {
+    if (this.$kmlLayerObject && this.$kmlLayerObject.setMap) {
+      this.$kmlLayerObject.setMap(null);
+    }
+  },
+};
+</script>
+
+```
+
+:::
+
+## How to use it
+
+```vue
+  const kmlLayers = [
+    {
+      url:
+        'https://developers.google.com/maps/documentation/javascript/examples/kml/westcampus.kml',
+    },
+  ];
+
+  <google-kml-layer
+    v-for="l in kmlLayers"
+    :url="l.url"
+    :clickable="true"
+  ></google-kml-layer>
+```
+
+If you need to know the API of this component please read it [here](/code/components/kml-layer.html).
+
+## Html examples
+
+:::details HTML example
 
 ```html
 <body>
@@ -46,3 +138,15 @@
   </script>
 </body>
 ```
+
+:::
+
+## Test the component
+
+:::details Click to see the HTML example in action
+
+<eg-base>
+  <eg-kml-layer />
+</eg-base>
+
+:::
