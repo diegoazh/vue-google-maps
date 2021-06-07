@@ -209,60 +209,68 @@ export default {
   },
   async provide() {
     // Infowindow needs this to be immediately available
-    this.$map = await this.$mapPromise;
+    const promise = await this.$mapPromise
+      .then((map) => {
+        this.$map = map;
 
-    // Initialize the maps with the given options
-    const initialOptions = {
-      // TODO: analyze the below line because I think it can be removed
-      ...this.options,
-      map: this.$map,
-      ...getPropsValues(this, drawingManagerMappedProps),
-    };
+        // Initialize the maps with the given options
+        const initialOptions = {
+          // TODO: analyze the below line because I think it can be removed
+          ...this.options,
+          map,
+          ...getPropsValues(this, drawingManagerMappedProps),
+        };
 
-    const { options: extraOptions, ...finalOptions } = initialOptions;
+        const { options: extraOptions, ...finalOptions } = initialOptions;
 
-    this.drawingModes = Object.keys(finalOptions).reduce((modes, opt) => {
-      const val = opt.split('Options');
+        this.drawingModes = Object.keys(finalOptions).reduce((modes, opt) => {
+          const val = opt.split('Options');
 
-      if (val.length > 1) {
-        modes.push(val[0]);
-      }
+          if (val.length > 1) {
+            modes.push(val[0]);
+          }
 
-      return modes;
-    }, []);
+          return modes;
+        }, []);
 
-    const position =
-      this.position && google.maps.ControlPosition[this.position]
-        ? google.maps.ControlPosition[this.position]
-        : google.maps.ControlPosition.TOP_LEFT;
+        const position =
+          this.position && google.maps.ControlPosition[this.position]
+            ? google.maps.ControlPosition[this.position]
+            : google.maps.ControlPosition.TOP_LEFT;
 
-    finalOptions.drawingMode = null;
-    finalOptions.drawingControl = !this.$scopedSlots.default;
-    finalOptions.drawingControlOptions = {
-      drawingModes: this.drawingModes,
-      position,
-    };
+        finalOptions.drawingMode = null;
+        finalOptions.drawingControl = !this.$scopedSlots.default;
+        finalOptions.drawingControlOptions = {
+          drawingModes: this.drawingModes,
+          position,
+        };
 
-    // https://stackoverflow.com/questions/1606797/use-of-apply-with-new-operator-is-this-possible
-    this.$drawingManagerObject = new google.maps.drawing.DrawingManager(
-      finalOptions
-    );
+        // https://stackoverflow.com/questions/1606797/use-of-apply-with-new-operator-is-this-possible
+        this.$drawingManagerObject = new google.maps.drawing.DrawingManager(
+          finalOptions
+        );
 
-    bindProps(this, this.$drawingManagerObject, drawingManagerMappedProps);
+        bindProps(this, this.$drawingManagerObject, drawingManagerMappedProps);
 
-    this.$drawingManagerObject.addListener('overlaycomplete', (e) =>
-      this.addShape(e)
-    );
+        this.$drawingManagerObject.addListener('overlaycomplete', (e) =>
+          this.addShape(e)
+        );
 
-    this.$map.addListener('click', this.clearSelection);
+        this.$map.addListener('click', this.clearSelection);
 
-    if (this.shapes.length) {
-      this.drawAll();
-    }
+        if (this.shapes.length) {
+          this.drawAll();
+        }
+
+        return this.$drawingManagerObject;
+      })
+      .catch((error) => {
+        throw error;
+      });
 
     // TODO: analyze the efects of only returns the instance and remove completely the promise
-    this.$drawingManagerPromise = this.$drawingManagerObject;
-    return { $drawingManagerPromise: this.$drawingManagerObject };
+    this.$drawingManagerPromise = promise;
+    return { $drawingManagerPromise: promise };
   },
   destroyed() {
     this.clearAll();

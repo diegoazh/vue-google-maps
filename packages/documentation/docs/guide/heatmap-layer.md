@@ -24,12 +24,6 @@ import MapElementMixin from '../mixins/map-element';
 import { heatMapLayerMappedProps } from '../utils/mapped-props-by-map-element';
 import { bindProps, getPropsValues, bindEvents } from '../utils/helpers';
 
-/**
- * HeatmapLayer component
- * @displayName HeatmapLayer
- * @see [source code](/guide/heatmap-layer.html#source-code)
- * @see [Official documentation](https://developers.google.com/maps/documentation/javascript/heatmaplayer)
- */
 export default {
   mixins: [MapElementMixin],
   props: {
@@ -44,27 +38,38 @@ export default {
   async provide() {
     const events = [];
 
-    this.$map = await this.$mapPromise;
+    // Infowindow needs this to be immediately available
+    const promise = await this.$mapPromise
+      .then((map) => {
+        this.$map = map;
 
-    const initialOptions = {
-      ...this.options,
-      map: this.$map,
-      ...getPropsValues(this, heatMapLayerMappedProps),
-    };
+        // Initialize the maps with the given options
+        const initialOptions = {
+          ...this.options,
+          map: this.$map,
+          ...getPropsValues(this, heatMapLayerMappedProps),
+        };
 
-    const { options: extraOptions, ...finalOptions } = initialOptions;
+        const { options: extraOptions, ...finalOptions } = initialOptions;
 
-    this.$heatmapLayerObject = new google.maps.visualization.HeatmapLayer(
-      finalOptions
-    );
+        this.$heatmapLayerObject = new google.maps.visualization.HeatmapLayer(
+          finalOptions
+        );
 
-    bindProps(this, this.$heatmapLayerObject, heatMapLayerMappedProps);
-    bindEvents(this, this.$heatmapLayerObject, events);
+        bindProps(this, this.$heatmapLayerObject, heatMapLayerMappedProps);
+        bindEvents(this, this.$heatmapLayerObject, events);
 
-    this.$heatmapLayerPromise = this.$heatmapLayerObject;
-    return { $heatmapLayerPromise: this.$heatmapLayerObject };
+        return this.$heatmapLayerObject;
+      })
+      .catch((error) => {
+        throw error;
+      });
+
+    this.$heatmapLayerPromise = promise;
+    return { $heatmapLayerPromise: promise };
   },
   destroyed() {
+    // Note: not all Google Maps components support maps
     if (this.$heatmapLayerObject && this.$heatmapLayerObject.setMap) {
       this.$heatmapLayerObject.setMap(null);
     }

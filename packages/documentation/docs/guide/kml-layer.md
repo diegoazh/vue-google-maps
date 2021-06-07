@@ -45,25 +45,36 @@ export default {
       'mouseout',
     ];
 
-    this.$map = await this.$mapPromise;
+    // Infowindow needs this to be immediately available
+    const promise = await this.$mapPromise
+      .then((map) => {
+        this.$map = map;
 
-    const initialOptions = {
-      ...this.options,
-      map: this.$map,
-      ...getPropsValues(this, kmlLayerMappedProps),
-    };
+        // Initialize the maps with the given options
+        const initialOptions = {
+          ...this.options,
+          map,
+          ...getPropsValues(this, kmlLayerMappedProps),
+        };
 
-    const { options: extraOptions, ...finalOptions } = initialOptions;
+        const { options: extraOptions, ...finalOptions } = initialOptions;
 
-    this.$kmlLayerObject = new google.maps.KmlLayer(finalOptions);
+        this.$kmlLayerObject = new google.maps.KmlLayer(finalOptions);
 
-    bindProps(this, this.$infoWindowObject, kmlLayerMappedProps);
-    bindEvents(this, this.$infoWindowObject, events);
+        bindProps(this, this.$infoWindowObject, kmlLayerMappedProps);
+        bindEvents(this, this.$infoWindowObject, events);
 
-    this.$kmlLayerPromise = this.$kmlLayerObject;
-    return { $kmlLayerPromise: this.$kmlLayerObject };
+        return this.$kmlLayerObject;
+      })
+      .catch((error) => {
+        throw error;
+      });
+
+    this.$kmlLayerPromise = promise;
+    return { $kmlLayerPromise: promise };
   },
   destroyed() {
+    // Note: not all Google Maps components support maps
     if (this.$kmlLayerObject && this.$kmlLayerObject.setMap) {
       this.$kmlLayerObject.setMap(null);
     }

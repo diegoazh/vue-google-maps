@@ -39,25 +39,33 @@ export default {
     ];
 
     // Infowindow needs this to be immediately available
-    this.$map = await this.$mapPromise;
+    const promise = await this.$mapPromise
+      .then((map) => {
+        this.$map = map;
 
-    // Initialize the maps with the given options
-    const initialOptions = {
-      // TODO: analyze the below line because I think it can be removed
-      ...this.options,
-      map: this.$map,
-      ...getPropsValues(this, kmlLayerMappedProps),
-    };
+        // Initialize the maps with the given options
+        const initialOptions = {
+          // TODO: analyze the below line because I think it can be removed
+          ...this.options,
+          map,
+          ...getPropsValues(this, kmlLayerMappedProps),
+        };
 
-    const { options: extraOptions, ...finalOptions } = initialOptions;
+        const { options: extraOptions, ...finalOptions } = initialOptions;
 
-    this.$kmlLayerObject = new google.maps.KmlLayer(finalOptions);
+        this.$kmlLayerObject = new google.maps.KmlLayer(finalOptions);
 
-    bindProps(this, this.$infoWindowObject, kmlLayerMappedProps);
-    bindEvents(this, this.$infoWindowObject, events);
+        bindProps(this, this.$infoWindowObject, kmlLayerMappedProps);
+        bindEvents(this, this.$infoWindowObject, events);
 
-    this.$kmlLayerPromise = this.$kmlLayerObject;
-    return { $kmlLayerPromise: this.$kmlLayerObject };
+        return this.$kmlLayerObject;
+      })
+      .catch((error) => {
+        throw error;
+      });
+
+    this.$kmlLayerPromise = promise;
+    return { $kmlLayerPromise: promise };
   },
   destroyed() {
     // Note: not all Google Maps components support maps

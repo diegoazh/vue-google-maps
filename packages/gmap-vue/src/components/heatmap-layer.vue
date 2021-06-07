@@ -32,28 +32,36 @@ export default {
     const events = [];
 
     // Infowindow needs this to be immediately available
-    this.$map = await this.$mapPromise;
+    const promise = await this.$mapPromise
+      .then((map) => {
+        this.$map = map;
 
-    // Initialize the maps with the given options
-    const initialOptions = {
-      // TODO: analyze the below line because I think it can be removed
-      ...this.options,
-      map: this.$map,
-      ...getPropsValues(this, heatMapLayerMappedProps),
-    };
+        // Initialize the maps with the given options
+        const initialOptions = {
+          // TODO: analyze the below line because I think it can be removed
+          ...this.options,
+          map: this.$map,
+          ...getPropsValues(this, heatMapLayerMappedProps),
+        };
 
-    const { options: extraOptions, ...finalOptions } = initialOptions;
+        const { options: extraOptions, ...finalOptions } = initialOptions;
 
-    this.$heatmapLayerObject = new google.maps.visualization.HeatmapLayer(
-      finalOptions
-    );
+        this.$heatmapLayerObject = new google.maps.visualization.HeatmapLayer(
+          finalOptions
+        );
 
-    bindProps(this, this.$heatmapLayerObject, heatMapLayerMappedProps);
-    bindEvents(this, this.$heatmapLayerObject, events);
+        bindProps(this, this.$heatmapLayerObject, heatMapLayerMappedProps);
+        bindEvents(this, this.$heatmapLayerObject, events);
+
+        return this.$heatmapLayerObject;
+      })
+      .catch((error) => {
+        throw error;
+      });
 
     // TODO: analyze the efects of only returns the instance and remove completely the promise
-    this.$heatmapLayerPromise = this.$heatmapLayerObject;
-    return { $heatmapLayerPromise: this.$heatmapLayerObject };
+    this.$heatmapLayerPromise = promise;
+    return { $heatmapLayerPromise: promise };
   },
   destroyed() {
     // Note: not all Google Maps components support maps

@@ -50,6 +50,7 @@ export default {
     return '';
   },
   async provide() {
+    // events to bind with toWay
     const events = [
       'click',
       'dblclick',
@@ -64,28 +65,40 @@ export default {
       'rightclick',
     ];
 
-    this.$map = await this.$mapPromise;
+    // Infowindow needs this to be immediately available
+    const promise = this.$mapPromise
+      .then((map) => {
+        this.$map = map;
 
-    const initialOptions = {
-      ...this.options,
-      map: this.$map,
-      ...getPropsValues(this, circleMappedProps),
-    };
-    const { options: extraOptions, ...finalOptions } = initialOptions;
-    this.$circleObject = new google.maps.Circle(finalOptions);
-    bindProps(this, this.$circleObject, circleMappedProps);
-    bindEvents(this, this.$circleObject, events);
+        // Initialize the maps with the given options
+        const initialOptions = {
+          ...this.options,
+          map,
+          ...getPropsValues(this, circleMappedProps),
+        };
+        const { options: extraOptions, ...finalOptions } = initialOptions;
+        this.$circleObject = new google.maps.Circle(finalOptions);
+        bindProps(this, this.$circleObject, circleMappedProps);
+        bindEvents(this, this.$circleObject, events);
 
-    this.$circlePromise = this.$circleObject;
-    return { $circlePromise: this.$circleObject };
+        return this.$circleObject;
+      })
+      .catch((error) => {
+        throw error;
+      });
+
+    this.$circlePromise = promise;
+    return { $circlePromise: promise };
   },
   destroyed() {
+    // Note: not all Google Maps components support maps
     if (this.$circleObject && this.$circleObject.setMap) {
       this.$circleObject.setMap(null);
     }
   },
 };
 </script>
+
 ```
 
 :::

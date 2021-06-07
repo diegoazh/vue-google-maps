@@ -22,6 +22,8 @@ This component save the original Info-Window object provided by Google Maps in a
 <template>
   <div>
     <div ref="flyaway">
+      <!-- so named because it will fly away to another component -->
+      <!-- @slot Used to set your info window.  -->
       <slot></slot>
     </div>
   </div>
@@ -53,56 +55,6 @@ export default {
       type: Number,
     },
   },
-  inject: {
-    $markerPromise: {
-      default: null,
-    },
-  },
-  async provide() {
-    const events = ['domready', 'closeclick', 'content_changed'];
-
-    this.$map = await this.$mapPromise;
-
-    const initialOptions = {
-      ...this.options,
-      map: this.$map,
-      ...getPropsValues(this, infoWindowMappedProps),
-    };
-
-    const { options: extraOptions, position, ...finalOptions } = initialOptions;
-
-    this.beforeCreate(finalOptions);
-
-    this.$infoWindowObject = new google.maps.InfoWindow(finalOptions);
-
-    bindProps(this, this.$infoWindowObject, infoWindowMappedProps);
-    bindEvents(this, this.$infoWindowObject, events);
-
-    this.$infoWindowPromise = this.$infoWindowObject;
-    return { $infoWindowPromise: this.$infoWindowObject };
-  },
-  beforeCreate(options) {
-    options.content = this.$refs.flyaway;
-
-    if (this.$markerPromise) {
-      return this.$markerPromise.then((mo) => {
-        this.$markerObject = mo;
-        return mo;
-      });
-    }
-
-    return undefined;
-  },
-  afterCreate() {
-    this._openInfoWindow();
-    this.$watch('opened', () => {
-      this._openInfoWindow();
-    });
-  },
-  mounted() {
-    const el = this.$refs.flyaway;
-    el.parentNode.removeChild(el);
-  },
   methods: {
     _openInfoWindow() {
       if (this.opened) {
@@ -116,7 +68,73 @@ export default {
       }
     },
   },
+  inject: {
+    $markerPromise: {
+      default: null,
+    },
+  },
+  async provide() {
+    const events = ['domready', 'closeclick', 'content_changed'];
+
+    // Infowindow needs this to be immediately available
+    const promise = await this.$mapPromise
+      .then((map) => {
+        this.$map = map;
+
+        // Initialize the maps with the given options
+        const initialOptions = {
+          ...this.options,
+          map,
+          ...getPropsValues(this, infoWindowMappedProps),
+        };
+
+        const {
+          options: extraOptions,
+          position,
+          ...finalOptions
+        } = initialOptions;
+
+        this.beforeCreate(finalOptions);
+
+        this.$infoWindowObject = new google.maps.InfoWindow(finalOptions);
+
+        bindProps(this, this.$infoWindowObject, infoWindowMappedProps);
+        bindEvents(this, this.$infoWindowObject, events);
+
+        return this.$infoWindowObject;
+      })
+      .catch((error) => {
+        throw error;
+      });
+
+    this.$infoWindowPromise = promise;
+    return { $infoWindowPromise: promise };
+  },
+  beforeCreate(options) {
+    options.content = this.$refs.flyaway;
+
+    if (this.$markerPromise) {
+      return this.$markerPromise.then((mo) => {
+        this.$markerObject = mo;
+        return mo;
+      });
+    }
+
+    // this return is to follow the consistent-return rule of eslint, https://eslint.org/docs/rules/consistent-return
+    return undefined;
+  },
+  afterCreate() {
+    this._openInfoWindow();
+    this.$watch('opened', () => {
+      this._openInfoWindow();
+    });
+  },
+  mounted() {
+    const el = this.$refs.flyaway;
+    el.parentNode.removeChild(el);
+  },
   destroyed() {
+    // Note: not all Google Maps components support maps
     if (this.$infoWindowObject && this.$infoWindowObject.setMap) {
       this.$infoWindowObject.setMap(null);
     }

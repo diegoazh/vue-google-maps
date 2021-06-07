@@ -126,37 +126,51 @@ export default {
     ];
 
     // Infowindow needs this to be immediately available
-    this.$map = await this.$mapPromise;
+    const promise = await this.$mapPromise
+      .then((map) => {
+        this.$map = map;
 
-    // Initialize the maps with the given options
-    const initialOptions = {
-      // TODO: analyze the below line because I think it can be removed
-      ...this.options,
-      map: this.$map,
-      ...getPropsValues(this, clusterMappedProps),
-    };
-    const { options: extraOptions, ...finalOptions } = initialOptions;
+        // Initialize the maps with the given options
+        const initialOptions = {
+          // TODO: analyze the below line because I think it can be removed
+          ...this.options,
+          map,
+          ...getPropsValues(this, clusterMappedProps),
+        };
+        const { options: extraOptions, ...finalOptions } = initialOptions;
 
-    if (typeof MarkerClusterer === 'undefined') {
-      throw new Error(
-        'MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js'
-      );
-    }
+        if (typeof MarkerClusterer === 'undefined') {
+          throw new Error(
+            'MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js'
+          );
+        }
 
-    const { map, markers, ...clusterOptions } = finalOptions;
-    this.$clusterObject = new MarkerClusterer(map, markers, ...clusterOptions);
-    bindProps(this, this.$clusterObject, clusterMappedProps);
-    bindEvents(this, this.$clusterObject, events);
+        const { map: mapInstance, markers, ...clusterOptions } = finalOptions;
 
-    Object.keys(clusterMappedProps).forEach((prop) => {
-      if (clusterMappedProps[prop].twoWay) {
-        this.$on(`${prop.toLowerCase()}_changed`, this.reinsertMarkers);
-      }
-    });
+        this.$clusterObject = new MarkerClusterer(
+          mapInstance,
+          markers,
+          ...clusterOptions
+        );
+
+        bindProps(this, this.$clusterObject, clusterMappedProps);
+        bindEvents(this, this.$clusterObject, events);
+
+        Object.keys(clusterMappedProps).forEach((prop) => {
+          if (clusterMappedProps[prop].twoWay) {
+            this.$on(`${prop.toLowerCase()}_changed`, this.reinsertMarkers);
+          }
+        });
+
+        return this.$clusterObject;
+      })
+      .catch((error) => {
+        throw error;
+      });
 
     // TODO: analyze the efects of only returns the instance and remove completely the promise
-    this.$clusterPromise = this.$clusterObject;
-    return { $clusterPromise: this.$clusterObject };
+    this.$clusterPromise = promise;
+    return { $clusterPromise: promise };
   },
   beforeDestroy() {
     /* Performance optimization when destroying a large number of markers */

@@ -21,6 +21,7 @@ this.$clusterObject = new MarkerClusterer(...);
 ```vue
 <template>
   <div>
+    <!-- @slot Used to set your cluster -->
     <slot></slot>
   </div>
 </template>
@@ -78,6 +79,7 @@ export default {
     },
   },
   async provide() {
+    // events to bind with toWay
     const events = [
       'click',
       'rightclick',
@@ -91,36 +93,53 @@ export default {
       'mouseout',
     ];
 
-    this.$map = await this.$mapPromise;
+    // Infowindow needs this to be immediately available
+    const promise = await this.$mapPromise
+      .then((map) => {
+        this.$map = map;
 
-    const initialOptions = {
-      ...this.options,
-      map: this.$map,
-      ...getPropsValues(this, clusterMappedProps),
-    };
-    const { options: extraOptions, ...finalOptions } = initialOptions;
+        // Initialize the maps with the given options
+        const initialOptions = {
+          ...this.options,
+          map,
+          ...getPropsValues(this, clusterMappedProps),
+        };
+        const { options: extraOptions, ...finalOptions } = initialOptions;
 
-    if (typeof MarkerClusterer === 'undefined') {
-      throw new Error(
-        'MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js'
-      );
-    }
+        if (typeof MarkerClusterer === 'undefined') {
+          throw new Error(
+            'MarkerClusterer is not installed! require() it or include it from https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js'
+          );
+        }
 
-    const { map, markers, ...clusterOptions } = finalOptions;
-    this.$clusterObject = new MarkerClusterer(map, markers, ...clusterOptions);
-    bindProps(this, this.$clusterObject, clusterMappedProps);
-    bindEvents(this, this.$clusterObject, events);
+        const { map: mapInstance, markers, ...clusterOptions } = finalOptions;
 
-    Object.keys(clusterMappedProps).forEach((prop) => {
-      if (clusterMappedProps[prop].twoWay) {
-        this.$on(`${prop.toLowerCase()}_changed`, this.reinsertMarkers);
-      }
-    });
+        this.$clusterObject = new MarkerClusterer(
+          mapInstance,
+          markers,
+          ...clusterOptions
+        );
 
-    this.$clusterPromise = this.$clusterObject;
-    return { $clusterPromise: this.$clusterObject };
+        bindProps(this, this.$clusterObject, clusterMappedProps);
+        bindEvents(this, this.$clusterObject, events);
+
+        Object.keys(clusterMappedProps).forEach((prop) => {
+          if (clusterMappedProps[prop].twoWay) {
+            this.$on(`${prop.toLowerCase()}_changed`, this.reinsertMarkers);
+          }
+        });
+
+        return this.$clusterObject;
+      })
+      .catch((error) => {
+        throw error;
+      });
+
+    this.$clusterPromise = promise;
+    return { $clusterPromise: promise };
   },
   beforeDestroy() {
+    /* Performance optimization when destroying a large number of markers */
     this.$children.forEach((marker) => {
       if (marker.$clusterObject === this.$clusterObject) {
         marker.$clusterObject = null;
@@ -132,6 +151,7 @@ export default {
     }
   },
   destroyed() {
+    // Note: not all Google Maps components support maps
     if (this.$clusterObject && this.$clusterObject.setMap) {
       this.$clusterObject.setMap(null);
     }
@@ -150,6 +170,7 @@ export default {
   },
 };
 </script>
+
 ```
 
 :::

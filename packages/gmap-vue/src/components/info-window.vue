@@ -79,28 +79,40 @@ export default {
     const events = ['domready', 'closeclick', 'content_changed'];
 
     // Infowindow needs this to be immediately available
-    this.$map = await this.$mapPromise;
+    const promise = await this.$mapPromise
+      .then((map) => {
+        this.$map = map;
 
-    // Initialize the maps with the given options
-    const initialOptions = {
-      // TODO: analyze the below line because I think it can be removed
-      ...this.options,
-      map: this.$map,
-      ...getPropsValues(this, infoWindowMappedProps),
-    };
+        // Initialize the maps with the given options
+        const initialOptions = {
+          // TODO: analyze the below line because I think it can be removed
+          ...this.options,
+          map,
+          ...getPropsValues(this, infoWindowMappedProps),
+        };
 
-    const { options: extraOptions, position, ...finalOptions } = initialOptions;
+        const {
+          options: extraOptions,
+          position,
+          ...finalOptions
+        } = initialOptions;
 
-    this.beforeCreate(finalOptions);
+        this.beforeCreate(finalOptions);
 
-    this.$infoWindowObject = new google.maps.InfoWindow(finalOptions);
+        this.$infoWindowObject = new google.maps.InfoWindow(finalOptions);
 
-    bindProps(this, this.$infoWindowObject, infoWindowMappedProps);
-    bindEvents(this, this.$infoWindowObject, events);
+        bindProps(this, this.$infoWindowObject, infoWindowMappedProps);
+        bindEvents(this, this.$infoWindowObject, events);
+
+        return this.$infoWindowObject;
+      })
+      .catch((error) => {
+        throw error;
+      });
 
     // TODO: analyze the efects of only returns the instance and remove completely the promise
-    this.$infoWindowPromise = this.$infoWindowObject;
-    return { $infoWindowPromise: this.$infoWindowObject };
+    this.$infoWindowPromise = promise;
+    return { $infoWindowPromise: promise };
   },
   beforeCreate(options) {
     options.content = this.$refs.flyaway;

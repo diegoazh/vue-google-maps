@@ -21,7 +21,10 @@ This component save the original drawing manager object provided by Google Maps 
 ```vue
 <template>
   <div>
-    <slot :setDrawingMode="setDrawingMode" :deleteSelection="deleteSelection" />
+    <slot
+      v-bind:setDrawingMode="setDrawingMode"
+      v-bind:deleteSelection="deleteSelection"
+    />
   </div>
 </template>
 
@@ -66,61 +69,6 @@ export default {
         drawingControlOptions: {},
       },
     };
-  },
-  async provide() {
-    // Infowindow needs this to be immediately available
-    this.$map = await this.$mapPromise;
-
-    // Initialize the maps with the given options
-    const initialOptions = {
-      ...this.options,
-      map: this.$map,
-      ...getPropsValues(this, drawingManagerMappedProps),
-    };
-
-    const { options: extraOptions, ...finalOptions } = initialOptions;
-
-    this.drawingModes = Object.keys(finalOptions).reduce((modes, opt) => {
-      const val = opt.split('Options');
-
-      if (val.length > 1) {
-        modes.push(val[0]);
-      }
-
-      return modes;
-    }, []);
-
-    const position =
-      this.position && google.maps.ControlPosition[this.position]
-        ? google.maps.ControlPosition[this.position]
-        : google.maps.ControlPosition.TOP_LEFT;
-
-    finalOptions.drawingMode = null;
-    finalOptions.drawingControl = !this.$scopedSlots.default;
-    finalOptions.drawingControlOptions = {
-      drawingModes: this.drawingModes,
-      position,
-    };
-
-    // https://stackoverflow.com/questions/1606797/use-of-apply-with-new-operator-is-this-possible
-    this.$drawingManagerObject = new google.maps.drawing.DrawingManager(
-      finalOptions
-    );
-
-    bindProps(this, this.$drawingManagerObject, drawingManagerMappedProps);
-
-    this.$drawingManagerObject.addListener('overlaycomplete', (e) =>
-      this.addShape(e)
-    );
-
-    this.$map.addListener('click', this.clearSelection);
-
-    if (this.shapes.length) {
-      this.drawAll();
-    }
-
-    this.$drawingManagerPromise = this.$drawingManagerObject;
-    return { $drawingManagerPromise: this.$drawingManagerObject };
   },
   methods: {
     setDrawingMode(mode) {
@@ -185,7 +133,7 @@ export default {
         self.setSelection(shape);
       });
       google.maps.event.addListener(shape.overlay, 'rightclick', () => {
-        self.deleteSelection()
+        self.deleteSelection();
       });
       this.setSelection(shape);
     },
@@ -229,9 +177,73 @@ export default {
       }
     },
   },
+  async provide() {
+    // Infowindow needs this to be immediately available
+    const promise = await this.$mapPromise
+      .then((map) => {
+        this.$map = map;
+
+        // Initialize the maps with the given options
+        const initialOptions = {
+          ...this.options,
+          map,
+          ...getPropsValues(this, drawingManagerMappedProps),
+        };
+
+        const { options: extraOptions, ...finalOptions } = initialOptions;
+
+        this.drawingModes = Object.keys(finalOptions).reduce((modes, opt) => {
+          const val = opt.split('Options');
+
+          if (val.length > 1) {
+            modes.push(val[0]);
+          }
+
+          return modes;
+        }, []);
+
+        const position =
+          this.position && google.maps.ControlPosition[this.position]
+            ? google.maps.ControlPosition[this.position]
+            : google.maps.ControlPosition.TOP_LEFT;
+
+        finalOptions.drawingMode = null;
+        finalOptions.drawingControl = !this.$scopedSlots.default;
+        finalOptions.drawingControlOptions = {
+          drawingModes: this.drawingModes,
+          position,
+        };
+
+        // https://stackoverflow.com/questions/1606797/use-of-apply-with-new-operator-is-this-possible
+        this.$drawingManagerObject = new google.maps.drawing.DrawingManager(
+          finalOptions
+        );
+
+        bindProps(this, this.$drawingManagerObject, drawingManagerMappedProps);
+
+        this.$drawingManagerObject.addListener('overlaycomplete', (e) =>
+          this.addShape(e)
+        );
+
+        this.$map.addListener('click', this.clearSelection);
+
+        if (this.shapes.length) {
+          this.drawAll();
+        }
+
+        return this.$drawingManagerObject;
+      })
+      .catch((error) => {
+        throw error;
+      });
+
+    this.$drawingManagerPromise = promise;
+    return { $drawingManagerPromise: promise };
+  },
   destroyed() {
     this.clearAll();
 
+    // Note: not all Google Maps components support maps
     if (this.$drawingManagerObject && this.$drawingManagerObject.setMap) {
       this.$drawingManagerObject.setMap(null);
     }

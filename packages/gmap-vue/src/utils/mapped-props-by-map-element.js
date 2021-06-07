@@ -186,6 +186,39 @@ export const kmlLayerMappedProps = {
   },
 };
 
+export const mapMappedProps = {
+  center: {
+    required: true,
+    twoWay: true,
+    type: Object,
+    noBind: true,
+  },
+  zoom: {
+    required: false,
+    twoWay: true,
+    type: Number,
+    noBind: true,
+  },
+  heading: {
+    type: Number,
+    twoWay: true,
+  },
+  mapTypeId: {
+    twoWay: true,
+    type: String,
+  },
+  tilt: {
+    twoWay: true,
+    type: Number,
+  },
+  options: {
+    type: Object,
+    default() {
+      return {};
+    },
+  },
+};
+
 export default {
   autocompleteMappedProps,
   circleMappedProps,
@@ -194,4 +227,5 @@ export default {
   heatMapLayerMappedProps,
   infoWindowMappedProps,
   kmlLayerMappedProps,
+  mapMappedProps,
 };

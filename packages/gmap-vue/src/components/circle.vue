@@ -84,22 +84,30 @@ export default {
     ];
 
     // Infowindow needs this to be immediately available
-    this.$map = await this.$mapPromise;
+    const promise = this.$mapPromise
+      .then((map) => {
+        this.$map = map;
 
-    // Initialize the maps with the given options
-    const initialOptions = {
-      ...this.options,
-      map: this.$map,
-      ...getPropsValues(this, circleMappedProps),
-    };
-    const { options: extraOptions, ...finalOptions } = initialOptions;
-    this.$circleObject = new google.maps.Circle(finalOptions);
-    bindProps(this, this.$circleObject, circleMappedProps);
-    bindEvents(this, this.$circleObject, events);
+        // Initialize the maps with the given options
+        const initialOptions = {
+          ...this.options,
+          map,
+          ...getPropsValues(this, circleMappedProps),
+        };
+        const { options: extraOptions, ...finalOptions } = initialOptions;
+        this.$circleObject = new google.maps.Circle(finalOptions);
+        bindProps(this, this.$circleObject, circleMappedProps);
+        bindEvents(this, this.$circleObject, events);
+
+        return this.$circleObject;
+      })
+      .catch((error) => {
+        throw error;
+      });
 
     // TODO: analyze the efects of only returns the instance and remove completely the promise
-    this.$circlePromise = this.$circleObject;
-    return { $circlePromise: this.$circleObject };
+    this.$circlePromise = promise;
+    return { $circlePromise: promise };
   },
   destroyed() {
     // Note: not all Google Maps components support maps
