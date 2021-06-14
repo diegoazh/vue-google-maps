@@ -10,7 +10,8 @@ module.exports = {
     nav: [
       { text: 'Plugin', link: '/' },
       { text: 'Guide', link: '/guide/' },
-      { text: 'API', link: '/code/' }
+      { text: 'API', link: '/code/' },
+      { text: 'GitHub', link: 'https://github.com/diegoazh/gmap-vue' },
     ],
     sidebar: {
       '/code/': apiDocs['/code/'],
