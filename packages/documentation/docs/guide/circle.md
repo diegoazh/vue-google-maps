@@ -158,11 +158,21 @@ const events = [
 ## How to use it
 
 ```vue
-<!-- you can use the auto close form if you want -->
-<gmap-circle />
+<template>
+  <gmap-map :center="center" :zoom="7" style="width: 100%; height: 500px">
+    <!-- you can use the auto close form if you want -->
+    <gmap-circle />
+  </gmap-map>
+</template>
+```
 
-<!-- or -->
-<gmap-circle></gmap-circle>
+```vue
+<template>
+  <gmap-map :center="center" :zoom="7" style="width: 100%; height: 500px">
+    <!-- or -->
+    <gmap-circle></gmap-circle>
+  </gmap-map>
+</template>
 ```
 
 If you need to know the API of this component please read it [here](/code/components/circle.html).

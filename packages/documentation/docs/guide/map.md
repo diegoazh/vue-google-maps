@@ -265,9 +265,73 @@ export default {
 
 :::
 
+If you need to know what are `mappedProps` please read the general concepts of this application [here](/examples/#mapped-props).
+
+:::details Mapped Props of <code>GmapMap</code> component
+
+```javascript
+export const mapMappedProps = {
+  center: {
+    required: true,
+    twoWay: true,
+    type: Object,
+    noBind: true,
+  },
+  zoom: {
+    required: false,
+    twoWay: true,
+    type: Number,
+    noBind: true,
+  },
+  heading: {
+    type: Number,
+    twoWay: true,
+  },
+  mapTypeId: {
+    twoWay: true,
+    type: String,
+  },
+  tilt: {
+    twoWay: true,
+    type: Number,
+  },
+  options: {
+    type: Object,
+    default() {
+      return {};
+    },
+  },
+};
+```
+
+:::
+
+:::details Events bound with to way on <code>GmapMap</code>
+
+```javascript
+const events = [
+  'bounds_changed',
+  'click',
+  'dblclick',
+  'drag',
+  'dragend',
+  'dragstart',
+  'idle',
+  'mousemove',
+  'mouseout',
+  'mouseover',
+  'resize',
+  'rightclick',
+  'tilesloaded',
+];
+```
+
+:::
+
 ## How to use it
 
 ```vue
+<template>
   <gmap-map
     :center="center"
     :zoom="7"
@@ -275,6 +339,7 @@ export default {
     style="width: 100%; height: 500px;"
   >
   </gmap-map>
+</template>
 ```
 
 If you need to know the API of this component please read it [here](/code/components/map.html).

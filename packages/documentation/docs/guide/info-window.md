@@ -73,7 +73,7 @@ export default {
       default: null,
     },
   },
-  async provide() {
+  provide() {
     const events = ['domready', 'closeclick', 'content_changed'];
 
     // Infowindow needs this to be immediately available
@@ -172,16 +172,37 @@ export const infoWindowMappedProps = {
 
 :::
 
+:::details Events bound with to way on <code>GmapInfoWindow</code>
+
+```javascript
+const events = ['domready', 'closeclick', 'content_changed'];
+```
+
+:::
+
 ## How to use it
 
 ```vue
-  <gmap-info-window
-    :options="infoOptions"
-    :position="infoWindowPos"
-    :opened="infoWinOpen"
-    @closeclick="infoWinOpen=false"
-  >
-  </gmap-info-window>
+<template>
+  <gmap-map :center="center" :zoom="15" style="width: 100%; height: 500px">
+    <gmap-info-window
+      :options="infoOptions"
+      :position="infoWindowPos"
+      :opened="infoWinOpen"
+      @closeclick="infoWinOpen=false"
+    >
+    </gmap-info-window>
+
+    <gmap-marker
+      :key="i"
+      v-for="(m,i) in markers"
+      :position="m.position"
+      :clickable="true"
+      @click="toggleInfoWindow(m,i)"
+    >
+    </gmap-marker>
+  </gmap-map>
+</template>
 ```
 
 If you need to know the API of this component please read it [here](/code/components/info-window.html).

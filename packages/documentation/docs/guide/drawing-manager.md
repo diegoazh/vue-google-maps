@@ -177,7 +177,7 @@ export default {
       }
     },
   },
-  async provide() {
+  provide() {
     // Infowindow needs this to be immediately available
     const promise = await this.$mapPromise
       .then((map) => {
@@ -296,19 +296,63 @@ export const drawingManagerMappedProps = {
 ## How to use it
 
 ```vue
-<!-- use the default slot to pass markers to it -->
-<gmap-drawing-manager></gmap-drawing-manager>
+<template>
+  <gmap-map
+    ref="mapRef"
+    :center="mapCenter"
+    :zoom="7"
+    map-type-id="roadmap"
+    style="width: 100%; height: 800px"
+    :options="{
+        zoomControl: true,
+        mapTypeControl: true,
+        scaleControl: false,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: false,
+        disableDefaultUi: false,
+        draggable: mapDraggable,
+        draggableCursor: mapCursor
+      }"
+  >
+    <!-- use the default slot to pass markers to it -->
+    <gmap-drawing-manager></gmap-drawing-manager>
+  </gmap-map>
+</template>
+```
 
-<!-- or with an slot -->
-<gmap-drawing-manager>
-  <template v-slot="on">
-    <your-toolbar-component
-      @drawingmode_changed="on.setDrawingMode($event)"
-      @delete_selection="on.deleteSelection()"
-      @save="mapMode='ready'"
-    />
-  </template>
-</gmap-drawing-manager>
+```vue
+<template>
+  <gmap-map
+    ref="mapRef"
+    :center="mapCenter"
+    :zoom="7"
+    map-type-id="roadmap"
+    style="width: 100%; height: 800px"
+    :options="{
+        zoomControl: true,
+        mapTypeControl: true,
+        scaleControl: false,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: false,
+        disableDefaultUi: false,
+        draggable: mapDraggable,
+        draggableCursor: mapCursor
+      }"
+  >
+    <!-- or with an slot -->
+    <gmap-drawing-manager>
+      <template v-slot="on">
+        <your-toolbar-component
+          @drawingmode_changed="on.setDrawingMode($event)"
+          @delete_selection="on.deleteSelection()"
+          @save="mapMode='ready'"
+        />
+      </template>
+    </gmap-drawing-manager>
+  </gmap-map>
+</template>
 ```
 
 If you need to know the API of this component please read it [here](/code/components/cluster.html).

@@ -176,11 +176,23 @@ export const autocompleteMappedProps = {
 ## How to use it
 
 ```vue
-<!-- you can use the auto close form if you don't use the slot -->
-<gmap-autocomplete />
+<template>
+  <!-- you can use the auto close form if you don't use the slot -->
+  <gmap-autocomplete />
 
-<!-- or use the common form with the slot -->
-<gmap-autocomplete></gmap-autocomplete>
+  <gmap-map :center="center" :zoom="7" style="width: 100%; height: 500px">
+  </gmap-map>
+</template>
+```
+
+```vue
+<template>
+  <!-- or use the common form with the slot -->
+  <gmap-autocomplete></gmap-autocomplete>
+
+  <gmap-map :center="center" :zoom="7" style="width: 100%; height: 500px">
+  </gmap-map>
+</template>
 ```
 
 If you need to know the API of this component please read it [here](/code/components/autocomplete.html).

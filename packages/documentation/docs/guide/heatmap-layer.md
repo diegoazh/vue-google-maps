@@ -35,7 +35,7 @@ export default {
       type: Array,
     },
   },
-  async provide() {
+  provide() {
     const events = [];
 
     // Infowindow needs this to be immediately available
@@ -106,12 +106,20 @@ export const heatMapLayerMappedProps = {
 ## How to use it
 
 ```vue
-
-  <gmap-heatmap-layer
-    :data="[new google.maps.LatLng(37.782, -122.447)]"
-    :options="{maxIntensity: 120, dissipating: false}"
-  />
-
+<template>
+  <gmap-map
+    ref="mapRef"
+    :zoom="7"
+    :center="center"
+    map-type-id="roadmap"
+    style="width: 100%; height: 500px;"
+  >
+    <gmap-heatmap-layer
+      :data="[new google.maps.LatLng(37.782, -122.447)]"
+      :options="{maxIntensity: 120, dissipating: false}"
+    />
+  </gmap-map>
+</template>
 ```
 
 You also can use a computed property like below

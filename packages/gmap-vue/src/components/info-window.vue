@@ -97,12 +97,27 @@ export default {
           ...finalOptions
         } = initialOptions;
 
-        this.beforeCreate(finalOptions);
+        finalOptions.content = this.$refs.flyaway;
+
+        if (this.$markerPromise) {
+          this.$markerPromise.then((markerObject) => {
+            this.$markerObject = markerObject;
+            return markerObject;
+          });
+        }
 
         this.$infoWindowObject = new google.maps.InfoWindow(finalOptions);
 
         bindProps(this, this.$infoWindowObject, infoWindowMappedProps);
         bindEvents(this, this.$infoWindowObject, events);
+
+        // TODO: This function names should be analyzed
+        /* eslint-disable no-underscore-dangle -- old style */
+        this._openInfoWindow();
+        this.$watch('opened', () => {
+          this._openInfoWindow();
+        });
+        /* eslint-enable no-underscore-dangle */
 
         return this.$infoWindowObject;
       })
@@ -113,28 +128,6 @@ export default {
     // TODO: analyze the efects of only returns the instance and remove completely the promise
     this.$infoWindowPromise = promise;
     return { $infoWindowPromise: promise };
-  },
-  beforeCreate(options) {
-    options.content = this.$refs.flyaway;
-
-    if (this.$markerPromise) {
-      return this.$markerPromise.then((mo) => {
-        this.$markerObject = mo;
-        return mo;
-      });
-    }
-
-    // this return is to follow the consistent-return rule of eslint, https://eslint.org/docs/rules/consistent-return
-    return undefined;
-  },
-  afterCreate() {
-    // TODO: This function names should be analyzed
-    /* eslint-disable no-underscore-dangle -- old style */
-    this._openInfoWindow();
-    this.$watch('opened', () => {
-      this._openInfoWindow();
-    });
-    /* eslint-enable no-underscore-dangle */
   },
   mounted() {
     const el = this.$refs.flyaway;

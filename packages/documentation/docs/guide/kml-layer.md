@@ -34,7 +34,7 @@ export default {
       type: Object,
     },
   },
-  async provide() {
+  provide() {
     const events = [
       'click',
       'rightclick',
@@ -86,21 +86,69 @@ export default {
 
 :::
 
+If you need to know what are `mappedProps` please read the general concepts of this application [here](/examples/#mapped-props).
+
+:::details Mapped Props of <code>GmapKmlLayer</code> component
+
+```javascript
+export const kmlLayerMappedProps = {
+  url: {
+    twoWay: false,
+    type: String,
+  },
+  map: {
+    twoWay: true,
+    type: Object,
+  },
+};
+```
+
+:::
+
+:::details Events bound with to way on <code>GmapKmlLayer</code>
+
+```javascript
+const events = [
+  'click',
+  'rightclick',
+  'dblclick',
+  'mouseup',
+  'mousedown',
+  'mouseover',
+  'mouseout',
+];
+```
+
+:::
+
 ## How to use it
 
 ```vue
-  const kmlLayers = [
-    {
-      url:
-        'https://developers.google.com/maps/documentation/javascript/examples/kml/westcampus.kml',
-    },
-  ];
+<template>
+  <gmap-map :center="center" :zoom="7" style="width: 100%; height: 500px">
+    <google-kml-layer
+      v-for="l in kmlLayers"
+      :url="l.url"
+      :clickable="true"
+    >
+    </google-kml-layer>
+  </gmap-map>
+</template>
 
-  <google-kml-layer
-    v-for="l in kmlLayers"
-    :url="l.url"
-    :clickable="true"
-  ></google-kml-layer>
+<script>
+export default {
+  data() {
+    return {
+      kmlLayers = [
+        {
+          url:
+            'https://developers.google.com/maps/documentation/javascript/examples/kml/westcampus.kml',
+        },
+      ],
+    }
+  }
+}
+</script>
 ```
 
 If you need to know the API of this component please read it [here](/code/components/kml-layer.html).
@@ -117,7 +165,7 @@ If you need to know the API of this component please read it [here](/code/compon
     </gmap-map>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></>
   <script src="https://cdn.jsdelivr.net/npm/gmap-vue@1.2.2/dist/gmap-vue.min.js"></script>
 
   <script>

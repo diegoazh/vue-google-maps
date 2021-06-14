@@ -264,13 +264,21 @@ const events = [
 ## How to use it
 
 ```vue
-<!-- use the default slot to pass markers to it -->
-<gmap-cluster></gmap-cluster>
+<template>
+  <gmap-map
+    :center="center"
+    :zoom="7"
+    style="width: 100%; height: 500px"
+  >
+    <!-- use the default slot to pass markers to it -->
+    <gmap-cluster></gmap-cluster>
+  </gmap-map>
+</template>
 ```
 
 If you need to know the API of this component please read it [here](/code/components/cluster.html).
 
-## Html example
+## Html examples
 
 ```html
 <body>

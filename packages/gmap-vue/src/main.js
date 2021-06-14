@@ -7,7 +7,7 @@ import HeatmapLayer from './components/heatmap-layer.vue';
 import InfoWindow from './components/info-window.vue';
 import KmlLayer from './components/kml-layer.vue';
 import Map from './components/map.vue';
-import Marker from './components/marker';
+import Marker from './components/marker.vue';
 import PlaceInput from './components/place-input.vue';
 import Polygon from './components/polygon';
 import Polyline from './components/polyline';
