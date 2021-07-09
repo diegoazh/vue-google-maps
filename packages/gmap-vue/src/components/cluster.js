@@ -67,6 +67,10 @@ const props = {
     type: Boolean,
     twoWay: false,
   },
+  title: {
+    type: String,
+    twoWay: false,
+  },
 };
 
 const events = [
